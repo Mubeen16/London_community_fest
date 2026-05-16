@@ -1,0 +1,61 @@
+# London Community Fest — Cursor Rules
+
+## Project
+Community festival website that will evolve into a SaaS platform (Community Event OS).
+Built by a solo founder using AI-assisted development. Code quality matters — no throwaway work.
+
+## Stack
+- Next.js 16 (App Router)
+- React 19
+- TypeScript (strict)
+- Tailwind CSS 4 (uses @theme inline in globals.css, NOT tailwind.config.ts)
+- No shadcn/ui — UI primitives are hand-built in components/ui/
+
+## Architecture Rules
+- All event data lives in lib/config/ — never hardcode dates, venue, pricing in components
+- All reusable types live in types/index.ts — split into separate files only when index exceeds 40 lines
+- All static content arrays (FAQ items, activities, sponsor tiers) live in data/ folder
+- Components import data, they don't define it
+- Use "as const" on all config exports
+- Use the cn() utility from lib/utils.ts for conditional class merging
+
+## Folder Structure (enforced)
+- app/ — routes and layouts only
+- components/landing/ — landing page section components
+- components/ui/ — reusable UI primitives (button, container, section-heading)
+- data/ — static content arrays
+- lib/config/ — site, event, and navigation configuration
+- lib/ — utilities and helpers
+- types/ — TypeScript interfaces
+- hooks/ — custom React hooks
+
+## Component Rules
+- One component per file
+- Named exports only (no default exports except page.tsx and layout.tsx)
+- Props must be typed with interface, not inline
+- Keep components under 150 lines — split if larger
+- No "use client" unless the component genuinely needs browser APIs or state
+
+## Styling Rules
+- Tailwind CSS 4 utility classes only — no inline styles, no CSS modules
+- Custom colours are defined in globals.css @theme inline block — use them (e.g. bg-forest-900, text-gold-400, text-crimson-400)
+- Colour palette: forest greens (dark backgrounds), gold (accent), crimson (logo/CTA), paper (light backgrounds), cream (text on dark), ink (text on light)
+- Font classes: font-serif (Instrument Serif — headings), font-sans (Be Vietnam Pro — body)
+- Dark sections use forest/crimson backgrounds with cream text
+- Light sections use paper backgrounds with ink text
+
+## Code Quality
+- No any types
+- No console.log in committed code
+- No unused imports
+- No giant files — if a component needs 200+ lines, it should be split
+- Prefer early returns over nested conditionals
+- Comments only when explaining WHY, not WHAT
+
+## What NOT to Do
+- Do not install shadcn/ui or Radix
+- Do not create tailwind.config.ts — Tailwind 4 uses CSS-based config
+- Do not add state management libraries (no Zustand, Redux)
+- Do not add dark mode toggle — light/dark is controlled per-section
+- Do not create pages beyond app/page.tsx until explicitly asked
+- Do not use Geist fonts — project uses Instrument Serif and Be Vietnam Pro
