@@ -1,7 +1,7 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { TornLogo } from "@/components/ui/torn-logo";
 import { useEffect, useState } from "react";
 import { eventConfig } from "@/lib/config/event";
 import { navigationLinks } from "@/lib/config/navigation";
@@ -42,13 +42,13 @@ export function SiteHeader() {
           className="flex shrink-0 items-center gap-2"
           onClick={closeMobile}
         >
-          <TornLogo
+          <Image
+            src="/images/logo.png"
             alt={siteConfig.name}
             width={32}
             height={32}
             priority
-            className="p-1"
-            imageClassName="h-7 w-auto"
+            className="h-8 w-auto"
           />
           <span className="hidden font-serif text-lg sm:inline">
             <span className={headerBrandClasses("crimson")}>London</span>{" "}

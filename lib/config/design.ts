@@ -14,8 +14,8 @@ export const designConfig = {
       linkMobileHover: "hover:text-gold-400",
       border: "border-cream/5",
       bar: {
-        default: "border-transparent bg-forest-900/85 backdrop-blur-sm",
-        scrolled: "border-cream/5 bg-forest-900/95 backdrop-blur-md",
+        default: "border-b border-cream/10 bg-forest-950/95 backdrop-blur-sm",
+        scrolled: "border-b border-cream/15 bg-forest-950 backdrop-blur-md",
       },
       brand: {
         crimson: "text-crimson-400",

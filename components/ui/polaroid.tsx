@@ -29,6 +29,7 @@ export function Polaroid({
           src={src}
           alt={alt}
           fill
+          unoptimized={src.startsWith("/images/")}
           sizes="(max-width: 640px) 50vw, 33vw"
           className="object-cover object-center"
         />
