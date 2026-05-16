@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Design tokens — locked to logo (#7A0D22, #475059) + WhatsApp poster direction.
+   Semantic map: lib/config/design.ts | AI rules: .cursorrules */
+
 @theme inline {
   /* Forest — dark greens */
   --color-forest-950: #0a120a;
@@ -18,18 +21,23 @@
   --color-gold-500: #a88535;
   --color-gold-600: #8a7540;
 
-  /* Crimson — logo / CTA */
-  --color-crimson-50: #f8eef1;
-  --color-crimson-100: #efd9e0;
-  --color-crimson-200: #d4a8b8;
-  --color-crimson-300: #a84d68;
-  --color-crimson-400: #7a2040;
-  --color-crimson-500: #521528;
-  --color-crimson-600: #2a0e18;
+  /* Crimson — logo primary (#7A0D22) */
+  --color-crimson-50: #f4eced;
+  --color-crimson-100: #e7d3d7;
+  --color-crimson-200: #d0aab2;
+  --color-crimson-300: #b67a85;
+  --color-crimson-400: #7a0d22;
+  --color-crimson-500: #5e0c1c;
+  --color-crimson-600: #480c17;
 
-  /* Slate */
-  --color-slate-400: #8a9baa;
-  --color-slate-500: #4e5e6e;
+  /* Slate — logo secondary (#475059) */
+  --color-slate-50: #edeeee;
+  --color-slate-100: #d1d3d6;
+  --color-slate-200: #acb0b4;
+  --color-slate-300: #878d93;
+  --color-slate-400: #636a72;
+  --color-slate-500: #475059;
+  --color-slate-600: #32383d;
 
   /* Paper — light backgrounds */
   --color-paper-50: #faf5eb;
@@ -38,10 +46,10 @@
   --color-paper-300: #e2d5b8;
   --color-paper-400: #d4c5a9;
 
-  /* Ink — text on light */
-  --color-ink: #2a1a10;
-  --color-ink-muted: #6b6050;
-  --color-ink-light: #8a7a68;
+  /* Ink — text on light (muted aligns with logo slate) */
+  --color-ink: #32383d;
+  --color-ink-muted: #475059;
+  --color-ink-light: #636a72;
 
   /* Cream — text on dark */
   --color-cream: #f0e6d0;
@@ -58,4 +66,131 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.poster-grain {
+  position: relative;
+  isolation: isolate;
+}
+
+.poster-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+@utility paper-torn {
+  clip-path: polygon(
+    0% 2%,
+    4% 0%,
+    12% 3%,
+    22% 0%,
+    35% 2%,
+    48% 0%,
+    62% 3%,
+    78% 1%,
+    92% 4%,
+    100% 0%,
+    100% 96%,
+    96% 100%,
+    84% 97%,
+    68% 100%,
+    52% 96%,
+    36% 100%,
+    18% 97%,
+    6% 100%,
+    0% 94%
+  );
+}
+
+@utility tape-strip {
+  background: linear-gradient(
+    180deg,
+    rgba(240, 230, 208, 0.55) 0%,
+    rgba(240, 230, 208, 0.35) 100%
+  );
+  box-shadow: 0 1px 2px rgba(10, 18, 10, 0.15);
+}
+
+/* Poster utilities — refined grain, torn paper, tape (see lib/config/design.ts) */
+.poster-grain {
+  position: relative;
+}
+.poster-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+.poster-grain > * {
+  position: relative;
+  z-index: 2;
+}
+
+.paper-torn {
+  position: relative;
+  background: var(--color-paper-50);
+  border-radius: 2px;
+  box-shadow: 2px 3px 8px rgba(0,0,0,0.08);
+}
+.paper-torn::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-paper-50) 10%, transparent 20%, var(--color-paper-50) 35%, transparent 45%, var(--color-paper-50) 60%, transparent 70%, var(--color-paper-50) 85%, transparent 100%);
+}
+
+.tape-strip {
+  position: absolute;
+  width: 48px;
+  height: 16px;
+  background: rgba(212, 197, 169, 0.5);
+  transform: rotate(-3deg);
+  top: -6px;
+  left: calc(50% - 24px);
+  z-index: 3;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes collage-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.collage-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: collage-marquee 36s linear infinite;
+}
+
+.collage-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collage-marquee-track {
+    animation: none;
+  }
 }

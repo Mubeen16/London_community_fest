@@ -36,13 +36,48 @@ Built by a solo founder using AI-assisted development. Code quality matters — 
 - Keep components under 150 lines — split if larger
 - No "use client" unless the component genuinely needs browser APIs or state
 
+## Visual Design Direction (LOCKED)
+Source of truth: `lib/config/design.ts` + `app/globals.css` @theme tokens.
+Reference implementation: `components/landing/` (poster-style demo) and `components/ui/paper-card.tsx`, `polaroid.tsx`.
+
+**Brand references**
+- Official logo: crimson `#7A0D22` (`crimson-400`) + slate `#475059` (`slate-500`) — `public/images/logo.png`
+- Marketing mood: WhatsApp festival poster — collage/scrapbook, handcrafted, not corporate SaaS
+
+**Mood & layout**
+- Torn parchment cards (`PaperCard`, `paper-torn`), polaroid photos with tape (`Polaroid`, `tape-strip`)
+- Subtle grain on dark sections (`poster-grain`)
+- Layered collage: tilted polaroids, overlapping “Fest” accent, icon strip on parchment
+
+**Colour roles (do not swap arbitrarily)**
+| Role | Token | Use |
+|------|-------|-----|
+| Dark hero/collage bg | `forest-900`, `forest-800` | Main dark sections + grain |
+| Brand / CTA / Fest accent | `crimson-400`–`crimson-500` | Logo colour, buttons, footer bar |
+| Logo secondary / muted text | `slate-500` | “Community” labels, muted on light |
+| Price / highlight | `gold-400` | £3, clocks, emphasis on dark |
+| Parchment UI | `paper-50`–`paper-200` | Cards, date blocks, skyline strip |
+| Text on dark | `cream`, `cream-muted` | Headlines, taglines on forest |
+| Text on light | `ink`, `ink-muted` | Body on paper sections |
+
+**Typography**
+- `font-sans` (Be Vietnam Pro): caps labels, dates, pricing, UI
+- `font-serif` (Instrument Serif): tagline, “Fest” accent, year on date card
+- Hero pattern: uppercase sans “LONDON COMMUNITY” + large italic serif crimson “Fest”
+
+**Section rhythm (alternate dark → paper → dark → crimson footer)**
+1. Hero — `bg-forest-900 poster-grain`
+2. Collage / content — `bg-forest-800` or `bg-paper-100`
+3. Pricing strip — `bg-forest-900`, gold price
+4. Footer — `bg-paper-100` skyline, then `bg-crimson-500` contact bar
+
 ## Styling Rules
 - Tailwind CSS 4 utility classes only — no inline styles, no CSS modules
-- Custom colours are defined in globals.css @theme inline block — use them (e.g. bg-forest-900, text-gold-400, text-crimson-400)
-- Colour palette: forest greens (dark backgrounds), gold (accent), crimson (logo/CTA), paper (light backgrounds), cream (text on dark), ink (text on light)
-- Font classes: font-serif (Instrument Serif — headings), font-sans (Be Vietnam Pro — body)
-- Dark sections use forest/crimson backgrounds with cream text
-- Light sections use paper backgrounds with ink text
+- Custom colours ONLY from globals.css @theme inline — no new hex in components
+- Read `lib/config/design.ts` before adding new sections or UI patterns
+- Font classes: font-serif (Instrument Serif), font-sans (Be Vietnam Pro)
+- Dark sections: forest/crimson backgrounds + cream/gold text
+- Light sections: paper backgrounds + ink text
 
 ## Code Quality
 - No any types
@@ -59,3 +94,5 @@ Built by a solo founder using AI-assisted development. Code quality matters — 
 - Do not add dark mode toggle — light/dark is controlled per-section
 - Do not create pages beyond app/page.tsx until explicitly asked
 - Do not use Geist fonts — project uses Instrument Serif and Be Vietnam Pro
+- Do not drift from the poster direction: no flat white SaaS heroes, no purple/blue gradients, no zinc/gray Tailwind defaults
+- Do not invent new colour tokens without updating globals.css @theme and lib/config/design.ts together

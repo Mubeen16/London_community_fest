@@ -32,4 +32,5 @@ export const eventConfig = {
   },
   registrationOpen: false,
   expectedAttendance: "4,000+",
+  foodStallCount: "10+",
 } as const;
