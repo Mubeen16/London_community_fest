@@ -60,6 +60,12 @@ export const designConfig = {
       accent: "text-crimson-400",
       grain: false,
     },
+    getInvolved: {
+      bg: "bg-forest-900",
+      text: "text-cream",
+      accent: "text-gold-400",
+      grain: true,
+    },
     sponsors: {
       bg: "bg-forest-900",
       text: "text-cream",

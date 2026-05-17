@@ -7,6 +7,8 @@ export const siteConfig = {
   url: "https://londoncommunityfest.org",
   ogImage: "/images/og-image.jpg",
   organisedBy: "South Indian Community UK",
-  email: "communityfest@gmail.com",
+  email: "mail@communityfest.uk",
   phone: ["07961 950 231", "07423 029 023"],
+  /** Set when sponsorship PDF is added to public/ */
+  sponsorshipPdfUrl: null as string | null,
 } as const;

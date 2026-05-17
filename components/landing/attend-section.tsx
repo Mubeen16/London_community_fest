@@ -1,93 +1,147 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
-import { eventConfig } from "@/lib/config/event";
+import { WaitlistForm } from "@/components/forms/waitlist-form";
 import {
-  sectionAccent,
-  sectionClasses,
-  sectionHeadingTheme,
-} from "@/lib/section-theme";
+  CalendarIcon,
+  MapPinIcon,
+  TrainIcon,
+} from "@/components/landing/attend-detail-icons";
+import { eventConfig } from "@/lib/config/event";
+import { sectionAccent, sectionClasses, sectionHeadingTheme } from "@/lib/section-theme";
 import { Container } from "@/components/ui/container";
-import { PaperCard } from "@/components/ui/paper-card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { cn } from "@/lib/utils";
+
+function AttendPanelCard({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "rounded-lg border border-cream/10 bg-black/20",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
+function AttendInfoRow({
+  icon,
+  title,
+  detail,
+}: {
+  icon: ReactNode;
+  title: string;
+  detail: string;
+}) {
+  return (
+    <AttendPanelCard className="flex items-start gap-2.5 px-3 py-2.5 sm:py-3">
+      <span className="shrink-0 text-gold-400 [&_svg]:size-4">{icon}</span>
+      <div className="min-w-0">
+        <p className="font-sans text-xs font-semibold text-cream sm:text-sm">{title}</p>
+        <p className="mt-0.5 font-sans text-[11px] leading-snug text-cream-muted sm:text-xs">
+          {detail}
+        </p>
+      </div>
+    </AttendPanelCard>
+  );
+}
+
+function formatStations(stations: readonly string[]) {
+  const names = stations.map((s) => s.replace(/\s*\([^)]*\)/, "").trim());
+  return `${names.join(" · ")} (Northern)`;
+}
 
 export function AttendSection() {
   const { venue, pricing } = eventConfig;
   const accent = sectionAccent("attend");
+  const showWaitlist = !eventConfig.registrationOpen;
+  const childPrice =
+    pricing.child.display.toLowerCase() === "free"
+      ? "FREE"
+      : pricing.child.display;
 
   return (
-    <section id="attend" className={sectionClasses("attend", "py-12 sm:py-14")}>
-      <Container size="narrow" className="relative z-10">
-        <SectionHeading
-          align="center"
-          theme={sectionHeadingTheme("attend")}
-          label="Attend"
-          title={`Join us at ${venue.name}`}
-          description={venue.accessibility}
-        />
+    <section id="attend" className={sectionClasses("attend", "py-8 sm:py-10")}>
+      <Container className="relative z-10">
+        <div className="rounded-xl border border-cream/10 bg-crimson-600/40 p-4 sm:p-5 lg:p-6">
+          <SectionHeading
+            compact
+            align="left"
+            theme={sectionHeadingTheme("attend")}
+            label="Attend"
+            title={`Join us at ${venue.name}`}
+            description={eventConfig.attendTagline}
+          />
 
-        <div className="grid gap-6 sm:grid-cols-2">
-          <PaperCard className="px-5 py-5" torn>
-            <h3
-              className={cn(
-                "font-sans text-xs font-semibold uppercase tracking-wider",
-                accent,
-              )}
-            >
-              When
-            </h3>
-            <p className="mt-2 font-sans text-lg font-semibold text-ink">
-              {eventConfig.dateDisplay}
-            </p>
-            <p className="font-sans text-sm text-ink-muted">
-              {eventConfig.timeDisplay}
-            </p>
-          </PaperCard>
+          <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <AttendPanelCard className="px-3 py-4 text-center sm:py-5">
+                  <p className={cn("font-serif text-3xl sm:text-4xl", accent)}>
+                    {pricing.adult.display}
+                  </p>
+                  <p className="mt-1 font-sans text-xs text-cream-muted">
+                    Adults ({pricing.adult.ageRange})
+                  </p>
+                </AttendPanelCard>
+                <AttendPanelCard className="px-3 py-4 text-center sm:py-5">
+                  <p className={cn("font-serif text-3xl sm:text-4xl", accent)}>
+                    {childPrice}
+                  </p>
+                  <p className="mt-1 font-sans text-xs text-cream-muted">
+                    Kids {pricing.child.ageRange}
+                  </p>
+                </AttendPanelCard>
+              </div>
 
-          <PaperCard className="px-5 py-5" torn>
-            <h3
-              className={cn(
-                "font-sans text-xs font-semibold uppercase tracking-wider",
-                accent,
-              )}
-            >
-              Where
-            </h3>
-            <p className="mt-2 font-sans text-lg font-semibold text-ink">
-              {venue.address}
-            </p>
-            <ul className="mt-2 space-y-1 font-sans text-sm text-ink-muted">
-              {venue.nearestStations.map((station) => (
-                <li key={station}>{station}</li>
-              ))}
-            </ul>
-          </PaperCard>
-        </div>
+              <div className="grid gap-2 sm:grid-cols-3 sm:gap-3">
+                <AttendInfoRow
+                  icon={<CalendarIcon />}
+                  title={eventConfig.dateDisplay}
+                  detail={eventConfig.timeDisplay}
+                />
+                <AttendInfoRow
+                  icon={<MapPinIcon />}
+                  title={venue.name}
+                  detail={venue.postcode ? `London ${venue.postcode}` : venue.address}
+                />
+                <AttendInfoRow
+                  icon={<TrainIcon />}
+                  title="Nearest tubes"
+                  detail={formatStations(venue.nearestStations)}
+                />
+              </div>
+            </div>
 
-        <PaperCard className="mt-6 px-5 py-5" torn>
-          <h3
-            className={cn(
-              "font-sans text-xs font-semibold uppercase tracking-wider",
-              accent,
+            {showWaitlist && (
+              <div className="flex flex-col border-t border-cream/10 pt-4 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="rounded bg-gold-400/15 px-1.5 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wider text-gold-400">
+                    New
+                  </span>
+                  <h3 className="font-sans text-sm font-semibold text-cream">
+                    Get notified when registration opens
+                  </h3>
+                </div>
+
+                <WaitlistForm variant="panel" />
+
+                <Link
+                  href="#faq"
+                  className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-cream/20 bg-transparent px-4 py-2 text-sm font-semibold text-cream transition-colors hover:bg-cream/5"
+                >
+                  Read the FAQ
+                </Link>
+              </div>
             )}
-          >
-            Entry
-          </h3>
-          <p className="mt-2 font-sans text-ink">
-            Adults ({pricing.adult.ageRange}):{" "}
-            <span className={cn("font-serif text-2xl", accent)}>{pricing.adult.display}</span>
-          </p>
-          <p className="mt-1 font-sans text-sm text-ink-muted">
-            Children ({pricing.child.ageRange}): {pricing.child.display}
-          </p>
-        </PaperCard>
-
-        <div className="mt-8 flex justify-center">
-          <Link
-            href="#faq"
-            className="inline-flex items-center justify-center rounded-lg border border-cream/15 bg-transparent px-6 py-3 text-sm font-semibold text-cream transition-colors duration-200 hover:bg-cream/5"
-          >
-            Read the FAQ
-          </Link>
+          </div>
         </div>
       </Container>
     </section>

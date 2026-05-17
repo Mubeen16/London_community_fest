@@ -10,7 +10,7 @@ const eventHrefs = new Set(["#about", "#whats-on", "#attend", "#faq"]);
 const eventLinks = navigationLinks.filter((link) => eventHrefs.has(link.href));
 
 const getInvolvedLinks = [
-  { label: "Apply for a stall", href: "#vendors" },
+  { label: "Apply for a stall", href: "/vendors" },
   { label: "Sponsorship", href: "#sponsors" },
   {
     label: "Volunteer",

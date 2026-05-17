@@ -1,3 +1,4 @@
+import type { SponsorAccentColor } from "@/types";
 import { cn } from "@/lib/utils";
 
 const accentStyles = {
@@ -18,10 +19,8 @@ const accentStyles = {
   },
 } as const;
 
-export function sponsorAccentClasses(accentColor: string) {
-  const style =
-    accentStyles[accentColor as keyof typeof accentStyles] ??
-    accentStyles.slate;
+export function sponsorAccentClasses(accentColor: SponsorAccentColor) {
+  const style = accentStyles[accentColor];
 
   return {
     card: cn("border-2", style.border, style.bg),

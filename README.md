@@ -69,10 +69,16 @@ Only **four** components use `"use client"`:
 
 Everything else is a React Server Component by default — minimal client JavaScript on the critical path.
 
+### 6. Backend (planned)
+
+The Django REST API (`community_fest_api`) is **not in this repo yet**. Full system design is in **[docs/BACKEND_ARCHITECTURE.md](./docs/BACKEND_ARCHITECTURE.md)** — clients, services layer, `EventScopedMixin`, event-scoped `/api/v1/` routes, and the Week 1–6 build plan through event day (12 July 2026).
+
 ## Project Structure
 
 ```
 community_fest_london/
+├── docs/
+│   └── BACKEND_ARCHITECTURE.md # Django API design (multi-tenant ready)
 ├── app/
 │   ├── layout.tsx              # Root layout, fonts, metadata
 │   ├── page.tsx                # Landing page composition

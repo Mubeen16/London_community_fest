@@ -38,7 +38,7 @@ export function SiteHeader() {
     <header className={headerBarClasses(scrolled)}>
       <Container className="flex h-14 w-full items-center justify-between gap-4">
         <Link
-          href="#hero"
+          href="/"
           className="flex shrink-0 items-center gap-2"
           onClick={closeMobile}
         >
@@ -67,7 +67,7 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
-          <Link href="#attend" className={headerCtaClasses()}>
+          <Link href="/#attend" className={headerCtaClasses()}>
             {ctaLabel}
           </Link>
         </nav>
@@ -110,7 +110,7 @@ export function SiteHeader() {
             ))}
             <li className="pt-4">
               <Link
-                href="#attend"
+                href="/#attend"
                 className={headerCtaClasses()}
                 onClick={closeMobile}
               >

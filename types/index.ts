@@ -18,10 +18,17 @@ export interface CollagePhoto {
   replaceWith: string;
 }
 
+export type SponsorAccentColor = "gold" | "slate" | "crimson";
+
 export interface SponsorTier {
+  id: string;
   name: string;
   price: string;
   description: string;
-  features: string[];
-  accentColor: string;
+  features: readonly string[];
+  accentColor: SponsorAccentColor;
+  /** Featured tiers show full detail in the 3-column grid */
+  featured: boolean;
+  /** Title Sponsor — premium card styling */
+  exclusive?: boolean;
 }

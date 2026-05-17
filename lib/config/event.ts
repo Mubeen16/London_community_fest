@@ -30,6 +30,8 @@ export const eventConfig = {
       ageRange: "under 10",
     },
   },
+  attendTagline:
+    "One ticket, one incredible day. A celebration you won't forget.",
   registrationOpen: false,
   expectedAttendance: "4,000+",
   foodStallCount: "10+",

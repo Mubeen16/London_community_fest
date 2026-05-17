@@ -1,14 +1,19 @@
 import { getFaqItems } from "@/data/faq";
 import { FaqAccordion } from "@/components/landing/faq-accordion";
-import {
-  sectionClasses,
-  sectionHeadingTheme,
-} from "@/lib/section-theme";
+import { sectionClasses, sectionHeadingTheme } from "@/lib/section-theme";
 import { Container } from "@/components/ui/container";
 import { PaperCard } from "@/components/ui/paper-card";
 import { SectionHeading } from "@/components/ui/section-heading";
 
-export function FaqSection() {
+interface FaqSectionProps {
+  title?: string;
+  description?: string;
+}
+
+export function FaqSection({
+  title = "Good to know",
+  description = "Quick answers before you visit.",
+}: FaqSectionProps) {
   const items = getFaqItems();
   const midpoint = Math.ceil(items.length / 2);
   const columns = [items.slice(0, midpoint), items.slice(midpoint)];
@@ -20,11 +25,11 @@ export function FaqSection() {
           align="center"
           theme={sectionHeadingTheme("faq")}
           label="FAQ"
-          title="Good to know"
-          description="Quick answers before you visit."
+          title={title}
+          description={description}
         />
 
-        <PaperCard torn className="overflow-hidden">
+        <PaperCard torn={false} className="overflow-hidden rounded-xl">
           <FaqAccordion columns={columns} />
         </PaperCard>
       </Container>
