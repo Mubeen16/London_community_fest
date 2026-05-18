@@ -5,7 +5,7 @@ export const faqItems: FAQItem[] = [
   {
     question: "Is the event family-friendly?",
     answer:
-      "Absolutely. London Community Fest is designed for families. We have a dedicated children's zone, the event is alcohol-free, and all food is halal. It's a safe, welcoming space for all ages.",
+      "Absolutely. London Community Fest is designed as a welcoming community experience for all ages — with a dedicated children's zone, family activities, and a safe, inclusive atmosphere. Children under 10 enter free.",
   },
   {
     question: "How much is entry?",
@@ -13,9 +13,9 @@ export const faqItems: FAQItem[] = [
       "Adults (10+) pay £3 entry. Children under 10 enter free. All proceeds go towards organising the event.",
   },
   {
-    question: "Is the food halal?",
+    question: "Who is the event for?",
     answer:
-      "Yes. All food vendors are required to be halal-certified. We verify hygiene certificates and halal compliance for every food stall.",
+      "Everyone. Born from the South Indian Community UK and built for all of London — families, professionals, young people, local businesses, and communities across the capital are welcome.",
   },
   {
     question: "How do I get there?",

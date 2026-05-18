@@ -122,26 +122,23 @@ export function AttendSection() {
 
             {showWaitlist && (
               <div className="flex flex-col border-t border-cream/10 pt-4 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
-                <div className="mb-3 flex items-center gap-2">
-                  <span className="rounded bg-gold-400/15 px-1.5 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wider text-gold-400">
-                    New
-                  </span>
-                  <h3 className="font-sans text-sm font-semibold text-cream">
-                    Get notified when registration opens
-                  </h3>
-                </div>
+                <h3 className="mb-3 font-sans text-sm font-semibold text-cream">
+                  Get notified when registration opens
+                </h3>
 
                 <WaitlistForm variant="panel" />
-
-                <Link
-                  href="#faq"
-                  className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-cream/20 bg-transparent px-4 py-2 text-sm font-semibold text-cream transition-colors hover:bg-cream/5"
-                >
-                  Read the FAQ
-                </Link>
               </div>
             )}
           </div>
+
+          <p className="mt-5 border-t border-cream/10 pt-4 text-center sm:text-left">
+            <Link
+              href="#faq"
+              className="font-sans text-sm font-semibold text-gold-400 transition-colors hover:text-gold-300"
+            >
+              Questions? Read the FAQ
+            </Link>
+          </p>
         </div>
       </Container>
     </section>

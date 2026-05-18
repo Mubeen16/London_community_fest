@@ -31,8 +31,8 @@ export const eventConfig = {
     },
   },
   attendTagline:
-    "One ticket, one incredible day. A celebration you won't forget.",
+    "One day of culture, connection, and community — an experience you'll remember.",
   registrationOpen: false,
-  expectedAttendance: "4,000+",
+  expectedAttendance: "2,000+",
   foodStallCount: "10+",
 } as const;

@@ -1,93 +1,178 @@
-import type { Activity, CollagePhoto } from "@/types";
+import type { Activity, ActivityGroup, CollagePhoto, ExperienceItem } from "@/types";
 
-export const activities: Activity[] = [
-  {
-    icon: "food",
-    title: "Asian food stalls",
-    description:
-      "Halal cuisine, street food, fresh juices from across South Asia",
-  },
-  {
-    icon: "football",
-    title: "Football tournament",
-    description:
-      "Community teams compete — sign up your team or come cheer",
-  },
-  {
-    icon: "family",
-    title: "Kids zone",
-    description:
-      "Bouncy castle, face painting, games and activities all day",
-  },
-  {
-    icon: "fashion",
-    title: "Modest fashion",
-    description: "Local designers and independent brands showcasing",
-  },
-  {
-    icon: "stage",
-    title: "Live stage",
-    description:
-      "Speeches, nasheed, spoken word, community awards",
-  },
-  {
-    icon: "games",
-    title: "Games & activities",
-    description:
-      "Raffles, competitions, interactive entertainment zones",
-  },
-];
-
-/** Bump when replacing files in public/images/collage/ so browsers pick up new images */
+/** Bump when replacing files in public/images/collage/ */
 const collageVersion = "2";
 
-export const collagePhotos: CollagePhoto[] = [
-  {
-    id: "food",
-    label: "Asian food stalls",
+const experienceImages = {
+  food: {
     src: `/images/collage/food.jpg?v=${collageVersion}`,
-    alt: "Indian thali platter with rice, curries, and side dishes",
-    replaceWith:
-      "Halal food stalls — thali, biryani, or street food from your vendors",
+    alt: "Asian cuisine and food stalls at the festival",
+  },
+  fashion: {
+    src: `/images/collage/fashion.jpg?v=${collageVersion}`,
+    alt: "Modest fashion and market stalls",
+  },
+  football: {
+    src: `/images/collage/football.jpg?v=${collageVersion}`,
+    alt: "Community football tournament on the pitch",
+  },
+  family: {
+    src: `/images/collage/family.jpg?v=${collageVersion}`,
+    alt: "Kids zone with families enjoying activities",
+  },
+  stage: {
+    src: `/images/collage/stage.jpg?v=${collageVersion}`,
+    alt: "Live stage performances and community spotlights",
+  },
+  games: {
+    src: `/images/collage/games.jpg?v=${collageVersion}`,
+    alt: "Games and interactive activities in the park",
+  },
+} as const;
+
+export type ExperienceImageKey = keyof typeof experienceImages;
+
+/** Single source of truth for photo strip + programme cards */
+export const experienceItems: readonly ExperienceItem[] = [
+  {
+    id: "kids-zone",
+    imageKey: "family",
+    icon: "family",
+    category: "Family & Kids",
+    title: "Kids zone & bouncy castle",
+    description:
+      "Dedicated family play area with games, activities, and bouncy fun for children throughout the day",
   },
   {
-    id: "fashion",
-    label: "Modest fashion",
-    src: `/images/collage/fashion.jpg?v=${collageVersion}`,
-    alt: "Colourful textiles and clothing displayed at a market fashion stall",
-    replaceWith:
-      "Modest fashion stall — abayas, hijabs, or designer pieces on display",
+    id: "food-stalls",
+    imageKey: "food",
+    icon: "food",
+    category: "Culture & Entertainment",
+    title: "Global food & cuisine stalls",
+    description:
+      "Authentic street food, traditional dishes, fresh flavours, and community favourites from around the world",
+  },
+  {
+    id: "fashion-market",
+    imageKey: "fashion",
+    icon: "fashion",
+    category: "Culture & Entertainment",
+    title: "Fashion & community market stalls",
+    description:
+      "Independent designers, small businesses, and community brands showcasing their products and creativity",
+  },
+  {
+    id: "live-stage",
+    imageKey: "stage",
+    icon: "stage",
+    category: "Culture & Entertainment",
+    title: "Live stage performances",
+    description:
+      "Cultural performances, spoken word, community spotlights, and live experiences on the main stage",
+  },
+  {
+    id: "community-talks",
+    imageKey: "stage",
+    icon: "community",
+    category: "Community & Learning",
+    title: "Community talks & ideas hub",
+    description:
+      "Meaningful discussions, local voices, and inspiring conversations on topics that matter",
+  },
+  {
+    id: "wellbeing",
+    imageKey: "games",
+    icon: "wellness",
+    category: "Community & Learning",
+    title: "Health & wellbeing pavilion",
+    description:
+      "Wellbeing guidance, health awareness, and practical support for individuals and families",
+  },
+  {
+    id: "youth-zone",
+    imageKey: "family",
+    icon: "youth",
+    category: "Community & Learning",
+    title: "Youth & future zone",
+    description:
+      "Inspiration, mentorship, and interactive activities designed to support and encourage young people",
   },
   {
     id: "football",
-    label: "Football tournament",
-    src: `/images/collage/football.jpg?v=${collageVersion}`,
-    alt: "Group of people playing football on a green grass pitch",
-    replaceWith:
-      "Community football tournament — teams on the pitch or a match in play",
-  },
-  {
-    id: "family",
-    label: "Kids zone",
-    src: `/images/collage/family.jpg?v=${collageVersion}`,
-    alt: "Children playing on an outdoor bouncy castle",
-    replaceWith:
-      "Kids zone — bouncy castle, face painting, or families in the play area",
-  },
-  {
-    id: "stage",
-    label: "Live stage",
-    src: `/images/collage/stage.jpg?v=${collageVersion}`,
-    alt: "Crowd gathered at an outdoor concert stage for a community performance",
-    replaceWith:
-      "Live stage — nasheed, speeches, awards, or community performances",
+    imageKey: "football",
+    icon: "football",
+    category: "Sports & Activities",
+    title: "Football tournament",
+    description:
+      "Community teams competing in a friendly tournament — join a team or support from the sidelines",
   },
   {
     id: "games",
-    label: "Games & activities",
-    src: `/images/collage/games.jpg?v=${collageVersion}`,
-    alt: "Crowded carnival midway with outdoor fair game booths",
-    replaceWith:
-      "Games zone — raffles, stalls, competitions, or interactive entertainment",
+    imageKey: "games",
+    icon: "games",
+    category: "Sports & Activities",
+    title: "Games & activities",
+    description:
+      "Interactive experiences, friendly competitions, and fun activities for all ages",
   },
-];
+  {
+    id: "networking",
+    imageKey: "fashion",
+    icon: "network",
+    category: "Business & Networking",
+    title: "Professional networking",
+    description:
+      "Connect with professionals, local businesses, entrepreneurs, and community organisations",
+  },
+] as const;
+
+export function getExperienceImage(key: string) {
+  return experienceImages[key as ExperienceImageKey] ?? experienceImages.stage;
+}
+
+function groupByCategory(items: readonly ExperienceItem[]): ActivityGroup[] {
+  const order = [
+    "Family & Kids",
+    "Culture & Entertainment",
+    "Community & Learning",
+    "Sports & Activities",
+    "Business & Networking",
+  ];
+  const map = new Map<string, Activity[]>();
+
+  for (const item of items) {
+    const list = map.get(item.category) ?? [];
+    list.push({
+      icon: item.icon,
+      title: item.title,
+      description: item.description,
+    });
+    map.set(item.category, list);
+  }
+
+  return order
+    .filter((category) => map.has(category))
+    .map((category) => ({
+      category,
+      activities: map.get(category) ?? [],
+    }));
+}
+
+export const activityGroups: readonly ActivityGroup[] = groupByCategory(experienceItems);
+
+export const activities: Activity[] = experienceItems.map((item) => ({
+  icon: item.icon,
+  title: item.title,
+  description: item.description,
+}));
+
+export const collagePhotos: CollagePhoto[] = experienceItems.map((item) => {
+  const image = getExperienceImage(item.imageKey);
+  return {
+    id: item.id,
+    label: item.title,
+    src: image.src,
+    alt: image.alt,
+    replaceWith: `Photo for ${item.title}`,
+  };
+});

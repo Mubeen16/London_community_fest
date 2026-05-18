@@ -5,7 +5,7 @@ export const getInvolved = {
       icon: "🏪",
       title: "Trade at the fest",
       description:
-        "Food, fashion, business or crafts — apply for a stall and reach 4,000+ visitors",
+        "Food, fashion, business or crafts — apply for a stall and reach 2,000+ visitors",
       href: "/vendors",
       ctaLabel: "Apply for a stall →",
       buttonStyle: "gold" as const,

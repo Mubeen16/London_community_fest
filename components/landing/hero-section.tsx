@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils";
 export function HeroSection() {
   const { registrationOpen } = eventConfig;
   const ticketsCtaLabel = registrationOpen ? "Get tickets" : "Plan your visit";
-  const vendorMailto = `mailto:${siteConfig.email}?subject=Vendor%20application`;
 
   return (
     <section
@@ -47,10 +46,10 @@ export function HeroSection() {
             <Link href="#attend" className={buttonClasses("primary", "sm")}>
               {ticketsCtaLabel}
             </Link>
-            <Link href="#sponsors" className={buttonClasses("secondary", "sm")}>
+            <Link href="/sponsors" className={buttonClasses("secondary", "sm")}>
               Sponsor us
             </Link>
-            <Link href={vendorMailto} className={buttonClasses("outline", "sm")}>
+            <Link href="/vendors" className={buttonClasses("outline", "sm")}>
               Apply for a stall
             </Link>
           </div>

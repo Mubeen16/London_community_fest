@@ -9,6 +9,20 @@ export interface Activity {
   description: string;
 }
 
+export interface ActivityGroup {
+  category: string;
+  activities: readonly Activity[];
+}
+
+export interface ExperienceItem {
+  id: string;
+  imageKey: string;
+  icon: string;
+  category: string;
+  title: string;
+  description: string;
+}
+
 export interface CollagePhoto {
   id: string;
   label: string;

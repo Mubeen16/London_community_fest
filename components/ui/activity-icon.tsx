@@ -107,6 +107,50 @@ export function ActivityIcon({ name, className }: ActivityIconProps) {
           <path d="M9 8V6a1 1 0 011-1h4a1 1 0 011 1v2" />
         </svg>
       );
+    case "wellness":
+      return (
+        <svg
+          className={shared}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          aria-hidden
+        >
+          <path d="M12 4v4M12 16v4M8 8l2.5 2.5M13.5 13.5L16 16M16 8l-2.5 2.5M10.5 13.5L8 16" />
+          <circle cx="12" cy="12" r="4" />
+        </svg>
+      );
+    case "network":
+      return (
+        <svg
+          className={shared}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          aria-hidden
+        >
+          <circle cx="6" cy="6" r="2.5" />
+          <circle cx="18" cy="6" r="2.5" />
+          <circle cx="12" cy="18" r="2.5" />
+          <path d="M8 7.5l3 8M16 7.5l-3 8M8.5 6h7" />
+        </svg>
+      );
+    case "youth":
+      return (
+        <svg
+          className={shared}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          aria-hidden
+        >
+          <path d="M12 3l1.5 4.5H18l-3.5 2.5 1.5 4.5L12 12l-4 2.5 1.5-4.5L6 7.5h4.5z" />
+          <path d="M8 20h8" />
+        </svg>
+      );
     default:
       return (
         <svg

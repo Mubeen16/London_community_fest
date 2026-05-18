@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { navigationLinks } from "@/lib/config/navigation";
-import { siteConfig } from "@/lib/config/site";
+import { siteConfig, siteValuesLine } from "@/lib/config/site";
 import { sectionClasses } from "@/lib/section-theme";
 import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/utils";
 
-const eventHrefs = new Set(["#about", "#whats-on", "#attend", "#faq"]);
+const eventHrefs = new Set(["/#about", "/#whats-on", "/#attend", "/#faq"]);
 
 const eventLinks = navigationLinks.filter((link) => eventHrefs.has(link.href));
 
 const getInvolvedLinks = [
   { label: "Apply for a stall", href: "/vendors" },
-  { label: "Sponsorship", href: "#sponsors" },
+  { label: "Sponsorship", href: "/sponsors" },
   {
     label: "Volunteer",
     href: `mailto:${siteConfig.email}?subject=Volunteer`,
@@ -124,7 +124,7 @@ export function SiteFooter() {
               © 2026 London Community Fest · {siteConfig.organisedBy}
             </p>
             <p className="text-xs leading-snug text-cream-faint">
-              Family-friendly · Alcohol-free · Halal-focused
+              {siteValuesLine}
             </p>
           </div>
         </div>

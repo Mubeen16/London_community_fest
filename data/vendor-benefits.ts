@@ -4,13 +4,13 @@ export const vendorBenefits = {
   items: [
     {
       icon: "👥",
-      title: "4,000+ visitors",
+      title: "2,000+ visitors",
       description: "Guaranteed footfall from families across London",
     },
     {
       icon: "🎯",
       title: "Your target audience",
-      description: "South Asian families who came to eat, shop, and celebrate",
+      description: "Families and visitors from communities across London",
     },
     {
       icon: "💷",

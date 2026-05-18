@@ -1,10 +1,11 @@
+import { siteValues } from "@/lib/config/site";
+
 export const vendorMarketing = {
   title: "Trade at the fest",
   description:
-    "Bring your brand to Kennington Park. We are looking for halal food, modest fashion, arts, and community stalls for a busy summer day with families from across London.",
+    "Bring your brand to Kennington Park. We welcome food, fashion, market, arts, and community stalls for a vibrant day with families and visitors from across London.",
   highlights: [
-    "Family-friendly, alcohol-free event",
-    "Halal food vendors welcome",
+    ...siteValues,
     "High footfall in the main event area",
     "Applications reviewed within 5 working days",
   ],

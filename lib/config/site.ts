@@ -1,9 +1,18 @@
+export const siteValues = [
+  "Community-led",
+  "All communities welcome",
+  "Family-friendly",
+  "Free for kids under 10",
+] as const;
+
+export const siteValuesLine = siteValues.join(" · ");
+
 export const siteConfig = {
   name: "London Community Fest",
   shortName: "LCF",
   description:
-    "A celebration of food, fun, and community. Bringing London's diverse families together.",
-  tagline: "Stronger together, better community",
+    "A family-focused community experience that brings together culture, connection, entertainment, wellbeing, learning, and meaningful conversations in one vibrant event.",
+  tagline: "More than a festival",
   url: "https://londoncommunityfest.org",
   ogImage: "/images/og-image.jpg",
   organisedBy: "South Indian Community UK",

@@ -34,7 +34,7 @@ export function VendorsSection() {
             theme={sectionHeadingTheme("vendors")}
             label="Vendors"
             title={vendorMarketing.title}
-            description="Halal food, modest fashion & community stalls — spaces limited."
+            description="Food, fashion, market & community stalls — spaces limited."
           />
         </div>
 
