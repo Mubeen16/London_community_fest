@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 interface MobileNavIconProps {
-  name: "about" | "programme" | "attend" | "vendors" | "faq";
+  name: "about" | "programme" | "attend" | "involved" | "faq";
   className?: string;
 }
 
@@ -41,12 +41,13 @@ export function MobileNavIcon({ name, className }: MobileNavIconProps) {
           <path d="M9 14h6" />
         </svg>
       );
-    case "vendors":
+    case "involved":
       return (
         <svg className={shared} {...iconProps}>
-          <path d="M4 10 6 5h12l2 5" />
-          <path d="M5 10v9h14v-9" />
-          <path d="M9 14v5M15 14v5" />
+          <path d="M12 3v4" />
+          <path d="M8 7h8l1 8H7l1-8z" />
+          <path d="M9 15v3M15 15v3" />
+          <path d="M6 18h12" />
         </svg>
       );
     case "faq":

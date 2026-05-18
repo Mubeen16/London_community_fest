@@ -9,6 +9,7 @@ const mobileNavItems = [
   { label: "About", href: "/#about", icon: "about" as const },
   { label: "Programme", href: "/#whats-on", icon: "programme" as const },
   { label: "Attend", href: "/#attend", icon: "attend" as const },
+  { label: "Get involved", href: "/#get-involved", icon: "involved" as const },
   { label: "FAQ", href: "/#faq", icon: "faq" as const },
 ];
 
@@ -21,7 +22,7 @@ export function MobileBottomNav() {
       aria-label="Mobile navigation"
     >
       <div className="pb-[env(safe-area-inset-bottom,0px)]">
-        <ul className="grid grid-cols-4">
+        <ul className="grid grid-cols-5">
           {mobileNavItems.map((item) => {
             const isPageLink = !item.href.includes("#");
             const isActive = isPageLink && pathname === item.href;
