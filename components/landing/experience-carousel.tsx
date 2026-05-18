@@ -6,9 +6,9 @@ import { experienceItems, getExperienceImage } from "@/data/activities";
 import { PaperCard } from "@/components/ui/paper-card";
 import { cn } from "@/lib/utils";
 
-const AUTO_INTERVAL_MS = 4500;
-const RESUME_DELAY_MS = 5000;
-const PROGRAMMATIC_SCROLL_MS = 600;
+const AUTO_INTERVAL_MS = 3200;
+const RESUME_DELAY_MS = 4000;
+const SCROLL_DURATION_MS = 480;
 
 /** Alternating scrapbook tilt — matches collage polaroid strip */
 const CARD_ROTATES = ["-rotate-2", "rotate-2", "-rotate-1"] as const;
@@ -55,18 +55,22 @@ export function ExperienceCarousel() {
   const scrollRef = useRef<HTMLUListElement>(null);
   const indexRef = useRef(0);
   const pausedRef = useRef(false);
+  const inViewRef = useRef(false);
   const isProgrammaticRef = useRef(false);
+  const scrollAnimationRef = useRef<number | null>(null);
   const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [reduceMotion, setReduceMotion] = useState(true);
   const [autoEnabled, setAutoEnabled] = useState(false);
+
+  const cancelScrollAnimation = useCallback(() => {
+    if (scrollAnimationRef.current !== null) {
+      cancelAnimationFrame(scrollAnimationRef.current);
+      scrollAnimationRef.current = null;
+    }
+  }, []);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => {
-      const reduced = media.matches;
-      setReduceMotion(reduced);
-      setAutoEnabled(!reduced);
-    };
+    const update = () => setAutoEnabled(!media.matches);
     update();
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
@@ -112,21 +116,61 @@ export function ExperienceCarousel() {
     indexRef.current = closest;
   }, []);
 
-  const scrollToIndex = useCallback((index: number) => {
-    const el = scrollRef.current;
-    if (!el) return;
-
+  const getScrollLeftForIndex = useCallback((el: HTMLUListElement, index: number) => {
     const child = el.children[index] as HTMLElement | undefined;
-    if (!child) return;
-
-    isProgrammaticRef.current = true;
-    child.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-    indexRef.current = index;
-
-    window.setTimeout(() => {
-      isProgrammaticRef.current = false;
-    }, PROGRAMMATIC_SCROLL_MS);
+    if (!child) return null;
+    return Math.max(0, child.offsetLeft - (el.clientWidth - child.offsetWidth) / 2);
   }, []);
+
+  const animateScrollTo = useCallback(
+    (targetLeft: number) => {
+      const el = scrollRef.current;
+      if (!el) return;
+
+      cancelScrollAnimation();
+      isProgrammaticRef.current = true;
+
+      const start = el.scrollLeft;
+      const distance = targetLeft - start;
+      if (Math.abs(distance) < 1) {
+        isProgrammaticRef.current = false;
+        return;
+      }
+
+      const startTime = performance.now();
+
+      const step = (now: number) => {
+        const progress = Math.min((now - startTime) / SCROLL_DURATION_MS, 1);
+        const eased = 1 - (1 - progress) ** 3;
+        el.scrollLeft = start + distance * eased;
+
+        if (progress < 1) {
+          scrollAnimationRef.current = requestAnimationFrame(step);
+          return;
+        }
+
+        scrollAnimationRef.current = null;
+        isProgrammaticRef.current = false;
+      };
+
+      scrollAnimationRef.current = requestAnimationFrame(step);
+    },
+    [cancelScrollAnimation],
+  );
+
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      const el = scrollRef.current;
+      if (!el) return;
+
+      const targetLeft = getScrollLeftForIndex(el, index);
+      if (targetLeft === null) return;
+
+      indexRef.current = index;
+      animateScrollTo(targetLeft);
+    },
+    [animateScrollTo, getScrollLeftForIndex],
+  );
 
   const advance = useCallback(() => {
     const next = (indexRef.current + 1) % experienceItems.length;
@@ -134,10 +178,24 @@ export function ExperienceCarousel() {
   }, [scrollToIndex]);
 
   useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inViewRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.25 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (!autoEnabled) return;
 
     const intervalId = window.setInterval(() => {
-      if (pausedRef.current) return;
+      if (pausedRef.current || !inViewRef.current) return;
       advance();
     }, AUTO_INTERVAL_MS);
 
@@ -146,8 +204,30 @@ export function ExperienceCarousel() {
 
   useEffect(() => clearResumeTimer, [clearResumeTimer]);
 
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const onScrollEnd = () => {
+      if (!isProgrammaticRef.current) {
+        syncIndexFromScroll();
+      }
+    };
+
+    el.addEventListener("scrollend", onScrollEnd);
+    return () => {
+      el.removeEventListener("scrollend", onScrollEnd);
+      cancelScrollAnimation();
+    };
+  }, [cancelScrollAnimation, syncIndexFromScroll]);
+
   function handleUserInteraction() {
-    if (!autoEnabled) return;
+    cancelScrollAnimation();
+    isProgrammaticRef.current = false;
+    if (!autoEnabled) {
+      syncIndexFromScroll();
+      return;
+    }
     pauseAuto();
     syncIndexFromScroll();
   }
@@ -185,7 +265,7 @@ export function ExperienceCarousel() {
 
         <ul
           ref={scrollRef}
-          className="scrollbar-hide flex gap-4 overflow-x-auto py-2 pb-3 snap-x snap-mandatory sm:gap-5"
+          className="scrollbar-hide flex touch-pan-x gap-4 overflow-x-auto overscroll-x-contain scroll-px-3 py-2 pb-3 snap-x snap-mandatory sm:gap-5 sm:scroll-px-0"
           aria-label="Festival programme highlights"
           onScroll={handleScroll}
           onTouchStart={handleUserInteraction}
@@ -194,7 +274,7 @@ export function ExperienceCarousel() {
           {experienceItems.map((item, index) => (
             <li
               key={item.id}
-              className="w-[min(80vw,240px)] shrink-0 snap-center list-none sm:w-[228px]"
+              className="w-[82vw] max-w-[240px] shrink-0 snap-center snap-always list-none sm:w-[228px]"
             >
               <ExperienceCard item={item} index={index} />
             </li>

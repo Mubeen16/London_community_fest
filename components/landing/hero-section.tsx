@@ -1,17 +1,11 @@
-import Link from "next/link";
 import { HeroCountdown } from "@/components/landing/hero-countdown";
 import { HeroEventBlock } from "@/components/landing/hero-event-block";
-import { buttonClasses } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { eventConfig } from "@/lib/config/event";
 import { siteConfig } from "@/lib/config/site";
 import { sectionClasses } from "@/lib/section-theme";
 import { cn } from "@/lib/utils";
 
 export function HeroSection() {
-  const { registrationOpen } = eventConfig;
-  const ticketsCtaLabel = registrationOpen ? "Get tickets" : "Plan your visit";
-
   return (
     <section
       id="hero"
@@ -41,18 +35,6 @@ export function HeroSection() {
           <HeroEventBlock />
 
           <HeroCountdown className="mt-6" />
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="#attend" className={buttonClasses("primary", "sm")}>
-              {ticketsCtaLabel}
-            </Link>
-            <Link href="/sponsors" className={buttonClasses("secondary", "sm")}>
-              Sponsor us
-            </Link>
-            <Link href="/vendors" className={buttonClasses("outline", "sm")}>
-              Apply for a stall
-            </Link>
-          </div>
         </div>
       </Container>
     </section>
