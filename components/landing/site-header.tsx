@@ -17,6 +17,9 @@ import {
 import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/utils";
 
+const eventNavLinks = navigationLinks.filter((link) => link.href.includes("#"));
+const involvedNavLinks = navigationLinks.filter((link) => !link.href.includes("#"));
+
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -31,6 +34,15 @@ export function SiteHeader() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileOpen]);
 
   const closeMobile = () => setMobileOpen(false);
 
@@ -74,57 +86,87 @@ export function SiteHeader() {
 
         <button
           type="button"
-          className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-1 rounded-md p-2 lg:hidden"
+          className="relative flex min-h-11 min-w-11 items-center justify-center rounded-md border border-cream/10 bg-cream/5 lg:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileOpen((open) => !open)}
         >
-          <span className="flex flex-col items-center gap-1">
-            <span className="flex flex-col gap-1">
-              <span className={cn("block h-0.5 w-5", headerBrandClasses("cream"))} />
-              <span className={cn("block h-0.5 w-5", headerBrandClasses("cream"))} />
-              <span className={cn("block h-0.5 w-5", headerBrandClasses("cream"))} />
-            </span>
-            <span className="font-sans text-[10px] font-semibold uppercase tracking-wide text-cream-muted">
-              Menu
-            </span>
-          </span>
+          <span
+            className={cn(
+              "absolute h-0.5 w-5 bg-cream transition-all duration-200",
+              mobileOpen ? "rotate-45" : "-translate-y-1.5",
+            )}
+          />
+          <span
+            className={cn(
+              "absolute h-0.5 w-5 bg-cream transition-opacity duration-200",
+              mobileOpen ? "opacity-0" : "opacity-100",
+            )}
+          />
+          <span
+            className={cn(
+              "absolute h-0.5 w-5 bg-cream transition-all duration-200",
+              mobileOpen ? "-rotate-45" : "translate-y-1.5",
+            )}
+          />
         </button>
       </Container>
 
       {mobileOpen ? (
         <nav
           id="mobile-nav"
-          className={headerMobilePanelClasses()}
-          aria-label="Mobile"
+          className={cn(headerMobilePanelClasses(), "shadow-lg shadow-forest-950/50")}
+          aria-label="Mobile menu"
         >
-          <Container className="py-6">
-          <ul className="flex flex-col gap-1">
-            {navigationLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={cn(
-                    "block min-h-11 py-3 text-base transition-colors",
-                    headerMobileLinkClasses(),
-                  )}
-                  onClick={closeMobile}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-            <li className="pt-4">
-              <Link
-                href="/#attend"
-                className={headerCtaClasses()}
-                onClick={closeMobile}
-              >
-                {ctaLabel}
-              </Link>
-            </li>
-          </ul>
+          <Container className="py-5">
+            <p className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
+              Event
+            </p>
+            <ul className="mt-2 flex flex-col">
+              {eventNavLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "block rounded-md px-2 py-3 font-sans text-base font-medium transition-colors",
+                      headerMobileLinkClasses(),
+                    )}
+                    onClick={closeMobile}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <p className="mt-5 font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
+              Get involved
+            </p>
+            <ul className="mt-2 flex flex-col">
+              {involvedNavLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "block rounded-md px-2 py-3 font-sans text-base font-medium transition-colors",
+                      headerMobileLinkClasses(),
+                    )}
+                    onClick={closeMobile}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <Link
+              href="/#attend"
+              className={cn(headerCtaClasses(), "mt-6 w-full")}
+              onClick={closeMobile}
+            >
+              {ctaLabel}
+            </Link>
           </Container>
         </nav>
       ) : null}

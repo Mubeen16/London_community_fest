@@ -2,44 +2,56 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { MobileNavIcon } from "@/components/ui/mobile-nav-icon";
 import { cn } from "@/lib/utils";
 
 const mobileNavItems = [
-  { label: "About", href: "/#about" },
-  { label: "What's on", href: "/#whats-on" },
-  { label: "Attend", href: "/#attend" },
-  { label: "Vendors", href: "/vendors" },
-  { label: "FAQ", href: "/#faq" },
-] as const;
+  { label: "About", href: "/#about", icon: "about" as const },
+  { label: "Programme", href: "/#whats-on", icon: "programme" as const },
+  { label: "Attend", href: "/#attend", icon: "attend" as const },
+  { label: "Vendors", href: "/vendors", icon: "vendors" as const },
+  { label: "FAQ", href: "/#faq", icon: "faq" as const },
+];
 
 export function MobileBottomNav() {
   const pathname = usePathname();
 
   return (
     <nav
-      className="fixed right-0 bottom-0 left-0 z-40 border-t border-cream/10 bg-forest-950/95 pb-[env(safe-area-inset-bottom,0px)] backdrop-blur-md lg:hidden"
+      className="fixed right-0 bottom-0 left-0 z-40 border-t border-cream/10 bg-forest-950 shadow-[0_-8px_32px_rgba(10,18,10,0.45)] lg:hidden"
       aria-label="Mobile navigation"
     >
-      <ul className="grid grid-cols-5">
-        {mobileNavItems.map((item) => {
-          const isPageLink = item.href.startsWith("/") && !item.href.includes("#");
-          const isActive = isPageLink && pathname === item.href;
+      <div className="pb-[env(safe-area-inset-bottom,0px)]">
+        <ul className="grid grid-cols-5">
+          {mobileNavItems.map((item) => {
+            const isPageLink = !item.href.includes("#");
+            const isActive = isPageLink && pathname === item.href;
 
-          return (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className={cn(
-                  "flex min-h-[3.25rem] flex-col items-center justify-center px-1 py-2 text-center font-sans text-[10px] font-semibold leading-tight transition-colors sm:text-xs",
-                  isActive ? "text-gold-400" : "text-cream-muted hover:text-cream",
-                )}
-              >
-                {item.label}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={cn(
+                    "relative flex min-h-14 flex-col items-center justify-center gap-1 px-1 py-2 transition-colors",
+                    isActive ? "text-gold-400" : "text-cream-muted hover:text-cream",
+                  )}
+                >
+                  {isActive ? (
+                    <span
+                      className="absolute inset-x-3 top-0 h-0.5 rounded-full bg-gold-400"
+                      aria-hidden
+                    />
+                  ) : null}
+                  <MobileNavIcon name={item.icon} />
+                  <span className="font-sans text-[10px] font-semibold uppercase tracking-wide sm:text-[11px]">
+                    {item.label}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </nav>
   );
 }

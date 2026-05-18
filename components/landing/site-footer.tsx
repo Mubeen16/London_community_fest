@@ -63,7 +63,7 @@ export function SiteFooter() {
     <footer
       className={cn(
         sectionClasses("footer"),
-        "py-6 pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] sm:py-7 lg:pb-7",
+        "py-6 pb-[calc(5rem+env(safe-area-inset-bottom,0px))] sm:py-7 lg:pb-7",
       )}
     >
       <Container className="relative z-10">
