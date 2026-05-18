@@ -24,7 +24,7 @@ function ExperienceCard({ item, index }: ExperienceCardProps) {
   return (
     <figure
       className={cn(
-        "relative flex h-full w-full flex-col bg-paper-50 p-1.5 shadow-xl shadow-forest-950/40",
+        "relative flex h-full w-full flex-col overflow-hidden bg-paper-50 p-1.5 shadow-xl shadow-forest-950/40",
         "transition-shadow hover:shadow-2xl",
         rotate,
       )}
@@ -259,7 +259,7 @@ export function ExperienceCarousel() {
       </p>
 
       <div
-        className="relative isolate mt-6 -mx-6 sm:-mx-8"
+        className="relative isolate mt-6 -mx-4 sm:-mx-6 md:-mx-8"
         onMouseEnter={() => {
           if (autoEnabled) pausedRef.current = true;
         }}
@@ -280,7 +280,7 @@ export function ExperienceCarousel() {
 
         <ul
           ref={scrollRef}
-          className="scrollbar-hide flex touch-pan-x gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain px-6 py-2 pb-3 snap-x snap-mandatory sm:gap-5 sm:px-8"
+          className="scrollbar-hide flex touch-pan-x gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain px-4 py-2 pb-3 snap-x snap-mandatory sm:gap-5 sm:px-6 md:px-8"
           aria-label="Festival programme highlights"
           onScroll={handleScroll}
           onTouchStart={handleUserInteraction}

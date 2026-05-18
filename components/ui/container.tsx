@@ -14,7 +14,7 @@ export function containerClasses(
   size: keyof typeof sizeClasses = "default",
   className?: string,
 ) {
-  return cn("mx-auto w-full px-6 sm:px-8", sizeClasses[size], className);
+  return cn("mx-auto w-full px-4 sm:px-6 md:px-8", sizeClasses[size], className);
 }
 
 export function Container({

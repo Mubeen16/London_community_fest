@@ -81,7 +81,12 @@ export function VendorTariffGrid({
             {vendorTariffs.title}
           </p>
         )}
-        <ul className={cn("grid grid-cols-3 gap-2", !hideTitle && "mt-3")}>
+        <ul
+          className={cn(
+            "grid grid-cols-1 gap-2 min-[420px]:grid-cols-3",
+            !hideTitle && "mt-3",
+          )}
+        >
           {vendorTariffs.tiers.map((tier) => {
             const accent = tierAccent[tier.accent as keyof typeof tierAccent];
 
@@ -104,7 +109,7 @@ export function VendorTariffGrid({
             );
           })}
         </ul>
-        <p className="mt-2 font-sans text-[11px] leading-snug text-ink-muted">
+        <p className="mt-2 break-words font-sans text-[11px] leading-snug text-ink-muted">
           {vendorTariffs.inclusions.join(" · ")}
         </p>
       </div>

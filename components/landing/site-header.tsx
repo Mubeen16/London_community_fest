@@ -74,7 +74,7 @@ export function SiteHeader() {
 
         <button
           type="button"
-          className="flex flex-col gap-1.5 p-2 lg:hidden"
+          className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-1.5 rounded-md p-2 lg:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -99,7 +99,7 @@ export function SiteHeader() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "block py-2 text-base transition-colors",
+                    "block min-h-11 py-3 text-base transition-colors",
                     headerMobileLinkClasses(),
                   )}
                   onClick={closeMobile}

@@ -79,7 +79,7 @@ export function WaitlistForm({ variant = "default" }: WaitlistFormProps) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-stretch">
+        <div className="flex flex-col gap-2 md:flex-row md:items-stretch">
           <input
             type="email"
             required
@@ -98,7 +98,7 @@ export function WaitlistForm({ variant = "default" }: WaitlistFormProps) {
             type="submit"
             disabled={status === "loading" || !email.trim() || isComplete}
             className={cn(
-              "rounded-xl px-6 py-3 text-sm font-semibold whitespace-nowrap transition-colors disabled:opacity-50 sm:shrink-0",
+              "w-full rounded-xl px-6 py-3 text-sm font-semibold transition-colors disabled:opacity-50 md:w-auto md:shrink-0 md:whitespace-nowrap",
               isPanel
                 ? "border border-cream/20 bg-cream text-forest-900 hover:bg-paper-50"
                 : "bg-gold-400 text-forest-900 hover:bg-gold-300",

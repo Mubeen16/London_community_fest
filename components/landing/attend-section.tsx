@@ -101,7 +101,7 @@ export function AttendSection() {
                 </AttendPanelCard>
               </div>
 
-              <div className="grid gap-2 sm:grid-cols-3 sm:gap-3">
+              <div className="grid grid-cols-1 gap-2 sm:gap-3 lg:grid-cols-3">
                 <AttendInfoRow
                   icon={<CalendarIcon />}
                   title={eventConfig.dateDisplay}

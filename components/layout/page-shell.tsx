@@ -10,7 +10,9 @@ export function PageShell({ children }: PageShellProps) {
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen pt-14">{children}</main>
+      <main className="min-h-screen pt-[calc(3.5rem+env(safe-area-inset-top,0px))]">
+        {children}
+      </main>
       <SiteFooter />
     </>
   );

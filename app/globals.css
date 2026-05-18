@@ -60,7 +60,13 @@
   --font-serif: var(--font-instrument-serif);
 }
 
+html {
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
+  overflow-x: clip;
   background-color: var(--color-paper-100);
   color: var(--color-ink);
   font-family: var(--font-sans), system-ui, sans-serif;

@@ -24,7 +24,7 @@ export function headerBarClasses(scrolled: boolean) {
   const header = designConfig.sections.header;
 
   return cn(
-    "fixed top-0 right-0 left-0 z-50 border-b transition-colors duration-200",
+    "fixed top-0 right-0 left-0 z-50 border-b pt-[env(safe-area-inset-top,0px)] transition-colors duration-200",
     scrolled ? header.bar.scrolled : header.bar.default,
   );
 }
@@ -47,7 +47,7 @@ export function headerMobileLinkClasses() {
 
 export function headerCtaClasses(className?: string) {
   return cn(
-    "inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition-colors duration-200",
+    "inline-flex min-h-11 items-center justify-center rounded-md px-4 py-2.5 text-sm font-semibold transition-colors duration-200",
     designConfig.sections.header.cta,
     className,
   );

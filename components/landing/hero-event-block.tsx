@@ -30,7 +30,7 @@ function HeroDetailBox({
   return (
     <PaperCard
       className={cn(
-        "relative flex min-h-[8.5rem] flex-col justify-center gap-2 px-4 py-4",
+        "relative flex min-h-[7rem] flex-col justify-center gap-2 px-4 py-4 sm:min-h-[8.5rem]",
         className,
       )}
       torn
@@ -48,7 +48,7 @@ function HeroEntryBox({ className }: { className?: string }) {
   return (
     <PaperCard
       className={cn(
-        "relative flex min-h-[8.5rem] flex-col justify-center gap-2 px-4 py-4",
+        "relative flex min-h-[7rem] flex-col justify-center gap-2 px-4 py-4 sm:min-h-[8.5rem]",
         className,
       )}
       torn
@@ -73,12 +73,12 @@ export function HeroEventBlock({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "mt-6 grid w-full grid-cols-2 gap-3 md:grid-cols-4 md:gap-4",
+        "mt-6 grid w-full grid-cols-1 gap-3 min-[420px]:grid-cols-2 md:grid-cols-4 md:gap-4",
         className,
       )}
     >
       <PaperCard
-        className="relative col-span-2 flex min-h-[8.5rem] flex-col justify-center px-5 py-4 md:col-span-1"
+        className="relative flex min-h-[7rem] flex-col justify-center px-5 py-4 min-[420px]:col-span-2 sm:min-h-[8.5rem] md:col-span-1"
         torn
       >
         <span className="tape-strip" aria-hidden />
@@ -95,9 +95,9 @@ export function HeroEventBlock({ className }: { className?: string }) {
 
       <HeroDetailBox label="Location" value={locationLine} />
 
-      <HeroEntryBox className="col-span-2 md:col-span-1" />
+      <HeroEntryBox className="min-[420px]:col-span-2 md:col-span-1" />
 
-      <p className="col-span-2 flex flex-wrap gap-x-8 gap-y-1 font-sans text-sm text-cream-muted md:col-span-4">
+      <p className="flex flex-wrap gap-x-8 gap-y-1 font-sans text-sm text-cream-muted min-[420px]:col-span-2 md:col-span-4">
         <span>
           <span className="font-semibold text-gold-400">
             {eventConfig.expectedAttendance}

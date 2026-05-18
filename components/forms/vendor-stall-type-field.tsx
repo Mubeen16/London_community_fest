@@ -23,7 +23,7 @@ export function VendorStallTypeField({ value, onChange, disabled }: VendorStallT
         aria-hidden
         onChange={() => {}}
       />
-      <div className="mt-2 flex flex-wrap gap-1.5">
+      <div className="mt-2 flex flex-wrap gap-2">
         {vendorStallTypes.map((type) => {
           const selected = value === type.value;
 
@@ -35,7 +35,7 @@ export function VendorStallTypeField({ value, onChange, disabled }: VendorStallT
               aria-pressed={selected}
               onClick={() => onChange(type.value)}
               className={cn(
-                "rounded-md border px-2.5 py-1.5 font-sans text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60",
+                "min-h-11 rounded-md border px-3 py-2.5 font-sans text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60",
                 selected
                   ? "border-crimson-400 bg-crimson-400 text-cream shadow-sm"
                   : "border-paper-300/90 bg-paper-50 text-ink hover:border-crimson-400/50 hover:bg-white",

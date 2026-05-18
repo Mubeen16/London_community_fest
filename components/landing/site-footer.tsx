@@ -63,7 +63,7 @@ export function SiteFooter() {
     <footer className={cn(sectionClasses("footer"), "py-6 sm:py-7")}>
       <Container className="relative z-10">
         <div className="mx-auto w-full max-w-5xl">
-          <div className="grid grid-cols-2 gap-x-6 gap-y-6 sm:gap-x-8 md:grid-cols-12 md:items-start">
+          <div className="grid grid-cols-1 gap-x-6 gap-y-6 min-[400px]:grid-cols-2 sm:gap-x-8 md:grid-cols-12 md:items-start">
             <div className="col-span-2 md:col-span-5">
               <p className="font-serif text-base leading-tight sm:text-lg">
                 <span className="text-crimson-400">London</span>{" "}
@@ -123,7 +123,7 @@ export function SiteFooter() {
             <p className="text-xs leading-snug text-cream-faint">
               © 2026 London Community Fest · {siteConfig.organisedBy}
             </p>
-            <p className="text-xs leading-snug text-cream-faint">
+            <p className="break-words text-xs leading-snug text-cream-faint">
               {siteValuesLine}
             </p>
           </div>

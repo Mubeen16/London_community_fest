@@ -26,7 +26,7 @@ function FaqAccordionItem({
     <li>
       <details open={isOpen}>
         <summary
-          className="cursor-pointer list-none px-4 py-2.5 font-sans text-sm font-semibold text-ink marker:content-none sm:px-5 sm:py-3 [&::-webkit-details-marker]:hidden"
+          className="flex min-h-11 cursor-pointer list-none items-center px-4 py-3 font-sans text-sm font-semibold text-ink marker:content-none sm:px-5 [&::-webkit-details-marker]:hidden"
           onClick={(event) => {
             event.preventDefault();
             onToggle();

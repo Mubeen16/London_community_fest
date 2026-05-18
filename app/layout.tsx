@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Be_Vietnam_Pro, Instrument_Serif } from "next/font/google";
 import { siteConfig } from "@/lib/config/site";
 import "./globals.css";
@@ -17,6 +17,12 @@ const beVietnamPro = Be_Vietnam_Pro({
   display: "swap",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: {
