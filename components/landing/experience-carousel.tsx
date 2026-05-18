@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { experienceItems, getExperienceImage } from "@/data/activities";
-import { PaperCard } from "@/components/ui/paper-card";
 import { cn } from "@/lib/utils";
 
 const AUTO_INTERVAL_MS = 3200;
@@ -46,7 +45,7 @@ function ExperienceCard({ item, index }: ExperienceCardProps) {
         <p className="font-sans text-xs leading-snug text-ink-muted">{item.description}</p>
       </figcaption>
 
-      <div className="tape-strip" aria-hidden />
+      <span className="board-pin" aria-hidden />
     </figure>
   );
 }
@@ -69,11 +68,21 @@ export function ExperienceCarousel() {
   }, []);
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setAutoEnabled(!media.matches);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobileViewport = window.matchMedia("(max-width: 768px)");
+
+    const update = () => {
+      // Auto-advance on mobile can scroll the whole page (iOS scroll chaining); manual swipe only.
+      setAutoEnabled(!reducedMotion.matches && !mobileViewport.matches);
+    };
+
     update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
+    reducedMotion.addEventListener("change", update);
+    mobileViewport.addEventListener("change", update);
+    return () => {
+      reducedMotion.removeEventListener("change", update);
+      mobileViewport.removeEventListener("change", update);
+    };
   }, []);
 
   const clearResumeTimer = useCallback(() => {
@@ -138,11 +147,17 @@ export function ExperienceCarousel() {
       }
 
       const startTime = performance.now();
+      const lockedScrollY = window.scrollY;
 
       const step = (now: number) => {
         const progress = Math.min((now - startTime) / SCROLL_DURATION_MS, 1);
         const eased = 1 - (1 - progress) ** 3;
         el.scrollLeft = start + distance * eased;
+
+        // Prevent iOS/Safari from chaining horizontal scroll into page scroll.
+        if (window.scrollY !== lockedScrollY) {
+          window.scrollTo(0, lockedScrollY);
+        }
 
         if (progress < 1) {
           scrollAnimationRef.current = requestAnimationFrame(step);
@@ -183,9 +198,9 @@ export function ExperienceCarousel() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        inViewRef.current = entry.isIntersecting;
+        inViewRef.current = entry.isIntersecting && entry.intersectionRatio >= 0.4;
       },
-      { threshold: 0.25 },
+      { threshold: [0, 0.4, 0.6], rootMargin: "-15% 0px -15% 0px" },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -238,13 +253,13 @@ export function ExperienceCarousel() {
   }
 
   return (
-    <PaperCard className="mt-8 px-4 py-5 sm:px-6" torn>
-      <p className="text-center font-sans text-xs font-semibold uppercase tracking-[0.3em] text-ink-muted">
+    <div className="mt-8">
+      <p className="text-center font-sans text-xs font-semibold uppercase tracking-[0.3em] text-gold-400">
         Programme
       </p>
 
       <div
-        className="relative mt-6 -mx-1"
+        className="relative isolate mt-6 -mx-6 sm:-mx-8"
         onMouseEnter={() => {
           if (autoEnabled) pausedRef.current = true;
         }}
@@ -255,17 +270,17 @@ export function ExperienceCarousel() {
         }}
       >
         <div
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-paper-100 to-transparent sm:w-12"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-forest-800 to-transparent sm:w-16"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-paper-100 to-transparent sm:w-12"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-forest-800 to-transparent sm:w-16"
           aria-hidden
         />
 
         <ul
           ref={scrollRef}
-          className="scrollbar-hide flex touch-pan-x gap-4 overflow-x-auto overscroll-x-contain scroll-px-3 py-2 pb-3 snap-x snap-mandatory sm:gap-5 sm:scroll-px-0"
+          className="scrollbar-hide flex touch-pan-x gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain px-6 py-2 pb-3 snap-x snap-mandatory sm:gap-5 sm:px-8"
           aria-label="Festival programme highlights"
           onScroll={handleScroll}
           onTouchStart={handleUserInteraction}
@@ -282,11 +297,10 @@ export function ExperienceCarousel() {
         </ul>
       </div>
 
-      <p className="mt-4 text-center font-sans text-xs text-ink-muted">
-        {autoEnabled
-          ? "Swipe to explore · moves automatically when idle"
-          : "Swipe to explore the programme"}
+      <p className="mt-4 text-center font-sans text-xs text-cream-muted">
+        Swipe to explore the programme
+        {autoEnabled ? " · auto-advances on desktop when in view" : ""}
       </p>
-    </PaperCard>
+    </div>
   );
 }
