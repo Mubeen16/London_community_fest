@@ -74,15 +74,22 @@ export function SiteHeader() {
 
         <button
           type="button"
-          className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-1.5 rounded-md p-2 lg:hidden"
+          className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-1 rounded-md p-2 lg:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileOpen((open) => !open)}
         >
-          <span className={cn("block h-0.5 w-5", headerBrandClasses("cream"))} />
-          <span className={cn("block h-0.5 w-5", headerBrandClasses("cream"))} />
-          <span className={cn("block h-0.5 w-5", headerBrandClasses("cream"))} />
+          <span className="flex flex-col items-center gap-1">
+            <span className="flex flex-col gap-1">
+              <span className={cn("block h-0.5 w-5", headerBrandClasses("cream"))} />
+              <span className={cn("block h-0.5 w-5", headerBrandClasses("cream"))} />
+              <span className={cn("block h-0.5 w-5", headerBrandClasses("cream"))} />
+            </span>
+            <span className="font-sans text-[10px] font-semibold uppercase tracking-wide text-cream-muted">
+              Menu
+            </span>
+          </span>
         </button>
       </Container>
 

@@ -60,7 +60,12 @@ function FooterLinkList({
 
 export function SiteFooter() {
   return (
-    <footer className={cn(sectionClasses("footer"), "py-6 sm:py-7")}>
+    <footer
+      className={cn(
+        sectionClasses("footer"),
+        "py-6 pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] sm:py-7 lg:pb-7",
+      )}
+    >
       <Container className="relative z-10">
         <div className="mx-auto w-full max-w-5xl">
           <div className="grid grid-cols-1 gap-x-6 gap-y-6 min-[400px]:grid-cols-2 sm:gap-x-8 md:grid-cols-12 md:items-start">
