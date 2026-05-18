@@ -9,7 +9,7 @@ const mobileNavItems = [
   { label: "About", href: "/#about", icon: "about" as const },
   { label: "Programme", href: "/#whats-on", icon: "programme" as const },
   { label: "Attend", href: "/#attend", icon: "attend" as const },
-  { label: "Get involved", href: "/#get-involved", icon: "involved" as const },
+  { label: "Contribute", href: "/#get-involved", icon: "involved" as const },
   { label: "FAQ", href: "/#faq", icon: "faq" as const },
 ];
 
