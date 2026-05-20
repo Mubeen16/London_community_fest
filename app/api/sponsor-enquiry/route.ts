@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { buildSponsorAppsScriptPayload } from "@/lib/api/build-sponsor-apps-script-payload";
 import { API } from "@/lib/config/api";
 import type { SponsorEnquiryPayload } from "@/types";
 
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(buildSponsorAppsScriptPayload(body)),
       redirect: "follow",
     });
   } catch {
