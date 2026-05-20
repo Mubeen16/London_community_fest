@@ -108,7 +108,7 @@ export function SponsorForm() {
 
     if (result.status === 400 && isDuplicateEnquiryMessage(result.message)) {
       setErrorMessage(
-        "We already have your enquiry on file — our team will be in touch within 48 hours.",
+        "We already have your enquiry on file — our team will be in touch within 24 hours.",
       );
     } else {
       setErrorMessage(result.message);
@@ -307,7 +307,7 @@ export function SponsorForm() {
         <FormSuccessFlash
           overlay
           title={`Thank you, ${submittedCompany}`}
-          message="Your enquiry was sent successfully. Our team will be in touch within 48 hours."
+          message="Your enquiry was sent successfully. Our team will be in touch within 24 hours."
         />
       ) : null}
     </div>
