@@ -89,7 +89,7 @@ export function VendorForm({ compact = false }: VendorFormProps) {
     <FormSuccessFlash
       overlay
       title={`Thank you, ${submittedBusiness}`}
-      message="Your application was sent successfully. We'll review it and be in touch within 5 working days."
+      message="Your application was sent successfully. We'll review it and be in touch within 24 hours."
     />
   ) : null;
 
@@ -106,7 +106,7 @@ export function VendorForm({ compact = false }: VendorFormProps) {
           )}
           noValidate
         >
-        <FormFieldGroup compact title="Contact" description="We reply within 5 working days.">
+        <FormFieldGroup compact title="Contact" description="We reply within 24 hours.">
           <div className="grid gap-3 sm:grid-cols-2">
             <FormField id="vendor-business-name" label="Business name" compact>
               <input
@@ -319,7 +319,7 @@ export function VendorForm({ compact = false }: VendorFormProps) {
           {status === "loading" ? "Submitting…" : "Submit application"}
         </Button>
         <p className="mt-3 font-sans text-xs text-ink-muted">
-          We&apos;ll review your application and get back to you within 5 working days.
+          We&apos;ll review your application and get back to you within 24 hours.
         </p>
       </div>
     </form>
