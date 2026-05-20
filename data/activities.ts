@@ -1,42 +1,59 @@
 import type { Activity, ActivityGroup, CollagePhoto, ExperienceItem } from "@/types";
 
-/** Bump when replacing files in public/images/collage/ */
-const collageVersion = "2";
+/** Bump when you replace any file in public/images/collage/ */
+const collageVersion = "3";
 
+/** One image per programme card — filename must match card id: {id}.jpg */
 const experienceImages = {
-  food: {
-    src: `/images/collage/food.jpg?v=${collageVersion}`,
-    alt: "Asian cuisine and food stalls at the festival",
+  "kids-zone": {
+    src: `/images/collage/kids-zone.jpg?v=${collageVersion}`,
+    alt: "Kids zone and bouncy castle at the festival",
   },
-  fashion: {
-    src: `/images/collage/fashion.jpg?v=${collageVersion}`,
-    alt: "Modest fashion and market stalls",
+  "food-stalls": {
+    src: `/images/collage/food-stalls.jpg?v=${collageVersion}`,
+    alt: "Global food and cuisine stalls",
+  },
+  "fashion-market": {
+    src: `/images/collage/fashion-market.jpg?v=${collageVersion}`,
+    alt: "Fashion and community market stalls",
+  },
+  "live-stage": {
+    src: `/images/collage/live-stage.jpg?v=${collageVersion}`,
+    alt: "Live stage performances",
+  },
+  "community-talks": {
+    src: `/images/collage/community-talks.jpg?v=${collageVersion}`,
+    alt: "Community talks and ideas hub",
+  },
+  wellbeing: {
+    src: `/images/collage/wellbeing.jpg?v=${collageVersion}`,
+    alt: "Health and wellbeing pavilion",
+  },
+  "youth-zone": {
+    src: `/images/collage/youth-zone.jpg?v=${collageVersion}`,
+    alt: "Youth and future zone",
   },
   football: {
     src: `/images/collage/football.jpg?v=${collageVersion}`,
-    alt: "Community football tournament on the pitch",
-  },
-  family: {
-    src: `/images/collage/family.jpg?v=${collageVersion}`,
-    alt: "Kids zone with families enjoying activities",
-  },
-  stage: {
-    src: `/images/collage/stage.jpg?v=${collageVersion}`,
-    alt: "Live stage performances and community spotlights",
+    alt: "Community football tournament",
   },
   games: {
     src: `/images/collage/games.jpg?v=${collageVersion}`,
-    alt: "Games and interactive activities in the park",
+    alt: "Games and activities in the park",
+  },
+  networking: {
+    src: `/images/collage/networking.jpg?v=${collageVersion}`,
+    alt: "Professional networking at the festival",
   },
 } as const;
 
 export type ExperienceImageKey = keyof typeof experienceImages;
 
-/** Single source of truth for photo strip + programme cards */
+/** Single source of truth for programme carousel (order = carousel order) */
 export const experienceItems: readonly ExperienceItem[] = [
   {
     id: "kids-zone",
-    imageKey: "family",
+    imageKey: "kids-zone",
     icon: "family",
     category: "Family & Kids",
     title: "Kids zone & bouncy castle",
@@ -45,7 +62,7 @@ export const experienceItems: readonly ExperienceItem[] = [
   },
   {
     id: "food-stalls",
-    imageKey: "food",
+    imageKey: "food-stalls",
     icon: "food",
     category: "Culture & Entertainment",
     title: "Global food & cuisine stalls",
@@ -54,7 +71,7 @@ export const experienceItems: readonly ExperienceItem[] = [
   },
   {
     id: "fashion-market",
-    imageKey: "fashion",
+    imageKey: "fashion-market",
     icon: "fashion",
     category: "Culture & Entertainment",
     title: "Fashion & community market stalls",
@@ -63,7 +80,7 @@ export const experienceItems: readonly ExperienceItem[] = [
   },
   {
     id: "live-stage",
-    imageKey: "stage",
+    imageKey: "live-stage",
     icon: "stage",
     category: "Culture & Entertainment",
     title: "Live stage performances",
@@ -72,7 +89,7 @@ export const experienceItems: readonly ExperienceItem[] = [
   },
   {
     id: "community-talks",
-    imageKey: "stage",
+    imageKey: "community-talks",
     icon: "community",
     category: "Community & Learning",
     title: "Community talks & ideas hub",
@@ -81,7 +98,7 @@ export const experienceItems: readonly ExperienceItem[] = [
   },
   {
     id: "wellbeing",
-    imageKey: "games",
+    imageKey: "wellbeing",
     icon: "wellness",
     category: "Community & Learning",
     title: "Health & wellbeing pavilion",
@@ -90,7 +107,7 @@ export const experienceItems: readonly ExperienceItem[] = [
   },
   {
     id: "youth-zone",
-    imageKey: "family",
+    imageKey: "youth-zone",
     icon: "youth",
     category: "Community & Learning",
     title: "Youth & future zone",
@@ -117,7 +134,7 @@ export const experienceItems: readonly ExperienceItem[] = [
   },
   {
     id: "networking",
-    imageKey: "fashion",
+    imageKey: "networking",
     icon: "network",
     category: "Business & Networking",
     title: "Professional networking",
@@ -127,7 +144,9 @@ export const experienceItems: readonly ExperienceItem[] = [
 ] as const;
 
 export function getExperienceImage(key: string) {
-  return experienceImages[key as ExperienceImageKey] ?? experienceImages.stage;
+  return (
+    experienceImages[key as ExperienceImageKey] ?? experienceImages["live-stage"]
+  );
 }
 
 function groupByCategory(items: readonly ExperienceItem[]): ActivityGroup[] {

@@ -9,10 +9,12 @@ const nextConfig: NextConfig = {
   // Django API routes require trailing slashes; do not strip them on /api/*.
   skipTrailingSlashRedirect: true,
   async rewrites() {
+    const apiBase = djangoApi.replace(/\/$/, "");
     return [
       {
+        // Django requires trailing slashes on POST; Next strips them unless we add one here.
         source: "/api/:path*",
-        destination: `${djangoApi.replace(/\/$/, "")}/api/:path*`,
+        destination: `${apiBase}/api/:path*/`,
       },
     ];
   },

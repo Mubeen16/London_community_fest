@@ -296,11 +296,6 @@ export function ExperienceCarousel() {
           ))}
         </ul>
       </div>
-
-      <p className="mt-4 text-center font-sans text-xs text-cream-muted">
-        Swipe to explore the programme
-        {autoEnabled ? " · auto-advances on desktop when in view" : ""}
-      </p>
     </div>
   );
 }

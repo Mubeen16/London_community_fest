@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Apply for a Stall | London Community Fest",
   description:
-    "Apply for a food, fashion, or business stall at London Community Fest 2026. Reach 2,000+ families at Kennington Park.",
+    "Apply for a food, fashion, or business stall at London Community Fest 2026. Reach 4,000+ visitors at Kennington Park.",
 };
 
 export default function VendorsPage() {
@@ -38,7 +38,7 @@ export default function VendorsPage() {
               align="center"
               label="Vendors"
               title="Apply for a stall"
-              description="Food, fashion, market, and community stalls welcome. Reach 2,000+ families at Kennington Park."
+              description="Food, fashion, market, and community stalls welcome. Reach 4,000+ visitors at Kennington Park."
               className="mt-6 mb-0"
             />
           </Container>

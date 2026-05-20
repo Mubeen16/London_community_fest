@@ -15,7 +15,7 @@ export function PageShell({ children }: PageShellProps) {
         {children}
       </main>
       <MobileBottomNav />
-      <SiteFooter />
+      <SiteFooter clearMobileNav />
     </>
   );
 }

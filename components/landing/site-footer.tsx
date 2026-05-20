@@ -58,17 +58,25 @@ function FooterLinkList({
   );
 }
 
-export function SiteFooter() {
+interface SiteFooterProps {
+  /** Extra bottom space for the fixed mobile nav (homepage shell only). */
+  clearMobileNav?: boolean;
+}
+
+export function SiteFooter({ clearMobileNav = false }: SiteFooterProps) {
   return (
     <footer
       className={cn(
         sectionClasses("footer"),
-        "py-6 pb-[calc(5rem+env(safe-area-inset-bottom,0px))] sm:py-7 lg:pb-7",
+        "pt-6 sm:pt-7 lg:py-7",
+        clearMobileNav
+          ? "pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:pb-7"
+          : "pb-6 sm:pb-7 lg:pb-7",
       )}
     >
       <Container className="relative z-10">
         <div className="mx-auto w-full max-w-5xl">
-          <div className="grid grid-cols-1 gap-x-6 gap-y-6 min-[400px]:grid-cols-2 sm:gap-x-8 md:grid-cols-12 md:items-start">
+          <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:gap-x-8 md:grid-cols-12 md:gap-y-6 md:items-start">
             <div className="col-span-2 md:col-span-5">
               <p className="font-serif text-base leading-tight sm:text-lg">
                 <span className="text-crimson-400">London</span>{" "}
@@ -83,14 +91,14 @@ export function SiteFooter() {
               </p>
             </div>
 
-            <nav aria-label="Event" className="md:col-span-2">
+            <nav aria-label="Event" className="hidden md:col-span-2 md:block">
               <FooterColumnHeading className="text-gold-400">
                 Event
               </FooterColumnHeading>
               <FooterLinkList links={eventLinks} />
             </nav>
 
-            <nav aria-label="Get involved" className="md:col-span-2">
+            <nav aria-label="Get involved" className="hidden md:col-span-2 md:block">
               <FooterColumnHeading className="text-crimson-400">
                 Get involved
               </FooterColumnHeading>
@@ -125,10 +133,10 @@ export function SiteFooter() {
           </div>
 
           <div className="mt-5 flex flex-col gap-2 border-t border-cream/5 pt-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs leading-snug text-cream-faint">
+            <p className="text-[10px] leading-snug text-cream-faint md:text-xs">
               © 2026 London Community Fest · {siteConfig.organisedBy}
             </p>
-            <p className="break-words text-xs leading-snug text-cream-faint">
+            <p className="break-words text-[10px] leading-snug text-cream-faint md:text-xs">
               {siteValuesLine}
             </p>
           </div>

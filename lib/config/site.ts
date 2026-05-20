@@ -14,7 +14,7 @@ export const siteConfig = {
     "A family-focused community experience that brings together culture, connection, entertainment, wellbeing, learning, and meaningful conversations in one vibrant event.",
   tagline: "More than a festival",
   url: "https://londoncommunityfest.org",
-  ogImage: "/images/og-image.jpg",
+  ogImage: "/images/logo.png",
   organisedBy: "South Indian Community UK",
   email: "mail@communityfest.uk",
   phone: ["07961 950 231", "07423 029 023"],
