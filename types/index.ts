@@ -34,6 +34,11 @@ export interface CollagePhoto {
 
 export type SponsorAccentColor = "gold" | "slate" | "crimson";
 
+/** Waitlist signup — shared by Apps Script (now) and Django API (later). */
+export interface WaitlistPayload {
+  email: string;
+}
+
 /** Vendor application payload — shared by Apps Script (now) and Django API (later). */
 export interface VendorEnquiryPayload {
   business_name: string;

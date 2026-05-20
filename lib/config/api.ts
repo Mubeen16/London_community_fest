@@ -2,8 +2,9 @@
  * Browser forms use same-origin `/api/...` paths (proxied in next.config.ts).
  * Set NEXT_PUBLIC_API_URL only when calling the API on another origin directly.
  *
- * Google Apps Script URLs live in server env vars only (`SPONSORS_APPS_SCRIPT_URL`,
- * `VENDORS_APPS_SCRIPT_URL`) — see `lib/api/apps-script-urls.ts` and `app/api/*-enquiry/`.
+ * Waitlist: browser → `/api/waitlist` proxy → `WAITLIST_APPS_SCRIPT_URL` (see `app/api/waitlist/`).
+ * Sponsor/vendor: `SPONSORS_APPS_SCRIPT_URL`, `VENDORS_APPS_SCRIPT_URL` via `app/api/*-enquiry/`.
+ * Django `endpoints.waitlist` is preserved for future `postJsonToApi("waitlist", ...)`.
  */
 export const apiConfig = {
   baseUrl: process.env.NEXT_PUBLIC_API_URL ?? "",

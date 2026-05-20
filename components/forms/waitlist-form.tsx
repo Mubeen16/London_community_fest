@@ -1,34 +1,16 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { apiUrl } from "@/lib/config/api";
+import {
+  isDuplicateWaitlistMessage,
+  postWaitlist,
+} from "@/lib/api/post-waitlist";
 import { cn } from "@/lib/utils";
 
 type WaitlistStatus = "idle" | "loading" | "success" | "already" | "error";
 
 interface WaitlistFormProps {
   variant?: "default" | "panel";
-}
-
-function getApiErrorMessage(data: unknown): string {
-  if (!data || typeof data !== "object") return "";
-  const body = data as Record<string, unknown>;
-  if (typeof body.detail === "string") return body.detail;
-  if (Array.isArray(body.email) && typeof body.email[0] === "string") {
-    return body.email[0];
-  }
-  if (typeof body.email === "string") return body.email;
-  if (
-    Array.isArray(body.non_field_errors) &&
-    typeof body.non_field_errors[0] === "string"
-  ) {
-    return body.non_field_errors[0];
-  }
-  return "";
-}
-
-function isDuplicateWaitlistMessage(message: string) {
-  return message.toLowerCase().includes("already");
 }
 
 export function WaitlistForm({ variant = "default" }: WaitlistFormProps) {
@@ -45,35 +27,20 @@ export function WaitlistForm({ variant = "default" }: WaitlistFormProps) {
     setStatus("loading");
     setErrorMessage("");
 
-    try {
-      const res = await fetch(apiUrl("waitlist"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
-      });
+    const result = await postWaitlist({ email: email.trim() });
 
-      if (res.ok) {
-        setStatus("success");
-        return;
-      }
-
-      if (res.status === 400) {
-        const message = getApiErrorMessage(await res.json());
-        if (isDuplicateWaitlistMessage(message)) {
-          setStatus("already");
-          return;
-        }
-        setErrorMessage(message || "Please check your email and try again.");
-        setStatus("error");
-        return;
-      }
-
-      setErrorMessage("Something went wrong. Please try again.");
-      setStatus("error");
-    } catch {
-      setErrorMessage("Something went wrong. Please try again.");
-      setStatus("error");
+    if (result.ok) {
+      setStatus("success");
+      return;
     }
+
+    if (isDuplicateWaitlistMessage(result.message)) {
+      setStatus("already");
+      return;
+    }
+
+    setErrorMessage(result.message);
+    setStatus("error");
   }
 
   return (

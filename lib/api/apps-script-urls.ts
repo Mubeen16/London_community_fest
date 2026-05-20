@@ -1,9 +1,10 @@
 /**
  * Server-only Apps Script URL accessors.
  *
- * Import only from app/api route handlers (e.g. sponsor-enquiry, vendor-enquiry) — never from client components.
- * Browsers post to `/api/sponsor-enquiry` and `/api/vendor-enquiry`; these env vars
- * keep Google Script URLs off the public bundle.
+ * Import only from app/api route handlers — never from client components.
+ * Browsers post to `/api/sponsor-enquiry` and `/api/vendor-enquiry`; waitlist uses
+ * `process.env.WAITLIST_APPS_SCRIPT_URL` in `app/api/waitlist/route.ts` directly.
+ * These env vars keep Google Script URLs off the public bundle.
  *
  * Temporary until Django is hosted; then remove these routes and use `postJsonToApi`.
  */
