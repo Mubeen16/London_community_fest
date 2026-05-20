@@ -50,7 +50,10 @@ export default function VendorsPage() {
 
         <section className={sectionClasses("vendors", "pb-10 sm:pb-12")}>
           <Container size="narrow">
-            <PaperCard torn={false} className="rounded-xl px-4 py-5 sm:px-6 sm:py-7">
+            <PaperCard
+              torn={false}
+              className="relative overflow-visible rounded-xl px-4 py-5 sm:px-6 sm:py-7"
+            >
               <VendorForm />
             </PaperCard>
 

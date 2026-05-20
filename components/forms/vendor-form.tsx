@@ -3,8 +3,10 @@
 import { useState, type FormEvent } from "react";
 import { type VendorStallType } from "@/data/vendor-stall-types";
 import { useFormSuccessScroll } from "@/hooks/use-form-success-scroll";
-import { apiUrl } from "@/lib/config/api";
+import { postVendorEnquiry } from "@/lib/api/post-vendor-enquiry";
+import type { VendorEnquiryPayload } from "@/types";
 import { Button } from "@/components/ui/button";
+import { FormSuccessFlash } from "@/components/ui/form-success-flash";
 import { VendorStallTypeField } from "@/components/forms/vendor-stall-type-field";
 import {
   FormField,
@@ -15,22 +17,6 @@ import {
 import { cn } from "@/lib/utils";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
-
-function formatApiErrors(data: unknown): string {
-  if (!data || typeof data !== "object") {
-    return "Something went wrong. Please try again.";
-  }
-  const body = data as Record<string, unknown>;
-  if (typeof body.detail === "string") return body.detail;
-
-  const messages: string[] = [];
-  for (const [key, value] of Object.entries(body)) {
-    if (Array.isArray(value) && typeof value[0] === "string") {
-      messages.push(`${key.replace(/_/g, " ")}: ${value[0]}`);
-    }
-  }
-  return messages.join(" ") || "Something went wrong. Please try again.";
-}
 
 interface VendorFormProps {
   compact?: boolean;
@@ -53,6 +39,16 @@ export function VendorForm({ compact = false }: VendorFormProps) {
   const disabled = status === "loading";
   const containerRef = useFormSuccessScroll(isSuccess);
 
+  function resetForm() {
+    setBusinessName("");
+    setContactName("");
+    setEmail("");
+    setPhone("");
+    setStallType("");
+    setDescription("");
+    setHalalCertified(false);
+  }
+
   function handleStallTypeChange(value: string) {
     setStallType(value as VendorStallType | "");
     if (value !== "food") setHalalCertified(false);
@@ -63,7 +59,7 @@ export function VendorForm({ compact = false }: VendorFormProps) {
     setStatus("loading");
     setErrorMessage("");
 
-    const payload: Record<string, string | boolean> = {
+    const payload: VendorEnquiryPayload = {
       business_name: businessName.trim(),
       contact_name: contactName.trim(),
       email: email.trim(),
@@ -72,57 +68,44 @@ export function VendorForm({ compact = false }: VendorFormProps) {
       description: description.trim(),
     };
 
-    if (isFoodStall) payload.halal_certified = halalCertified;
-
-    try {
-      const res = await fetch(apiUrl("vendors"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        const data = (await res.json()) as { business_name?: string };
-        setSubmittedBusiness(data.business_name ?? businessName.trim());
-        setStatus("success");
-        return;
-      }
-
-      setErrorMessage(formatApiErrors(await res.json()));
-      setStatus("error");
-    } catch {
-      setErrorMessage("Something went wrong. Please try again.");
-      setStatus("error");
+    if (isFoodStall) {
+      payload.halal_certified = halalCertified;
     }
+
+    const result = await postVendorEnquiry(payload);
+
+    if (result.ok) {
+      setSubmittedBusiness(result.data.business_name ?? businessName.trim());
+      resetForm();
+      setStatus("success");
+      return;
+    }
+
+    setErrorMessage(result.message);
+    setStatus("error");
   }
 
-  const successPanel = (
-    <div
-      className={cn(
-        "flex flex-col justify-center py-8 text-center",
-        compact ? "min-h-[14rem]" : "min-h-[22rem]",
-      )}
-      aria-live="polite"
-      role="status"
-    >
-      <p className={cn("font-serif text-crimson-400", compact ? "text-xl" : "text-2xl")}>
-        Thank you, {submittedBusiness}
-      </p>
-      <p className="mx-auto mt-3 max-w-sm font-sans text-sm leading-relaxed text-ink-muted">
-        Your application is in. We&apos;ll review it and be in touch within 5 working days.
-      </p>
-    </div>
-  );
+  const successFlash = isSuccess ? (
+    <FormSuccessFlash
+      overlay
+      title={`Thank you, ${submittedBusiness}`}
+      message="Your application was sent successfully. We'll review it and be in touch within 5 working days."
+    />
+  ) : null;
 
   if (compact) {
     const inputClass = formInputCompactClass;
 
     return (
-      <div ref={containerRef}>
-        {isSuccess ? (
-          successPanel
-        ) : (
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <div ref={containerRef} className="relative min-h-[14rem]">
+        <form
+          onSubmit={handleSubmit}
+          className={cn(
+            "space-y-4 transition-opacity duration-300",
+            isSuccess && "pointer-events-none opacity-25",
+          )}
+          noValidate
+        >
         <FormFieldGroup compact title="Contact" description="We reply within 5 working days.">
           <div className="grid gap-3 sm:grid-cols-2">
             <FormField id="vendor-business-name" label="Business name" compact>
@@ -227,17 +210,21 @@ export function VendorForm({ compact = false }: VendorFormProps) {
           </Button>
         </div>
       </form>
-        )}
-      </div>
+      {successFlash}
+    </div>
     );
   }
 
   return (
-    <div ref={containerRef}>
-      {isSuccess ? (
-        successPanel
-      ) : (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <div ref={containerRef} className="relative min-h-[20rem]">
+      <form
+        onSubmit={handleSubmit}
+        className={cn(
+          "space-y-6 transition-opacity duration-300",
+          isSuccess && "pointer-events-none opacity-25",
+        )}
+        noValidate
+      >
       <div className="grid gap-4 sm:grid-cols-2">
         <FormField id="vendor-business-name" label="Business name">
           <input
@@ -336,7 +323,7 @@ export function VendorForm({ compact = false }: VendorFormProps) {
         </p>
       </div>
     </form>
-      )}
+    {successFlash}
     </div>
   );
 }

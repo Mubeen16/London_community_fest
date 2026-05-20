@@ -34,6 +34,17 @@ export interface CollagePhoto {
 
 export type SponsorAccentColor = "gold" | "slate" | "crimson";
 
+/** Vendor application payload — shared by Apps Script (now) and Django API (later). */
+export interface VendorEnquiryPayload {
+  business_name: string;
+  contact_name: string;
+  email: string;
+  phone: string;
+  stall_type: string;
+  description: string;
+  halal_certified?: boolean;
+}
+
 /** Sponsor enquiry form payload — shared by Apps Script (now) and Django API (later). */
 export interface SponsorEnquiryPayload {
   company_name: string;
