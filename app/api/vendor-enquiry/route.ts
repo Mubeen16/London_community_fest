@@ -4,6 +4,7 @@ import {
   getVendorsAppsScriptUrl,
 } from "@/lib/api/apps-script-urls";
 import { buildVendorAppsScriptPayload } from "@/lib/api/build-vendor-apps-script-payload";
+import { fetchAppsScript } from "@/lib/api/fetch-apps-script";
 import type { VendorEnquiryPayload } from "@/types";
 
 type AppsScriptResponse = {
@@ -45,15 +46,10 @@ export async function POST(request: Request) {
   let res: Response;
 
   try {
-    res = await fetch(scriptUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(buildVendorAppsScriptPayload(body)),
-      redirect: "follow",
-    });
+    res = await fetchAppsScript(
+      scriptUrl,
+      buildVendorAppsScriptPayload(body),
+    );
   } catch {
     return NextResponse.json(
       { success: false, message: "Unable to reach the submission service." },
