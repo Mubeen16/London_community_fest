@@ -41,8 +41,8 @@ function errorMessageFromBody(data: unknown): string {
 /**
  * Submit a vendor application.
  *
- * TEMPORARY: posts via `/api/vendor-enquiry` → Google Apps Script (`API.vendorsAppsScript`).
- * Server proxy avoids browser CORS/redirect issues with script.google.com.
+ * TEMPORARY: posts via `/api/vendor-enquiry` → Google Apps Script (server env URL).
+ * Proxy keeps the Apps Script URL out of the browser; avoids CORS/302 issues.
  *
  * FUTURE: when Django is hosted, switch to:
  *   `return postJsonToApi<VendorEnquiryResponse>("vendors", body);`

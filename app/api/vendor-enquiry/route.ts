@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
+import {
+  APPS_SCRIPT_NOT_CONFIGURED_MESSAGE,
+  getVendorsAppsScriptUrl,
+} from "@/lib/api/apps-script-urls";
 import { buildVendorAppsScriptPayload } from "@/lib/api/build-vendor-apps-script-payload";
-import { API } from "@/lib/config/api";
 import type { VendorEnquiryPayload } from "@/types";
 
 type AppsScriptResponse = {
@@ -11,9 +14,10 @@ type AppsScriptResponse = {
 };
 
 /**
- * Proxies vendor applications to Google Apps Script (server-side).
- * Avoids browser CORS/302 redirect issues with script.google.com.
- * Remove this route when switching to Django via postJsonToApi("vendors", ...).
+ * Proxies vendor applications to Google Apps Script (server-side only).
+ *
+ * The browser never sees `VENDORS_APPS_SCRIPT_URL` — it only calls this route.
+ * Temporary operational intake until Django is hosted (`postJsonToApi("vendors", ...)`).
  */
 export async function POST(request: Request) {
   let body: VendorEnquiryPayload;
@@ -27,10 +31,21 @@ export async function POST(request: Request) {
     );
   }
 
+  let scriptUrl: string;
+
+  try {
+    scriptUrl = getVendorsAppsScriptUrl();
+  } catch {
+    return NextResponse.json(
+      { success: false, message: APPS_SCRIPT_NOT_CONFIGURED_MESSAGE },
+      { status: 503 },
+    );
+  }
+
   let res: Response;
 
   try {
-    res = await fetch(API.vendorsAppsScript, {
+    res = await fetch(scriptUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

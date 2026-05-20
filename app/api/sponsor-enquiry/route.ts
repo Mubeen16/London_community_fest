@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
+import {
+  APPS_SCRIPT_NOT_CONFIGURED_MESSAGE,
+  getSponsorsAppsScriptUrl,
+} from "@/lib/api/apps-script-urls";
 import { buildSponsorAppsScriptPayload } from "@/lib/api/build-sponsor-apps-script-payload";
-import { API } from "@/lib/config/api";
 import type { SponsorEnquiryPayload } from "@/types";
 
 type AppsScriptResponse = {
@@ -11,9 +14,10 @@ type AppsScriptResponse = {
 };
 
 /**
- * Proxies sponsor enquiries to Google Apps Script (server-side).
- * Avoids browser CORS/302 redirect issues with script.google.com.
- * Remove this route when switching to Django via postJsonToApi("sponsors", ...).
+ * Proxies sponsor enquiries to Google Apps Script (server-side only).
+ *
+ * The browser never sees `SPONSORS_APPS_SCRIPT_URL` — it only calls this route.
+ * Temporary operational intake until Django is hosted (`postJsonToApi("sponsors", ...)`).
  */
 export async function POST(request: Request) {
   let body: SponsorEnquiryPayload;
@@ -27,10 +31,21 @@ export async function POST(request: Request) {
     );
   }
 
+  let scriptUrl: string;
+
+  try {
+    scriptUrl = getSponsorsAppsScriptUrl();
+  } catch {
+    return NextResponse.json(
+      { success: false, message: APPS_SCRIPT_NOT_CONFIGURED_MESSAGE },
+      { status: 503 },
+    );
+  }
+
   let res: Response;
 
   try {
-    res = await fetch(API.sponsorsAppsScript, {
+    res = await fetch(scriptUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
