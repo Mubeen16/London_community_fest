@@ -1,6 +1,5 @@
 import { formatApiErrors } from "@/lib/api/format-errors";
 import type { PostJsonResult } from "@/lib/api/post-json";
-import { API } from "@/lib/config/api";
 import type { SponsorEnquiryPayload } from "@/types";
 
 type SponsorEnquiryResponse = {
@@ -23,7 +22,7 @@ async function parseResponseBody(text: string): Promise<unknown> {
   }
 }
 
-function appsScriptErrorMessage(data: unknown): string {
+function errorMessageFromBody(data: unknown): string {
   if (!data || typeof data !== "object") {
     return "";
   }
@@ -39,39 +38,14 @@ function appsScriptErrorMessage(data: unknown): string {
   return formatApiErrors(data);
 }
 
-function isAppsScriptSuccess(data: unknown): boolean {
-  if (!data || typeof data !== "object") {
-    return true;
-  }
-
-  const body = data as Record<string, unknown>;
-
-  if (body.success === false) {
-    return false;
-  }
-
-  if (typeof body.success === "boolean") {
-    return body.success;
-  }
-
-  if (body.status === "error" || body.status === "failure") {
-    return false;
-  }
-
-  if (typeof body.error === "string" && body.error.length > 0) {
-    return false;
-  }
-
-  return true;
-}
-
 /**
  * Submit a sponsor enquiry.
  *
- * TEMPORARY: posts to Google Apps Script (`API.sponsorsAppsScript`) for live intake.
- * FUTURE: when Django is hosted, switch the implementation below to:
+ * TEMPORARY: posts via `/api/sponsor-enquiry` → Google Apps Script (`API.sponsorsAppsScript`).
+ * Server proxy avoids browser CORS/redirect issues with script.google.com.
+ *
+ * FUTURE: when Django is hosted, switch to:
  *   `return postJsonToApi<SponsorEnquiryResponse>("sponsors", body);`
- * and remove the Apps Script fetch block — keep `apiConfig` / `postJsonToApi` unchanged.
  */
 export async function postSponsorEnquiry(
   body: SponsorEnquiryPayload,
@@ -79,7 +53,7 @@ export async function postSponsorEnquiry(
   let res: Response;
 
   try {
-    res = await fetch(API.sponsorsAppsScript, {
+    res = await fetch("/api/sponsor-enquiry", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -97,24 +71,25 @@ export async function postSponsorEnquiry(
 
   const data = await parseResponseBody(await res.text());
 
-  if (res.ok && isAppsScriptSuccess(data)) {
-    const response =
-      data && typeof data === "object" ? (data as SponsorEnquiryResponse) : {};
+  if (res.ok && data && typeof data === "object") {
+    const bodyData = data as SponsorEnquiryResponse;
 
-    return {
-      ok: true,
-      status: res.status,
-      data: {
-        ...response,
-        company_name: response.company_name ?? body.company_name,
-      },
-    };
+    if (bodyData.success === true) {
+      return {
+        ok: true,
+        status: res.status,
+        data: {
+          ...bodyData,
+          company_name: bodyData.company_name ?? body.company_name,
+        },
+      };
+    }
   }
 
   return {
     ok: false,
     status: res.status,
     message:
-      appsScriptErrorMessage(data) || "Something went wrong. Please try again.",
+      errorMessageFromBody(data) || "Something went wrong. Please try again.",
   };
 }

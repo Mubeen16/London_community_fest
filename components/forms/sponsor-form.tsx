@@ -18,6 +18,7 @@ import { postSponsorEnquiry } from "@/lib/api/post-sponsor-enquiry";
 import type { SponsorEnquiryPayload } from "@/types";
 import { useFormSuccessScroll } from "@/hooks/use-form-success-scroll";
 import { Button } from "@/components/ui/button";
+import { FormSuccessFlash } from "@/components/ui/form-success-flash";
 import {
   FormField,
   FormFieldGroup,
@@ -117,20 +118,15 @@ export function SponsorForm() {
   }
 
   return (
-    <div ref={containerRef}>
-      {isSuccess ? (
-        <div
-          className="flex min-h-[26rem] flex-col justify-center py-8 text-center"
-          aria-live="polite"
-          role="status"
-        >
-          <p className="font-serif text-2xl text-crimson-400">Thank you, {submittedCompany}</p>
-          <p className="mx-auto mt-3 max-w-sm font-sans text-sm leading-relaxed text-ink-muted">
-            Thank you for your interest! Our team will be in touch within 48 hours.
-          </p>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-10" noValidate>
+    <div ref={containerRef} className="relative min-h-[20rem]">
+      <form
+        onSubmit={handleSubmit}
+        className={cn(
+          "space-y-10 transition-opacity duration-300",
+          isSuccess && "pointer-events-none opacity-25",
+        )}
+        noValidate
+      >
           <FormFieldGroup
             title="Your company"
             description="Tell us who you are and which package interests you."
@@ -306,7 +302,14 @@ export function SponsorForm() {
             </Button>
           </div>
         </form>
-      )}
+
+      {isSuccess ? (
+        <FormSuccessFlash
+          overlay
+          title={`Thank you, ${submittedCompany}`}
+          message="Your enquiry was sent successfully. Our team will be in touch within 48 hours."
+        />
+      ) : null}
     </div>
   );
 }
