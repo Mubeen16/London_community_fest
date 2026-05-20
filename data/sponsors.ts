@@ -1,5 +1,8 @@
 import type { SponsorTier } from "@/types";
 
+export const sponsorPackagesIntro =
+  "We offer a range of sponsorship opportunities designed to provide strong brand visibility, community engagement, and meaningful event presence at London Community Fest 2026." as const;
+
 export const sponsorNegotiableNote =
   "All packages are negotiable. Contact us to discuss a custom arrangement." as const;
 
@@ -12,18 +15,17 @@ export const featuredSponsorTiers = [
     exclusive: true,
     featured: true,
     description:
-      "Exclusive top-tier partnership — be the face of London Community Fest 2026. Only one available.",
+      "Exclusive top-tier partnership — become the face of London Community Fest 2026. Maximum visibility with premium event-wide branding and recognition.",
     features: [
-      "Exclusive Title Sponsor status — the ONLY one",
-      "Logo on main Entrance Arch gates",
-      "Only company logo on the Event Banner",
-      "Exclusive stall near main entrance: 3m × 2m",
-      "LED screen promotion",
-      "Promotional/selling stall in main event location",
-      "Named recognition in speeches and videos",
-      "Platform presence for your representative",
-      "Featured exclusively by influencers",
-      "Maximum brand exposure",
+      "Exclusive Title Sponsor status — the only Main Sponsor",
+      "Main Entrance Arch branding",
+      "Exclusive company logo placement on the primary event banner",
+      "Premium stall placement near the main entrance and exit (3m × 2m)",
+      "LED/LCD screen promotion throughout the event",
+      "Stage recognition and sponsor acknowledgements during speeches",
+      "Opportunity to operate a promotional or sales stall in the main event area (3m × 2m)",
+      "Exclusive influencer features across multiple social media promotions",
+      "Maximum brand exposure and strong association with the event",
     ],
   },
   {
@@ -33,15 +35,15 @@ export const featuredSponsorTiers = [
     accentColor: "slate",
     featured: true,
     description:
-      "Introduced as 'Powered by'. Extensive visibility with prominent event presence.",
+      'Introduced as "Powered By". Extensive visibility with a prominent presence throughout the event.',
     features: [
-      "Company logo displayed prominently around the park",
-      "LED screen promotion",
-      "1 promotional or selling stall: 3m × 2m",
-      "Logo on all social media promotions",
-      "Logo on leaflets distributed to residents",
-      "Digital memorabilia",
-      "Everything in Platinum package included",
+      "Prominent company logo placement across the event park",
+      "LED/LCD screen promotions throughout the event",
+      "One promotional or sales stall in the main event area (3m × 2m)",
+      "Company logo featured in social media promotions",
+      "Logo placement on printed leaflets distributed to residents",
+      "Branding included in digital event memorabilia",
+      "Includes all Platinum Package benefits",
     ],
   },
   {
@@ -50,19 +52,16 @@ export const featuredSponsorTiers = [
     price: "From £3,000",
     accentColor: "crimson",
     featured: true,
-    description:
-      "Introduced as 'Co-Powered by'. Premium package with strong event presence.",
+    description: 'Introduced as "Co-Powered By".',
     features: [
-      "Promotional or selling stall: 3m × 2m",
-      "Large logo on event park banner",
-      "Special event prize sponsor",
-      "Flex banners on secondary stage",
-      "Digital memorabilia with your logo",
-      "Selective LED screen promotion",
-      "3 social media posts with your logo",
-      "Logo on main event backdrop",
-      "Logo on distributed leaflets",
-      "Everything in Gold included",
+      "Promotional or sales stall (3m × 2m)",
+      "Large logo placement on event banners",
+      "Recognition as a sponsor for selected event participant prizes",
+      "Visibility on secondary stage flex banners",
+      "Selective LED screen promotions",
+      "Three dedicated social media promotions",
+      "Logo placement on event backdrops and printed leaflets",
+      "Includes all Gold Package benefits",
     ],
   },
 ] as const satisfies readonly SponsorTier[];
@@ -74,13 +73,13 @@ export const standardSponsorTiers = [
     price: "£2,000",
     accentColor: "gold",
     featured: false,
-    description: "Introduced as 'Sponsored by'. Strong visibility for local businesses.",
+    description: 'Introduced as "Sponsored By".',
     features: [
-      "Promotional or selling stall: 3m × 2m",
-      "3 social media posts with your logo",
-      "Selective LED screen promotion",
-      "Logo on promotional leaflets",
-      "Everything in Silver included",
+      "Promotional or sales stall (3m × 2m)",
+      "Selective social media promotions",
+      "LED screen promotional rotation",
+      "Company logo displayed on promotional leaflets",
+      "Includes all Silver Package benefits",
     ],
   },
   {
@@ -89,8 +88,11 @@ export const standardSponsorTiers = [
     price: "£1,000",
     accentColor: "slate",
     featured: false,
-    description: "Introduced as 'Co-Sponsored by'. Entry-level sponsorship.",
-    features: ["Promotional stall: 3m × 2m", "Logo on promotional leaflets"],
+    description: 'Introduced as "Co-Sponsored By".',
+    features: [
+      "Promotional stall (3m × 2m)",
+      "Company logo placement on promotional leaflets",
+    ],
   },
 ] as const satisfies readonly SponsorTier[];
 

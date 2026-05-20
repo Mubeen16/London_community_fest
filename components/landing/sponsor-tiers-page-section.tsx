@@ -1,6 +1,7 @@
 import {
   featuredSponsorTiers,
   sponsorNegotiableNote,
+  sponsorPackagesIntro,
   standardSponsorTiers,
 } from "@/data/sponsors";
 import type { SponsorTier } from "@/types";
@@ -73,7 +74,7 @@ function StandardTierCard({ tier }: { tier: SponsorTier }) {
       <p className={accent.label}>{tier.name}</p>
       <p className={cn("mt-1 font-serif text-2xl", accent.check)}>{tier.price}</p>
       <p className="mt-2 font-sans text-sm leading-snug text-ink-muted">{tier.description}</p>
-      <TierFeatureList features={tier.features} checkClass={accent.check} compact />
+      <TierFeatureList features={tier.features} checkClass={accent.check} />
     </PaperCard>
   );
 }
@@ -82,6 +83,10 @@ export function SponsorTiersPageSection() {
   return (
     <section className={sectionClasses("about", "py-10 sm:py-12")}>
       <Container>
+        <p className="mx-auto mb-8 max-w-2xl text-center font-sans text-sm leading-relaxed text-ink-muted sm:text-base">
+          {sponsorPackagesIntro}
+        </p>
+
         <ul className="grid gap-6 lg:grid-cols-3">
           {featuredSponsorTiers.map((tier) => (
             <li key={tier.id}>
