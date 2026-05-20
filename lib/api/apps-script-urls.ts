@@ -11,24 +11,30 @@
 const MISSING_SPONSOR_URL = "SPONSORS_APPS_SCRIPT_URL is not configured.";
 const MISSING_VENDOR_URL = "VENDORS_APPS_SCRIPT_URL is not configured.";
 
-export function getSponsorsAppsScriptUrl(): string {
-  const url = process.env.SPONSORS_APPS_SCRIPT_URL?.trim();
+function normalizeAppsScriptUrl(raw: string | undefined): string {
+  const url = raw?.trim().replace(/^["']|["']$/g, "") ?? "";
 
-  if (!url) {
-    throw new Error(MISSING_SPONSOR_URL);
+  if (!url || !url.startsWith("https://")) {
+    throw new Error("invalid");
   }
 
   return url;
 }
 
-export function getVendorsAppsScriptUrl(): string {
-  const url = process.env.VENDORS_APPS_SCRIPT_URL?.trim();
+export function getSponsorsAppsScriptUrl(): string {
+  try {
+    return normalizeAppsScriptUrl(process.env.SPONSORS_APPS_SCRIPT_URL);
+  } catch {
+    throw new Error(MISSING_SPONSOR_URL);
+  }
+}
 
-  if (!url) {
+export function getVendorsAppsScriptUrl(): string {
+  try {
+    return normalizeAppsScriptUrl(process.env.VENDORS_APPS_SCRIPT_URL);
+  } catch {
     throw new Error(MISSING_VENDOR_URL);
   }
-
-  return url;
 }
 
 /** User-safe message when env is missing (do not expose env var names to clients). */
