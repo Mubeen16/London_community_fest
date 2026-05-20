@@ -2,11 +2,20 @@
 
 import { useState, type FormEvent } from "react";
 import {
+  sponsorBusinessTypes,
+  type SponsorBusinessType,
+} from "@/data/sponsor-business-types";
+import {
+  sponsorContactMethods,
+  type SponsorPreferredContact,
+} from "@/data/sponsor-contact-methods";
+import {
   sponsorTierOptions,
   type SponsorTierInterest,
 } from "@/data/sponsor-tier-options";
 import { isDuplicateEnquiryMessage } from "@/lib/api/format-errors";
-import { postJsonToApi } from "@/lib/api/post-json";
+import { postSponsorEnquiry } from "@/lib/api/post-sponsor-enquiry";
+import type { SponsorEnquiryPayload } from "@/types";
 import { useFormSuccessScroll } from "@/hooks/use-form-success-scroll";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,13 +27,20 @@ import { cn } from "@/lib/utils";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
+const selectClass = cn(formInputClass, "cursor-pointer");
+
 export function SponsorForm() {
   const [companyName, setCompanyName] = useState("");
   const [contactName, setContactName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [businessType, setBusinessType] = useState<SponsorBusinessType | "">("");
   const [tierInterest, setTierInterest] = useState<SponsorTierInterest | "">("");
+  const [preferredContact, setPreferredContact] = useState<SponsorPreferredContact | "">(
+    "",
+  );
   const [message, setMessage] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [submittedCompany, setSubmittedCompany] = useState("");
@@ -33,10 +49,28 @@ export function SponsorForm() {
   const disabled = status === "loading";
   const containerRef = useFormSuccessScroll(isSuccess);
 
+  function resetForm() {
+    setCompanyName("");
+    setContactName("");
+    setEmail("");
+    setPhone("");
+    setBusinessType("");
+    setTierInterest("");
+    setPreferredContact("");
+    setMessage("");
+    setConsent(false);
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("loading");
     setErrorMessage("");
+
+    if (!businessType) {
+      setErrorMessage("Please select a business type.");
+      setStatus("error");
+      return;
+    }
 
     if (!tierInterest) {
       setErrorMessage("Please select a sponsorship package.");
@@ -44,23 +78,29 @@ export function SponsorForm() {
       return;
     }
 
-    const payload: Record<string, string> = {
+    if (!consent) {
+      setErrorMessage("Please agree to be contacted about sponsorship opportunities.");
+      setStatus("error");
+      return;
+    }
+
+    const payload: SponsorEnquiryPayload = {
       company_name: companyName.trim(),
       contact_name: contactName.trim(),
       email: email.trim(),
       phone: phone.trim(),
+      business_type: businessType,
       tier_interest: tierInterest,
+      preferred_contact: preferredContact,
+      message: message.trim(),
+      consent: true,
     };
 
-    const trimmedMessage = message.trim();
-    if (trimmedMessage) {
-      payload.message = trimmedMessage;
-    }
-
-    const result = await postJsonToApi<{ company_name?: string }>("sponsors", payload);
+    const result = await postSponsorEnquiry(payload);
 
     if (result.ok) {
       setSubmittedCompany(result.data.company_name ?? companyName.trim());
+      resetForm();
       setStatus("success");
       return;
     }
@@ -90,17 +130,18 @@ export function SponsorForm() {
           </p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-8" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-10" noValidate>
           <FormFieldGroup
             title="Your company"
             description="Tell us who you are and which package interests you."
           >
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-5 sm:grid-cols-2">
               <FormField id="sponsor-company" label="Company name">
                 <input
                   id="sponsor-company"
                   type="text"
                   required
+                  autoComplete="organization"
                   value={companyName}
                   disabled={disabled}
                   onChange={(e) => setCompanyName(e.target.value)}
@@ -112,6 +153,7 @@ export function SponsorForm() {
                   id="sponsor-contact"
                   type="text"
                   required
+                  autoComplete="name"
                   value={contactName}
                   disabled={disabled}
                   onChange={(e) => setContactName(e.target.value)}
@@ -119,30 +161,27 @@ export function SponsorForm() {
                 />
               </FormField>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <FormField id="sponsor-email" label="Email">
-                <input
-                  id="sponsor-email"
-                  type="email"
-                  required
-                  value={email}
-                  disabled={disabled}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={formInputClass}
-                />
-              </FormField>
-              <FormField id="sponsor-phone" label="Phone">
-                <input
-                  id="sponsor-phone"
-                  type="tel"
-                  required
-                  value={phone}
-                  disabled={disabled}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className={formInputClass}
-                />
-              </FormField>
-            </div>
+
+            <FormField id="sponsor-business-type" label="Business type">
+              <select
+                id="sponsor-business-type"
+                required
+                value={businessType}
+                disabled={disabled}
+                onChange={(e) => setBusinessType(e.target.value as SponsorBusinessType)}
+                className={selectClass}
+              >
+                <option value="" disabled>
+                  Select business type
+                </option>
+                {sponsorBusinessTypes.map((type) => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </select>
+            </FormField>
+
             <FormField id="sponsor-tier" label="Package interest">
               <select
                 id="sponsor-tier"
@@ -150,7 +189,7 @@ export function SponsorForm() {
                 value={tierInterest}
                 disabled={disabled}
                 onChange={(e) => setTierInterest(e.target.value as SponsorTierInterest)}
-                className={cn(formInputClass, "cursor-pointer")}
+                className={selectClass}
               >
                 <option value="" disabled>
                   Select a package
@@ -162,17 +201,90 @@ export function SponsorForm() {
                 ))}
               </select>
             </FormField>
-            <FormField id="sponsor-message" label="Message (optional)">
-              <textarea
-                id="sponsor-message"
-                rows={3}
-                value={message}
+          </FormFieldGroup>
+
+          <FormFieldGroup
+            title="Contact details"
+            description="How we can reach you about your enquiry."
+          >
+            <div className="grid gap-5 sm:grid-cols-2">
+              <FormField id="sponsor-email" label="Email">
+                <input
+                  id="sponsor-email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  value={email}
+                  disabled={disabled}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={formInputClass}
+                />
+              </FormField>
+              <FormField id="sponsor-phone" label="Phone">
+                <input
+                  id="sponsor-phone"
+                  type="tel"
+                  required
+                  autoComplete="tel"
+                  value={phone}
+                  disabled={disabled}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className={formInputClass}
+                />
+              </FormField>
+            </div>
+
+            <FormField id="sponsor-preferred-contact" label="Preferred contact method">
+              <select
+                id="sponsor-preferred-contact"
+                value={preferredContact}
                 disabled={disabled}
-                onChange={(e) => setMessage(e.target.value)}
-                className={cn(formInputClass, "min-h-[5rem] resize-y")}
-              />
+                onChange={(e) =>
+                  setPreferredContact(e.target.value as SponsorPreferredContact | "")
+                }
+                className={selectClass}
+              >
+                <option value="">No preference</option>
+                {sponsorContactMethods.map((method) => (
+                  <option key={method.value} value={method.value}>
+                    {method.label}
+                  </option>
+                ))}
+              </select>
             </FormField>
           </FormFieldGroup>
+
+          <FormField
+            id="sponsor-message"
+            label="Additional information"
+            className="border-t border-paper-300/80 pt-8"
+          >
+            <textarea
+              id="sponsor-message"
+              rows={4}
+              value={message}
+              disabled={disabled}
+              placeholder="Tell us about your organisation, sponsorship goals, or any questions you may have."
+              onChange={(e) => setMessage(e.target.value)}
+              className={cn(formInputClass, "min-h-[6rem] resize-y")}
+            />
+          </FormField>
+
+          <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-paper-300/90 bg-paper-50 px-4 py-3.5">
+            <input
+              id="sponsor-consent"
+              type="checkbox"
+              required
+              checked={consent}
+              disabled={disabled}
+              onChange={(e) => setConsent(e.target.checked)}
+              className="mt-0.5 size-4 shrink-0 rounded border-paper-300 text-crimson-400 focus:ring-crimson-400/30"
+            />
+            <span className="font-sans text-sm leading-snug text-ink">
+              I agree to be contacted regarding sponsorship opportunities for London Community
+              Fest 2026.
+            </span>
+          </label>
 
           {status === "error" && (
             <p

@@ -13,6 +13,22 @@ export const apiConfig = {
   },
 } as const;
 
+/**
+ * Temporary operational endpoints (Google Apps Script).
+ * Sponsor intake uses Apps Script until the Django API is hosted; then switch
+ * `postSponsorEnquiry` in lib/api/post-sponsor-enquiry.ts to `postJsonToApi("sponsors", ...)`.
+ */
+export const appsScriptConfig = {
+  sponsors:
+    "https://script.google.com/macros/s/AKfycbxTYtvgVOdRR7sCG0n6zZ_y2QrLQH8tJXY0P0V83BhKQYzg61dr-qBFQauH9dlVzScsgQ/exec",
+} as const;
+
+/** Convenience map — Django paths + temporary Apps Script URLs. */
+export const API = {
+  sponsors: apiConfig.endpoints.sponsors,
+  sponsorsAppsScript: appsScriptConfig.sponsors,
+} as const;
+
 export type ApiEndpoint = keyof typeof apiConfig.endpoints;
 
 export function apiUrl(endpoint: ApiEndpoint) {

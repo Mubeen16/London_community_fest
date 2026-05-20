@@ -34,6 +34,19 @@ export interface CollagePhoto {
 
 export type SponsorAccentColor = "gold" | "slate" | "crimson";
 
+/** Sponsor enquiry form payload — shared by Apps Script (now) and Django API (later). */
+export interface SponsorEnquiryPayload {
+  company_name: string;
+  contact_name: string;
+  email: string;
+  phone: string;
+  business_type: string;
+  tier_interest: string;
+  preferred_contact: string;
+  message: string;
+  consent: boolean;
+}
+
 export interface SponsorTier {
   id: string;
   name: string;
