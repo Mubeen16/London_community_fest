@@ -1,7 +1,6 @@
 import {
   sponsorPartnershipHighlights,
   sponsorPartnershipIntro,
-  sponsorPartnershipNote,
 } from "@/data/sponsor-partnership";
 import { sectionClasses, sectionHeadingTheme } from "@/lib/section-theme";
 import { Container } from "@/components/ui/container";
@@ -10,22 +9,24 @@ import { SectionHeading } from "@/components/ui/section-heading";
 
 export function SponsorPartnershipSection() {
   return (
-    <section className={sectionClasses("vendors", "py-12 sm:py-14")}>
+    <section className={sectionClasses("vendors", "py-6 sm:py-8")}>
       <Container size="narrow" className="relative z-10">
         <SectionHeading
+          compact
           theme={sectionHeadingTheme("vendors")}
           align="center"
-          label="Why partner"
-          title="Reach London together"
+          label="Partnership"
+          title="Why partner with us"
           description={sponsorPartnershipIntro}
+          className="mb-5"
         />
 
-        <PaperCard torn={false} className="mt-8 rounded-xl px-6 py-8 sm:px-10 sm:py-10">
-          <ul className="space-y-4">
+        <PaperCard torn={false} className="rounded-xl px-5 py-5 sm:px-6 sm:py-6">
+          <ul className="space-y-2.5">
             {sponsorPartnershipHighlights.map((item) => (
               <li
                 key={item}
-                className="flex gap-3 font-sans text-sm leading-relaxed text-ink sm:text-base"
+                className="flex gap-2.5 font-sans text-sm leading-snug text-ink"
               >
                 <span
                   className="mt-0.5 shrink-0 font-bold text-crimson-400"
@@ -37,9 +38,6 @@ export function SponsorPartnershipSection() {
               </li>
             ))}
           </ul>
-          <p className="mt-8 border-t border-paper-300/80 pt-6 text-center font-sans text-sm leading-relaxed text-ink-muted">
-            {sponsorPartnershipNote}
-          </p>
         </PaperCard>
       </Container>
     </section>

@@ -4,7 +4,7 @@ export const sponsorPartnershipIntro =
   "London Community Fest brings brands together with a diverse, family-focused audience in the heart of London. Partnerships are shaped around your goals — we do not publish fixed packages online." as const;
 
 export const sponsorPartnershipNote =
-  "Tell us about your organisation below. Our team will respond with tailored partnership options — usually within 24 hours." as const;
+  "Our team will respond with tailored partnership options — usually within 24 hours." as const;
 
 export const sponsorPartnershipHighlights = [
   `${eventConfig.expectedAttendance} attendees expected at ${eventConfig.venue.name}`,
