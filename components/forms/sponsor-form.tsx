@@ -74,7 +74,7 @@ export function SponsorForm() {
     }
 
     if (!tierInterest) {
-      setErrorMessage("Please select a sponsorship package.");
+      setErrorMessage("Please select a partnership level or choose “Not sure yet”.");
       setStatus("error");
       return;
     }
@@ -129,7 +129,7 @@ export function SponsorForm() {
       >
           <FormFieldGroup
             title="Your company"
-            description="Tell us who you are and which package interests you."
+            description="Tell us who you are and the type of partnership you have in mind."
           >
             <div className="grid gap-5 sm:grid-cols-2">
               <FormField id="sponsor-company" label="Company name">
@@ -178,7 +178,7 @@ export function SponsorForm() {
               </select>
             </FormField>
 
-            <FormField id="sponsor-tier" label="Package interest">
+            <FormField id="sponsor-tier" label="Partnership interest">
               <select
                 id="sponsor-tier"
                 required
@@ -188,7 +188,7 @@ export function SponsorForm() {
                 className={selectClass}
               >
                 <option value="" disabled>
-                  Select a package
+                  Select partnership type
                 </option>
                 {sponsorTierOptions.map((tier) => (
                   <option key={tier.value} value={tier.value}>

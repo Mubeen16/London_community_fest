@@ -1,11 +1,11 @@
 /** Values must match Django SponsorEnquiry.tier_interest choices exactly */
 export const sponsorTierOptions = [
-  { value: "title_sponsor", label: "Title Sponsor (from £10,000)" },
-  { value: "diamond", label: "Diamond (from £5,000)" },
-  { value: "platinum", label: "Platinum (from £3,000)" },
-  { value: "gold", label: "Gold (£2,000)" },
-  { value: "silver", label: "Silver (£1,000)" },
-  { value: "undecided", label: "Not sure yet" },
+  { value: "title_sponsor", label: "Title / headline partnership" },
+  { value: "diamond", label: "Major partnership" },
+  { value: "platinum", label: "Premium partnership" },
+  { value: "gold", label: "Brand partnership" },
+  { value: "silver", label: "Community partnership" },
+  { value: "undecided", label: "Not sure yet — please advise" },
 ] as const;
 
 export type SponsorTierInterest = (typeof sponsorTierOptions)[number]["value"];

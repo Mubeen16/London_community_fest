@@ -16,7 +16,7 @@ export const getInvolved = {
       description:
         "Connect your brand with thousands of engaged families across London",
       href: "/sponsors",
-      ctaLabel: "View packages →",
+      ctaLabel: "Partner with us →",
       buttonStyle: "crimson" as const,
     },
   ],

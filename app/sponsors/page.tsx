@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SponsorForm } from "@/components/forms/sponsor-form";
-import { SponsorTiersPageSection } from "@/components/landing/sponsor-tiers-page-section";
+import { SponsorPartnershipSection } from "@/components/landing/sponsor-partnership-section";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { SiteHeader } from "@/components/landing/site-header";
 import { BrandBar } from "@/components/ui/brand-bar";
@@ -13,14 +13,12 @@ import { sectionClasses } from "@/lib/section-theme";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Sponsorship Packages | London Community Fest",
+  title: "Partner with us | London Community Fest",
   description:
-    "Partner with London Community Fest 2026. Sponsorship packages from £1,000 to £10,000. Reach 2,000+ families at Kennington Park."
+    "Enquire about sponsoring London Community Fest 2026. Connect your brand with thousands of families at Kennington Park.",
 };
 
 export default function SponsorsPage() {
-  const pdfUrl = siteConfig.sponsorshipPdfUrl;
-
   return (
     <>
       <SiteHeader />
@@ -46,7 +44,7 @@ export default function SponsorsPage() {
 
         <BrandBar />
 
-        <SponsorTiersPageSection />
+        <SponsorPartnershipSection />
 
         <BrandBar />
 
@@ -56,7 +54,8 @@ export default function SponsorsPage() {
               theme="dark"
               align="center"
               label="Interested?"
-              title="Get in touch"
+              title="Start an enquiry"
+              description="Share a few details — we'll follow up with partnership options tailored to your organisation."
               className="mb-8"
             />
 
@@ -66,19 +65,6 @@ export default function SponsorsPage() {
             >
               <SponsorForm />
             </PaperCard>
-
-            {pdfUrl ? (
-              <p className="mt-6 text-center">
-                <Link
-                  href={pdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-sans text-sm font-semibold text-gold-400 underline-offset-2 hover:underline"
-                >
-                  Download our full sponsorship pack (PDF)
-                </Link>
-              </p>
-            ) : null}
 
             <p className="mt-6 text-center font-sans text-sm text-cream-muted">
               Prefer email?{" "}
