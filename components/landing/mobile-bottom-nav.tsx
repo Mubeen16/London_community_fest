@@ -36,7 +36,7 @@ export function MobileBottomNav() {
 
   return (
     <nav
-      className="fixed right-0 bottom-0 left-0 z-40 border-t border-cream/10 bg-forest-950 shadow-[0_-8px_32px_rgba(10,18,10,0.45)] lg:hidden"
+      className="fixed right-0 bottom-0 left-0 z-40 border-t border-cream/10 bg-crimson-600 shadow-[0_-8px_32px_rgba(94,12,28,0.45)] lg:hidden"
       aria-label="Mobile navigation"
     >
       <div className="pb-[env(safe-area-inset-bottom,0px)]">

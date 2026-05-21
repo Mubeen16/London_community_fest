@@ -25,12 +25,12 @@ function FooterColumnHeading({
   className,
 }: {
   children: React.ReactNode;
-  className: string;
+  className?: string;
 }) {
   return (
     <h3
       className={cn(
-        "mb-2.5 font-sans text-xs font-bold uppercase tracking-widest",
+        "mb-2.5 font-sans text-xs font-bold uppercase tracking-widest text-gold-400",
         className,
       )}
     >
@@ -50,7 +50,7 @@ function FooterLinkList({
         <li key={link.href}>
           <Link
             href={link.href}
-            className="text-sm text-cream-faint transition-colors hover:text-cream"
+            className="text-sm text-cream-muted transition-colors hover:text-gold-300"
           >
             {link.label}
           </Link>
@@ -70,90 +70,82 @@ export function SiteFooter({ clearMobileNav = false }: SiteFooterProps) {
     <footer
       className={cn(
         sectionClasses("footer"),
-        "pt-6 sm:pt-7 lg:py-7",
+        "pt-6 sm:pt-7 lg:py-8",
         clearMobileNav
-          ? "pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:pb-7"
-          : "pb-6 sm:pb-7 lg:pb-7",
+          ? "pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:pb-8"
+          : "pb-6 sm:pb-7 lg:pb-8",
       )}
     >
       <Container className="relative z-10">
-        <div className="mx-auto w-full max-w-5xl">
-          <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:gap-x-8 md:grid-cols-12 md:gap-y-6 md:items-start">
-            <div className="col-span-2 md:col-span-5">
-              <p className="font-serif text-base leading-tight sm:text-lg">
-                <span className="text-crimson-400">London</span>{" "}
-                <span className="text-cream">Community</span>{" "}
-                <span className="italic text-gold-400">Fest</span>
-              </p>
-              <p className="mt-2 max-w-[16rem] text-sm leading-snug text-cream-faint">
-                {siteConfig.description}
-              </p>
-              <p className="mt-1 max-w-[16rem] font-serif text-sm italic text-cream-muted">
-                {siteConfig.tagline}
-              </p>
-            </div>
+        <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8 md:grid-cols-12 md:gap-x-8 lg:gap-x-10">
+          <div className="sm:col-span-2 md:col-span-4">
+            <p className="mb-2.5 font-serif text-base leading-tight sm:text-lg">
+              <span className="text-gold-400">London</span>{" "}
+              <span className="text-cream">Community</span>{" "}
+              <span className="italic text-gold-400">Fest</span>
+            </p>
+            <p className="text-sm leading-snug text-cream-muted sm:max-w-xs">
+              {siteConfig.description}
+            </p>
+            <p className="mt-2 font-serif text-sm italic text-cream sm:max-w-xs">
+              {siteConfig.tagline}
+            </p>
+          </div>
 
-            <nav aria-label="Event" className="hidden md:col-span-2 md:block">
-              <FooterColumnHeading className="text-gold-400">
-                Event
-              </FooterColumnHeading>
-              <FooterLinkList links={eventLinks} />
-            </nav>
+          <nav aria-label="Event" className="md:col-span-2">
+            <FooterColumnHeading>Event</FooterColumnHeading>
+            <FooterLinkList links={eventLinks} />
+          </nav>
 
-            <nav aria-label="Get involved" className="hidden md:col-span-2 md:block">
-              <FooterColumnHeading className="text-crimson-400">
-                Get involved
-              </FooterColumnHeading>
-              <FooterLinkList links={getInvolvedLinks} />
-            </nav>
+          <nav aria-label="Get involved" className="md:col-span-2">
+            <FooterColumnHeading>Get involved</FooterColumnHeading>
+            <FooterLinkList links={getInvolvedLinks} />
+          </nav>
 
-            <div className="col-span-2 md:col-span-3">
-              <FooterColumnHeading className="text-gold-400">
-                Visit
-              </FooterColumnHeading>
-              <p className="text-sm text-cream-faint">
-                {eventConfig.venue.name}
-                <br />
-                {eventConfig.venue.address}
-              </p>
-              <p className="mt-2">
-                <VenueDirectionsLink theme="dark" />
-              </p>
+          <div className="md:col-span-2">
+            <FooterColumnHeading>Visit</FooterColumnHeading>
+            <p className="text-sm leading-snug text-cream-muted">
+              {eventConfig.venue.name}
+              <br />
+              {eventConfig.venue.address}
+            </p>
+            <p className="mt-2">
+              <VenueDirectionsLink theme="dark" />
+            </p>
+          </div>
 
-              <FooterColumnHeading className="mt-5 text-gold-400">
-                Contact
-              </FooterColumnHeading>
-              <ul className="space-y-1.5">
-                <li>
+          <div className="md:col-span-2">
+            <FooterColumnHeading>Contact</FooterColumnHeading>
+            <ul className="space-y-1.5">
+              <li>
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="text-sm text-cream-muted transition-colors hover:text-gold-300"
+                >
+                  {siteConfig.email}
+                </a>
+              </li>
+              {siteConfig.phone.map((number) => (
+                <li key={number}>
                   <a
-                    href={`mailto:${siteConfig.email}`}
-                    className="text-sm text-cream-faint transition-colors hover:text-cream"
+                    href={`tel:${number.replace(/\s/g, "")}`}
+                    className="text-sm text-cream-muted transition-colors hover:text-gold-300"
                   >
-                    {siteConfig.email}
+                    {number}
                   </a>
                 </li>
-                {siteConfig.phone.map((number) => (
-                  <li key={number}>
-                    <a
-                      href={`tel:${number.replace(/\s/g, "")}`}
-                      className="text-sm text-cream-faint transition-colors hover:text-cream"
-                    >
-                      {number}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              ))}
+            </ul>
           </div>
+        </div>
 
-          <div className="mt-5 flex flex-col gap-2 border-t border-cream/5 pt-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-[10px] leading-snug text-cream-faint md:text-xs">
-              © 2026 London Community Fest · {siteConfig.organisedBy}
-            </p>
-            <p className="break-words text-[10px] leading-snug text-cream-faint md:text-xs">
-              {siteValuesLine}
-            </p>
-          </div>
+        <div className="mt-8 flex flex-col gap-2 border-t border-cream/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[10px] leading-snug text-cream-muted md:text-xs">
+            © 2026 London Community Fest · {siteConfig.organisedBy}
+          </p>
+          <p className="break-words text-[10px] leading-snug text-cream-muted md:text-xs">
+            {siteValuesLine}
+          </p>
         </div>
       </Container>
     </footer>

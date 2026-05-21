@@ -29,8 +29,19 @@ export function headerBarClasses(scrolled: boolean) {
   );
 }
 
-export function headerBrandClasses(part: keyof typeof designConfig.sections.header.brand) {
+export function headerBrandClasses(
+  part: keyof typeof designConfig.sections.header.brand,
+) {
   return designConfig.sections.header.brand[part];
+}
+
+/** Nav link — underline on hover, no box border (premium on burgundy) */
+export function headerNavLinkClasses() {
+  return cn(
+    headerLinkClasses(),
+    "border-b-2 border-transparent pb-0.5 transition-colors",
+    "hover:border-gold-400 hover:text-cream",
+  );
 }
 
 export function headerLinkClasses() {

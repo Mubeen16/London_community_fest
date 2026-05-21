@@ -5,9 +5,6 @@ export const ticketCopy = {
   secondaryLabel: "Explore what's on",
   panelLabel: "Get tickets on Eventbrite",
   liveBadge: "Tickets live",
-  storyHeadline: "Be part of London's community celebration",
-  storySubtext:
-    "Culture, food, family activities, and connection — one unforgettable day in Kennington Park.",
   trustNote: "Secure checkout via Eventbrite",
   attendHeading: "Tickets & entry",
   attendIntro: "Adults from £3 · Under 10s free · One ticket covers the full festival day",

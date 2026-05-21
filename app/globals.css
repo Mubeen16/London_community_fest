@@ -56,6 +56,13 @@
   --color-cream-muted: rgba(240, 230, 208, 0.5);
   --color-cream-faint: rgba(240, 230, 208, 0.3);
 
+  /* Wood — diary / poster desk surface */
+  --color-wood-50: #e8dcc8;
+  --color-wood-100: #d9c4a8;
+  --color-wood-200: #c9a87a;
+  --color-wood-300: #a67c52;
+  --color-wood-800: #4a3228;
+
   --font-sans: var(--font-be-vietnam);
   --font-serif: var(--font-instrument-serif);
 }
@@ -72,6 +79,26 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Wood desk — poster-style surface behind diary sections */
+.wood-surface {
+  background-color: var(--color-wood-100);
+  background-image:
+    linear-gradient(
+      175deg,
+      var(--color-wood-50) 0%,
+      var(--color-wood-100) 35%,
+      var(--color-wood-200) 70%,
+      var(--color-wood-300) 100%
+    ),
+    repeating-linear-gradient(
+      93deg,
+      rgba(74, 50, 40, 0.06) 0px,
+      transparent 3px,
+      transparent 14px,
+      rgba(74, 50, 40, 0.04) 15px
+    );
 }
 
 .poster-grain {

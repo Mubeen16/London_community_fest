@@ -19,7 +19,7 @@ export function Polaroid({
   return (
     <figure
       className={cn(
-        "relative flex h-full flex-col bg-paper-50 p-2 pb-7 shadow-xl shadow-forest-950/40",
+        "relative flex h-full flex-col bg-paper-50 p-2 pb-7 shadow-xl shadow-black/25",
         rotate,
         className,
       )}

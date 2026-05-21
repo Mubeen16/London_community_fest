@@ -9,8 +9,9 @@ import {
   TrainIcon,
 } from "@/components/landing/attend-detail-icons";
 import { eventConfig } from "@/lib/config/event";
-import { sectionAccent, sectionClasses, sectionHeadingTheme } from "@/lib/section-theme";
-import { Container } from "@/components/ui/container";
+import { homepageSections } from "@/lib/config/landing-layout";
+import { sectionAccent, sectionHeadingTheme } from "@/lib/section-theme";
+import { LandingSection } from "@/components/ui/landing-section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { VenueDirectionsLink } from "@/components/ui/venue-directions-link";
 import { cn } from "@/lib/utils";
@@ -64,9 +65,11 @@ function formatStations(stations: readonly string[]) {
   return `${names.join(" · ")} (Northern)`;
 }
 
+const { id, theme, label } = homepageSections.attend;
+
 export function AttendSection() {
   const { venue, pricing } = eventConfig;
-  const accent = sectionAccent("attend");
+  const accent = sectionAccent(theme);
   const showWaitlist = !isTicketSalesOpen();
   const showTicketButton = isTicketSalesOpen();
   const childPrice =
@@ -75,19 +78,19 @@ export function AttendSection() {
       : pricing.child.display;
 
   return (
-    <section id="attend" className={sectionClasses("attend", "py-8 sm:py-10")}>
-      <Container className="relative z-10">
-        <div className="rounded-xl border border-cream/10 bg-crimson-600/40 p-4 sm:p-5 lg:p-6">
-          <SectionHeading
-            compact
-            align="left"
-            theme={sectionHeadingTheme("attend")}
-            label="Attend"
-            title={`Join us at ${venue.name}`}
-            description={eventConfig.attendTagline}
-          />
+    <LandingSection id={id} section={theme}>
+      <div className="rounded-xl border border-cream/10 bg-crimson-600/40 p-4 sm:p-5 lg:p-6">
+        <SectionHeading
+          compact
+          align="left"
+          titleId={`${id}-title`}
+          theme={sectionHeadingTheme(theme)}
+          label={label}
+          title={`Join us at ${venue.name}`}
+          description={eventConfig.attendTagline}
+        />
 
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <AttendPanelCard className="px-3 py-4 text-center sm:py-5">
@@ -159,18 +162,17 @@ export function AttendSection() {
                 )}
               </div>
             )}
-          </div>
+        </div>
 
-          <p className="mt-5 border-t border-cream/10 pt-4 text-center sm:text-left">
+        <p className="mt-5 border-t border-cream/10 pt-4 text-center sm:text-left">
             <Link
               href="#faq"
               className="font-sans text-sm font-semibold text-gold-400 transition-colors hover:text-gold-300"
             >
               Questions? Read the FAQ
             </Link>
-          </p>
-        </div>
-      </Container>
-    </section>
+        </p>
+      </div>
+    </LandingSection>
   );
 }

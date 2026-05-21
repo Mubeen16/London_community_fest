@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 interface SectionHeadingProps {
   label: string;
   title: string;
+  titleId?: string;
   description?: string;
   align?: "left" | "center";
   theme?: "light" | "dark";
@@ -13,6 +14,7 @@ interface SectionHeadingProps {
 export function SectionHeading({
   label,
   title,
+  titleId,
   description,
   align = "left",
   theme = "light",
@@ -33,6 +35,7 @@ export function SectionHeading({
         {label}
       </p>
       <h2
+        id={titleId}
         className={cn(
           "mt-2 font-serif",
           isDark ? "text-cream" : "text-ink",

@@ -1,36 +1,35 @@
 import { eventConfig } from "@/lib/config/event";
+import { homepageSections } from "@/lib/config/landing-layout";
 import { isTicketSalesOpen } from "@/lib/config/tickets";
 import { ExperienceCarousel } from "@/components/landing/experience-carousel";
-import { Container } from "@/components/ui/container";
+import { LandingSection } from "@/components/ui/landing-section";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { sectionClasses, sectionHeadingTheme } from "@/lib/section-theme";
+import { sectionHeadingTheme } from "@/lib/section-theme";
+
+const { id, theme, label, title, description } = homepageSections.whatsOn;
 
 export function CollageSection() {
   return (
-    <section
-      id="whats-on"
-      className={sectionClasses("collage", "py-12 sm:py-14")}
-    >
-      <Container className="relative z-10">
-        <SectionHeading
-          theme={sectionHeadingTheme("collage")}
-          label="What's on"
-          title="The experience"
-          description="Culture, connection, learning, and family fun — thoughtfully curated across the park."
-        />
+    <LandingSection id={id} section={theme}>
+      <SectionHeading
+        titleId={`${id}-title`}
+        theme={sectionHeadingTheme(theme)}
+        label={label}
+        title={title}
+        description={description}
+      />
 
-        <ExperienceCarousel />
+      <ExperienceCarousel />
 
-        <p className="mt-8 text-center font-sans text-sm text-cream-muted">
-          {eventConfig.venue.name} · {eventConfig.expectedAttendance} expected
+      <p className="mt-8 text-center font-sans text-sm text-ink-muted">
+        {eventConfig.venue.name} · {eventConfig.expectedAttendance} expected
+      </p>
+
+      {isTicketSalesOpen() ? (
+        <p className="mt-8 border-t border-paper-300 pt-8 text-center font-sans text-sm text-ink-muted">
+          Every experience above is included with your festival ticket.
         </p>
-
-        {isTicketSalesOpen() ? (
-          <p className="mt-8 border-t border-cream/10 pt-8 text-center font-sans text-sm text-cream-muted">
-            Every experience above is included with your festival ticket.
-          </p>
-        ) : null}
-      </Container>
-    </section>
+      ) : null}
+    </LandingSection>
   );
 }

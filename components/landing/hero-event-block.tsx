@@ -24,12 +24,18 @@ function HeroDetailBox({
   secondaryValue,
   action,
   className,
+  labelClassName,
+  valueClassName,
+  secondaryClassName,
 }: {
   label: string;
   value: string;
   secondaryValue?: string;
   action?: ReactNode;
   className?: string;
+  labelClassName?: string;
+  valueClassName?: string;
+  secondaryClassName?: string;
 }) {
   return (
     <PaperCard
@@ -39,9 +45,11 @@ function HeroDetailBox({
       )}
       torn
     >
-      <p className={paperLabel}>{label}</p>
-      <p className={paperValue}>{value}</p>
-      {secondaryValue ? <p className={paperMuted}>{secondaryValue}</p> : null}
+      <p className={cn(paperLabel, labelClassName)}>{label}</p>
+      <p className={cn(paperValue, valueClassName)}>{value}</p>
+      {secondaryValue ? (
+        <p className={cn(paperMuted, secondaryClassName)}>{secondaryValue}</p>
+      ) : null}
       {action}
     </PaperCard>
   );
@@ -53,18 +61,20 @@ function HeroEntryBox({ className }: { className?: string }) {
   return (
     <PaperCard
       className={cn(
-        "relative flex min-h-[7rem] flex-col justify-center gap-2 px-4 py-4 sm:min-h-[8.5rem]",
+        "relative flex min-h-[8rem] flex-col items-center justify-center gap-2 px-5 py-5 text-center sm:min-h-[9.5rem]",
         className,
       )}
       torn
     >
-      <p className={paperLabel}>Entry</p>
-      <p className="font-sans text-ink">
-        Adults ({pricing.adult.ageRange}):{" "}
+      <p className={cn(paperLabel, "text-xl font-extrabold uppercase sm:text-2xl")}>
+        Entry
+      </p>
+      <p className="font-sans text-lg font-semibold text-ink sm:text-xl">
+        Adults ({pricing.adult.ageRange}) —{" "}
         <span className={paperPrice}>{pricing.adult.display}</span>
       </p>
-      <p className={paperMuted}>
-        Children ({pricing.child.ageRange}): {pricing.child.display}
+      <p className="font-sans text-lg font-semibold text-ink sm:text-xl">
+        Children {pricing.child.ageRange} — Free
       </p>
     </PaperCard>
   );
@@ -73,7 +83,8 @@ function HeroEntryBox({ className }: { className?: string }) {
 export function HeroEventBlock({ className }: { className?: string }) {
   const { venue } = eventConfig;
   const { weekday, day, month, year } = parseHeroDate(eventConfig.dateDisplay);
-  const locationLine = `${venue.name}, London ${venue.postcode.split(" ")[0]}`;
+  const locationLine = venue.name;
+  const locationDetail = `London ${venue.postcode}`;
 
   return (
     <div
@@ -83,26 +94,41 @@ export function HeroEventBlock({ className }: { className?: string }) {
       )}
     >
       <PaperCard
-        className="relative flex min-h-[7rem] flex-col justify-center px-5 py-4 min-[420px]:col-span-2 sm:min-h-[8.5rem] md:col-span-1"
+        className="relative flex min-h-[8rem] flex-col items-center justify-center px-5 py-5 text-center min-[420px]:col-span-2 sm:min-h-[9.5rem] md:col-span-1"
         torn
       >
         <span className="tape-strip" aria-hidden />
-        <p className="font-sans text-xs font-semibold uppercase tracking-[0.25em] text-ink-muted">
+        <p className="font-sans text-lg font-semibold uppercase tracking-[0.2em] text-ink-muted">
           {weekday}
         </p>
-        <p className="mt-1 font-sans text-xl font-bold uppercase tracking-wide text-crimson-400 sm:text-2xl">
+        <p className="mt-1 font-sans text-4xl font-bold uppercase tracking-wide text-crimson-400 sm:text-5xl">
           {day} {month}
         </p>
-        <p className="font-serif text-3xl font-bold text-ink sm:text-4xl">{year}</p>
+        <p className="font-serif text-6xl font-bold leading-none text-ink sm:text-7xl">{year}</p>
       </PaperCard>
 
-      <HeroDetailBox label="Time" value={eventConfig.timeDisplay} />
+      <HeroDetailBox
+        label="Time"
+        value={eventConfig.timeDisplay}
+        className="min-h-[8rem] items-center justify-center gap-2 px-5 py-5 text-center sm:min-h-[9.5rem]"
+        labelClassName="text-xl font-extrabold sm:text-2xl"
+        valueClassName="text-3xl font-bold leading-snug tracking-tight sm:text-4xl"
+      />
 
       <HeroDetailBox
         label="Location"
         value={locationLine}
-        secondaryValue={venue.address}
-        action={<VenueDirectionsLink theme="light" className="mt-1" />}
+        secondaryValue={locationDetail}
+        className="min-h-[8rem] items-center justify-center gap-2 px-5 py-5 text-center sm:min-h-[9.5rem]"
+        labelClassName="text-xl font-extrabold sm:text-2xl"
+        valueClassName="text-2xl font-bold sm:text-3xl"
+        secondaryClassName="text-ink text-lg font-semibold sm:text-xl"
+        action={
+          <VenueDirectionsLink
+            theme="light"
+            className="mt-1 inline-flex justify-center"
+          />
+        }
       />
 
       <HeroEntryBox className="min-[420px]:col-span-2 md:col-span-1" />

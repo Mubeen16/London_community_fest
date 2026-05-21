@@ -27,7 +27,7 @@ export function HeroSection() {
       )}
     >
       <Container className="relative z-10">
-        <div>
+        <div className="mx-auto max-w-4xl text-center">
           {ticketsOpen ? (
             <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold-300/40 bg-gold-400/10 px-3 py-1 font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-gold-300">
               <span className="size-1.5 rounded-full bg-gold-400" aria-hidden />
@@ -35,23 +35,26 @@ export function HeroSection() {
             </p>
           ) : null}
 
-          <h1 className="font-sans text-4xl font-extrabold uppercase leading-[0.95] tracking-[0.08em] sm:text-6xl sm:tracking-[0.12em] md:text-7xl">
-            <span className="text-crimson-400">London</span>
+          <h1 className="font-sans text-5xl font-extrabold uppercase leading-[0.92] tracking-[0.08em] sm:text-7xl sm:tracking-[0.12em] md:text-8xl">
+            <span className="text-gold-400">London</span>
             <br />
             <span className="text-cream">Community</span>
           </h1>
-          <p className="relative z-10 -mt-1 font-serif text-5xl italic text-gold-400 sm:-mt-3 sm:text-8xl md:text-9xl">
+          <p className="relative z-10 mt-0.5 font-serif text-7xl italic leading-[0.88] text-gold-400 sm:mt-1 sm:text-[10rem] md:mt-2 md:text-[12rem]">
             Fest
           </p>
 
           <p className="mt-4 font-serif text-xl italic text-cream-muted sm:text-2xl">
             {siteConfig.tagline}
           </p>
-          <p className="mt-2 max-w-xl font-sans text-sm leading-relaxed text-cream-muted sm:text-base">
+          <p className="mx-auto mt-2 max-w-xl font-sans text-sm leading-relaxed text-cream-muted sm:text-base">
             {siteConfig.description}
           </p>
 
-          <ul className="mt-5 flex flex-wrap gap-2" aria-label="Event highlights">
+          <ul
+            className="mt-5 flex flex-wrap justify-center gap-2"
+            aria-label="Event highlights"
+          >
             {proofChips.map((chip) => (
               <li
                 key={chip.label}
@@ -63,7 +66,7 @@ export function HeroSection() {
             ))}
           </ul>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row sm:items-center">
             {ticketsOpen ? (
               <>
                 <TicketCta trackingMedium="hero" />
@@ -98,10 +101,11 @@ export function HeroSection() {
             </p>
           ) : null}
 
-          <HeroEventBlock />
-
-          <HeroCountdown className="mt-6" />
         </div>
+
+        <HeroEventBlock className="mt-10" />
+
+        <HeroCountdown className="mx-auto mt-8 max-w-2xl" />
       </Container>
     </section>
   );

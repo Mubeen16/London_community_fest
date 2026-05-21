@@ -10,8 +10,8 @@ import {
   headerBarClasses,
   headerBrandClasses,
   headerCtaClasses,
-  headerLinkClasses,
   headerMobileLinkClasses,
+  headerNavLinkClasses,
   headerMobilePanelClasses,
 } from "@/lib/section-theme";
 import { Container } from "@/components/ui/container";
@@ -53,10 +53,10 @@ export function SiteHeader() {
         headerBarClasses(scrolled),
         "border-b border-transparent transition-all duration-300",
         scrolled &&
-          "border-cream/10 bg-forest-900/85 shadow-[0_10px_30px_rgba(8,14,10,0.45)] backdrop-blur-xl",
+          "border-cream/10 bg-crimson-600/90 shadow-[0_10px_30px_rgba(94,12,28,0.4)] backdrop-blur-xl",
       )}
     >
-      <Container className="flex h-14 w-full items-center justify-between gap-4">
+      <div className="flex h-14 w-full items-center gap-3 px-4 sm:px-6 lg:gap-4 lg:px-8">
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2"
@@ -68,65 +68,54 @@ export function SiteHeader() {
             width={32}
             height={32}
             priority
-            className="h-8 w-auto"
+            className="h-8 w-auto shrink-0"
           />
-          <span className="hidden font-serif text-lg sm:inline">
-            <span className={headerBrandClasses("crimson")}>London</span>{" "}
+          <span className="hidden truncate font-serif text-lg sm:inline">
+            <span className={headerBrandClasses("gold")}>London</span>{" "}
             <span className={headerBrandClasses("cream")}>Community</span>{" "}
-            <span className={headerBrandClasses("gold")}>Fest</span>
+            <span className={headerBrandClasses("fest")}>Fest</span>
           </span>
         </Link>
 
         <nav
-          className="hidden flex-1 items-center justify-end gap-5 lg:flex xl:gap-6"
+          className="hidden min-w-0 flex-1 items-center justify-evenly lg:flex"
           aria-label="Main"
         >
-          {eventNavLinks.map((link) => (
+          {navigationLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={cn("text-sm transition-colors", headerLinkClasses())}
+              className={cn(
+                "px-1 text-center text-sm whitespace-nowrap",
+                headerNavLinkClasses(),
+              )}
             >
               {link.label}
             </Link>
           ))}
-          <div className="hidden items-center gap-4 xl:flex">
-            <span className="h-5 w-px bg-cream/15" aria-hidden />
-            {involvedNavLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "text-xs font-semibold uppercase tracking-wide text-cream-muted transition-colors hover:text-cream",
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
         </nav>
 
-        {ticketsOpen ? (
-          <TicketCta
-            trackingMedium="navbar"
-            className="hidden min-w-[10.75rem] shrink-0 px-7 lg:inline-flex"
-          />
-        ) : (
-          <Link
-            href={ctaHref}
-            className={cn(
-              headerCtaClasses(),
-              "hidden min-w-[10.75rem] shrink-0 px-7 lg:inline-flex",
-            )}
-          >
-            {ctaLabel}
-          </Link>
-        )}
+        <div className="ml-auto flex shrink-0 items-center gap-3">
+          {ticketsOpen ? (
+            <TicketCta
+              trackingMedium="navbar"
+              className="hidden shrink-0 px-5 lg:inline-flex xl:px-6"
+            />
+          ) : (
+            <Link
+              href={ctaHref}
+              className={cn(
+                headerCtaClasses(),
+                "hidden shrink-0 whitespace-nowrap px-5 lg:inline-flex xl:px-6",
+              )}
+            >
+              {ctaLabel}
+            </Link>
+          )}
 
-        <div className="flex items-center lg:hidden">
           <button
             type="button"
-            className="relative flex min-h-11 min-w-11 items-center justify-center rounded-md border border-cream/10 bg-cream/5"
+            className="relative flex min-h-11 min-w-11 items-center justify-center rounded-md border border-cream/10 bg-cream/5 lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -152,12 +141,12 @@ export function SiteHeader() {
             />
           </button>
         </div>
-      </Container>
+      </div>
 
       {mobileOpen ? (
         <nav
           id="mobile-nav"
-          className={cn(headerMobilePanelClasses(), "shadow-lg shadow-forest-950/50")}
+          className={cn(headerMobilePanelClasses(), "shadow-lg shadow-crimson-950/50")}
           aria-label="Mobile menu"
         >
           <Container className="py-5">

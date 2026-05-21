@@ -5,36 +5,37 @@
 export const designConfig = {
   sections: {
     header: {
-      bg: "bg-forest-950",
+      bg: "bg-crimson-600",
       text: "text-cream",
       accent: "text-gold-400",
       grain: false,
       link: "text-cream-muted",
       linkHover: "hover:text-cream",
       linkMobileHover: "hover:text-gold-400",
-      border: "border-cream/5",
+      border: "border-cream/10",
       bar: {
-        default: "border-b border-cream/10 bg-forest-950/95 backdrop-blur-sm",
-        scrolled: "border-b border-cream/15 bg-forest-950 backdrop-blur-md",
+        default: "border-b border-cream/10 bg-crimson-600/95 backdrop-blur-sm",
+        scrolled:
+          "border-b border-cream/15 bg-crimson-600 shadow-[0_10px_30px_rgba(94,12,28,0.4)] backdrop-blur-md",
       },
       brand: {
-        crimson: "text-crimson-400",
+        gold: "text-gold-400",
         cream: "text-cream",
-        gold: "italic text-gold-400",
+        fest: "italic text-gold-400",
       },
       cta: "bg-crimson-400 text-cream hover:bg-crimson-500",
     },
     hero: {
-      bg: "bg-forest-900",
+      bg: "bg-crimson-600",
       text: "text-cream",
       accent: "text-gold-400",
       grain: true,
     },
     collage: {
-      bg: "bg-forest-800",
-      text: "text-cream",
-      accent: "text-gold-400",
-      grain: true,
+      bg: "bg-paper-100",
+      text: "text-ink",
+      accent: "text-crimson-400",
+      grain: false,
     },
     about: {
       bg: "bg-paper-200",
@@ -61,10 +62,10 @@ export const designConfig = {
       grain: false,
     },
     getInvolved: {
-      bg: "bg-forest-900",
-      text: "text-cream",
-      accent: "text-gold-400",
-      grain: true,
+      bg: "bg-paper-200",
+      text: "text-ink",
+      accent: "text-crimson-400",
+      grain: false,
     },
     sponsors: {
       bg: "bg-forest-900",
@@ -73,20 +74,20 @@ export const designConfig = {
       grain: true,
     },
     faq: {
-      bg: "bg-forest-800",
-      text: "text-cream",
+      bg: "bg-paper-100",
+      text: "text-ink",
+      accent: "text-crimson-400",
+      grain: false,
+    },
+    footer: {
+      bg: "bg-crimson-600",
+      text: "text-cream-muted",
       accent: "text-gold-400",
       grain: true,
     },
-    footer: {
-      bg: "bg-forest-950",
-      text: "text-cream-faint",
-      accent: "text-gold-400",
-      grain: false,
-    },
   },
   brandBar: {
-    colors: ["bg-crimson-400", "bg-gold-400", "bg-forest-600", "bg-slate-500"],
+    colors: ["bg-crimson-400", "bg-gold-400", "bg-crimson-600", "bg-slate-500"],
     height: "h-1",
   },
 } as const;

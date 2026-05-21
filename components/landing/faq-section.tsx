@@ -1,9 +1,12 @@
 import { getFaqItems } from "@/data/faq";
 import { FaqAccordion } from "@/components/landing/faq-accordion";
-import { sectionClasses, sectionHeadingTheme } from "@/lib/section-theme";
-import { Container } from "@/components/ui/container";
+import { homepageSections } from "@/lib/config/landing-layout";
+import { LandingSection } from "@/components/ui/landing-section";
 import { PaperCard } from "@/components/ui/paper-card";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { sectionHeadingTheme } from "@/lib/section-theme";
+
+const { id, theme, label, title, description } = homepageSections.faq;
 
 interface FaqSectionProps {
   title?: string;
@@ -11,28 +14,27 @@ interface FaqSectionProps {
 }
 
 export function FaqSection({
-  title = "Good to know",
-  description = "Quick answers before you visit.",
+  title: titleOverride,
+  description: descriptionOverride,
 }: FaqSectionProps) {
   const items = getFaqItems();
   const midpoint = Math.ceil(items.length / 2);
   const columns = [items.slice(0, midpoint), items.slice(midpoint)];
 
   return (
-    <section id="faq" className={sectionClasses("faq", "py-10 sm:py-12")}>
-      <Container size="narrow" className="relative z-10">
-        <SectionHeading
-          align="center"
-          theme={sectionHeadingTheme("faq")}
-          label="FAQ"
-          title={title}
-          description={description}
-        />
+    <LandingSection id={id} section={theme} containerSize="narrow">
+      <SectionHeading
+        align="center"
+        titleId={`${id}-title`}
+        theme={sectionHeadingTheme(theme)}
+        label={label}
+        title={titleOverride ?? title}
+        description={descriptionOverride ?? description}
+      />
 
-        <PaperCard torn={false} className="overflow-hidden rounded-xl">
-          <FaqAccordion columns={columns} />
-        </PaperCard>
-      </Container>
-    </section>
+      <PaperCard torn={false} className="overflow-hidden rounded-xl">
+        <FaqAccordion columns={columns} />
+      </PaperCard>
+    </LandingSection>
   );
 }

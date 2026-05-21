@@ -23,8 +23,8 @@ function ExperienceCard({ item }: ExperienceCardProps) {
     <figure
       className={cn(
         "group relative flex w-full flex-col overflow-hidden bg-paper-50 p-1.5",
-        "shadow-xl shadow-forest-950/40 ring-1 ring-ink/5",
-        "transition-shadow duration-200 md:hover:shadow-2xl md:hover:shadow-forest-950/50",
+        "shadow-xl shadow-black/25 ring-1 ring-ink/5",
+        "transition-shadow duration-200 md:hover:shadow-2xl md:hover:shadow-black/35",
       )}
     >
       <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-forest-900">
@@ -254,7 +254,7 @@ export function ExperienceCarousel() {
 
   return (
     <div className="mt-8">
-      <p className="text-center font-sans text-xs font-semibold uppercase tracking-[0.3em] text-gold-400">
+      <p className="text-center font-sans text-xs font-semibold uppercase tracking-[0.3em] text-crimson-400">
         Programme
       </p>
 
@@ -270,11 +270,11 @@ export function ExperienceCarousel() {
         }}
       >
         <div
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-forest-800 to-transparent sm:w-16"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-paper-100 to-transparent sm:w-16"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-forest-800 to-transparent sm:w-16"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-paper-100 to-transparent sm:w-16"
           aria-hidden
         />
 

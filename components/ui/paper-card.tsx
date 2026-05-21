@@ -10,7 +10,7 @@ export function PaperCard({ children, className, torn = true }: PaperCardProps) 
   return (
     <div
       className={cn(
-        "bg-paper-100 text-ink shadow-lg shadow-forest-950/30",
+        "bg-paper-50 text-ink shadow-lg shadow-black/20",
         torn && "paper-torn",
         className,
       )}

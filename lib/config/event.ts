@@ -1,8 +1,8 @@
 export const eventConfig = {
   name: "London Community Fest 2026",
-  date: new Date("2026-07-12T11:00:00+01:00"),
+  date: new Date("2026-07-12T10:00:00+01:00"),
   dateDisplay: "Sunday, 12 July 2026",
-  timeDisplay: "11am – 7pm",
+  timeDisplay: "10am – 6pm",
   venue: {
     name: "Kennington Park",
     address: "Kennington Park Road, London SE11 4AX",
