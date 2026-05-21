@@ -1,5 +1,7 @@
+import type { ReactNode } from "react";
 import { eventConfig } from "@/lib/config/event";
 import { PaperCard } from "@/components/ui/paper-card";
+import { VenueDirectionsLink } from "@/components/ui/venue-directions-link";
 import { cn } from "@/lib/utils";
 
 const paperLabel =
@@ -20,11 +22,13 @@ function HeroDetailBox({
   label,
   value,
   secondaryValue,
+  action,
   className,
 }: {
   label: string;
   value: string;
   secondaryValue?: string;
+  action?: ReactNode;
   className?: string;
 }) {
   return (
@@ -38,6 +42,7 @@ function HeroDetailBox({
       <p className={paperLabel}>{label}</p>
       <p className={paperValue}>{value}</p>
       {secondaryValue ? <p className={paperMuted}>{secondaryValue}</p> : null}
+      {action}
     </PaperCard>
   );
 }
@@ -93,7 +98,12 @@ export function HeroEventBlock({ className }: { className?: string }) {
 
       <HeroDetailBox label="Time" value={eventConfig.timeDisplay} />
 
-      <HeroDetailBox label="Location" value={locationLine} />
+      <HeroDetailBox
+        label="Location"
+        value={locationLine}
+        secondaryValue={venue.address}
+        action={<VenueDirectionsLink theme="light" className="mt-1" />}
+      />
 
       <HeroEntryBox className="min-[420px]:col-span-2 md:col-span-1" />
 

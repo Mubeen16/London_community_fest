@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { FAQItem } from "@/types";
+import { VenueDirectionsLink } from "@/components/ui/venue-directions-link";
 import { sectionAccent } from "@/lib/section-theme";
 import { cn } from "@/lib/utils";
 
@@ -12,12 +13,14 @@ interface FaqAccordionProps {
 function FaqAccordionItem({
   question,
   answer,
+  directionsLink,
   isOpen,
   onToggle,
   accent,
 }: {
   question: string;
   answer: string;
+  directionsLink?: boolean;
   isOpen: boolean;
   onToggle: () => void;
   accent: string;
@@ -46,9 +49,14 @@ function FaqAccordionItem({
             </span>
           </span>
         </summary>
-        <p className="border-t border-paper-300 px-4 pb-3 pt-2 font-sans text-sm leading-relaxed text-ink-muted sm:px-5">
-          {answer}
-        </p>
+        <div className="border-t border-paper-300 px-4 pb-3 pt-2 sm:px-5">
+          <p className="font-sans text-sm leading-relaxed text-ink-muted">{answer}</p>
+          {directionsLink ? (
+            <p className="mt-2">
+              <VenueDirectionsLink theme="light" />
+            </p>
+          ) : null}
+        </div>
       </details>
     </li>
   );
@@ -77,6 +85,7 @@ export function FaqAccordion({ columns }: FaqAccordionProps) {
               key={item.question}
               question={item.question}
               answer={item.answer}
+              directionsLink={item.directionsLink}
               isOpen={openQuestion === item.question}
               onToggle={() => handleToggle(item.question)}
               accent={accent}

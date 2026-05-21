@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { eventConfig } from "@/lib/config/event";
 import { navigationLinks } from "@/lib/config/navigation";
 import { siteConfig, siteValuesLine } from "@/lib/config/site";
+import { VenueDirectionsLink } from "@/components/ui/venue-directions-link";
 import { sectionClasses } from "@/lib/section-theme";
 import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/utils";
@@ -107,6 +109,18 @@ export function SiteFooter({ clearMobileNav = false }: SiteFooterProps) {
 
             <div className="col-span-2 md:col-span-3">
               <FooterColumnHeading className="text-gold-400">
+                Visit
+              </FooterColumnHeading>
+              <p className="text-sm text-cream-faint">
+                {eventConfig.venue.name}
+                <br />
+                {eventConfig.venue.address}
+              </p>
+              <p className="mt-2">
+                <VenueDirectionsLink theme="dark" />
+              </p>
+
+              <FooterColumnHeading className="mt-5 text-gold-400">
                 Contact
               </FooterColumnHeading>
               <ul className="space-y-1.5">

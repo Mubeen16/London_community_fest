@@ -21,6 +21,7 @@ export const faqItems: FAQItem[] = [
     question: "How do I get there?",
     answer:
       "Kennington Park is a 5-minute walk from Oval station and Kennington station, both on the Northern line. Street parking is available nearby, and there are bike racks at the park entrance.",
+    directionsLink: true,
   },
   {
     question: "Is there wheelchair access?",

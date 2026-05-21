@@ -1,6 +1,8 @@
 export interface FAQItem {
   question: string;
   answer: string;
+  /** Show Google Maps directions link below the answer (transport FAQ). */
+  directionsLink?: boolean;
 }
 
 export interface Activity {

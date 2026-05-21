@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Sponsorship Packages | London Community Fest",
   description:
-    "Partner with London Community Fest 2026. Sponsorship packages from £1,000 to £10,000. Reach 4,000+ families at Kennington Park."
+    "Partner with London Community Fest 2026. Sponsorship packages from £1,000 to £10,000. Reach 2,000+ families at Kennington Park."
 };
 
 export default function SponsorsPage() {

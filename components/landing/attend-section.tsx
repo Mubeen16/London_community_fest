@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { WaitlistForm } from "@/components/forms/waitlist-form";
+import { TicketCta } from "@/components/ui/ticket-cta";
+import { isTicketSalesOpen, ticketCopy } from "@/lib/config/tickets";
 import {
   CalendarIcon,
   MapPinIcon,
@@ -10,6 +12,7 @@ import { eventConfig } from "@/lib/config/event";
 import { sectionAccent, sectionClasses, sectionHeadingTheme } from "@/lib/section-theme";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { VenueDirectionsLink } from "@/components/ui/venue-directions-link";
 import { cn } from "@/lib/utils";
 
 function AttendPanelCard({
@@ -35,10 +38,12 @@ function AttendInfoRow({
   icon,
   title,
   detail,
+  action,
 }: {
   icon: ReactNode;
   title: string;
   detail: string;
+  action?: ReactNode;
 }) {
   return (
     <AttendPanelCard className="flex items-start gap-2.5 px-3 py-2.5 sm:py-3">
@@ -48,6 +53,7 @@ function AttendInfoRow({
         <p className="mt-0.5 font-sans text-[11px] leading-snug text-cream-muted sm:text-xs">
           {detail}
         </p>
+        {action ? <div className="mt-1.5">{action}</div> : null}
       </div>
     </AttendPanelCard>
   );
@@ -61,8 +67,8 @@ function formatStations(stations: readonly string[]) {
 export function AttendSection() {
   const { venue, pricing } = eventConfig;
   const accent = sectionAccent("attend");
-  const showWaitlist = !eventConfig.registrationOpen;
-  const showTicketButton = eventConfig.registrationOpen;
+  const showWaitlist = !isTicketSalesOpen();
+  const showTicketButton = isTicketSalesOpen();
   const childPrice =
     pricing.child.display.toLowerCase() === "free"
       ? "FREE"
@@ -112,6 +118,7 @@ export function AttendSection() {
                   icon={<MapPinIcon />}
                   title={venue.name}
                   detail={venue.postcode ? `London ${venue.postcode}` : venue.address}
+                  action={<VenueDirectionsLink theme="dark" />}
                 />
                 <AttendInfoRow
                   icon={<TrainIcon />}
@@ -126,16 +133,12 @@ export function AttendSection() {
                 {showTicketButton ? (
                   <>
                     <h3 className="mb-3 font-sans text-sm font-semibold text-cream">
-                      Tickets are now live
+                      {ticketCopy.liveBadge}
                     </h3>
-                    <a
-                      href={eventConfig.ticketUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex w-full items-center justify-center rounded-xl border border-cream/20 bg-cream px-6 py-3 text-sm font-semibold text-forest-900 transition-colors hover:bg-paper-50 md:w-auto"
-                    >
-                      Get tickets on Eventbrite
-                    </a>
+                    <TicketCta trackingMedium="attend" variant="panel" />
+                    <p className="mt-2 font-sans text-xs text-cream-faint">
+                      {ticketCopy.trustNote}
+                    </p>
                   </>
                 ) : (
                   <>

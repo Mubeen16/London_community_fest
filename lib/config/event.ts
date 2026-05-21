@@ -15,6 +15,11 @@ export const eventConfig = {
       "No dedicated festival car park. Limited on-street parking nearby; we strongly recommend public transport. Oval and Kennington stations are a short walk from the park.",
     accessibility:
       "Level access from Kennington Park Road. Paved paths throughout the main event area. Accessible toilets on site. If you need assistance on the day, visit the information tent near the main entrance.",
+    mapsDirectionsUrl:
+      "https://www.google.com/maps/dir//Kennington+Park,+Kennington+Park+Rd,+London+SE11+4BE",
+    mapsPlaceUrl:
+      "https://www.google.com/maps/search/?api=1&query=Kennington+Park,+Kennington+Park+Rd,+London+SE11+4AX",
+    directionsLabel: "Get directions",
   },
   pricing: {
     adult: {
@@ -35,6 +40,6 @@ export const eventConfig = {
   registrationOpen: true,
   ticketUrl:
     "https://www.eventbrite.co.uk/e/london-community-fest-2026-tickets-1990051365204?aff=ebdsoporgprofile&_gl=1*1tnr8tc*_up*MQ..*_ga*NDE5Njg1OTYzLjE3NzkzMjE4MTE.*_ga_TQVES5V6SH*czE3NzkzMjE4MTAkbzEkZzAkdDE3NzkzMjE4MTAkajYwJGwwJGgw",
-  expectedAttendance: "4,000+",
+  expectedAttendance: "2,000+",
   foodStallCount: "10+",
 } as const;
