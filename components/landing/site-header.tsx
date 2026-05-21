@@ -27,6 +27,7 @@ export function SiteHeader() {
   const ctaLabel = eventConfig.registrationOpen
     ? "Get tickets"
     : "Plan your visit";
+  const ctaHref = eventConfig.registrationOpen ? eventConfig.ticketUrl : "/#attend";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -79,9 +80,20 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
-          <Link href="/#attend" className={headerCtaClasses()}>
-            {ctaLabel}
-          </Link>
+          {eventConfig.registrationOpen ? (
+            <a
+              href={ctaHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={headerCtaClasses()}
+            >
+              {ctaLabel}
+            </a>
+          ) : (
+            <Link href={ctaHref} className={headerCtaClasses()}>
+              {ctaLabel}
+            </Link>
+          )}
         </nav>
 
         <button
@@ -160,13 +172,25 @@ export function SiteHeader() {
               ))}
             </ul>
 
-            <Link
-              href="/#attend"
-              className={cn(headerCtaClasses(), "mt-6 w-full")}
-              onClick={closeMobile}
-            >
-              {ctaLabel}
-            </Link>
+            {eventConfig.registrationOpen ? (
+              <a
+                href={ctaHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(headerCtaClasses(), "mt-6 w-full")}
+                onClick={closeMobile}
+              >
+                {ctaLabel}
+              </a>
+            ) : (
+              <Link
+                href={ctaHref}
+                className={cn(headerCtaClasses(), "mt-6 w-full")}
+                onClick={closeMobile}
+              >
+                {ctaLabel}
+              </Link>
+            )}
           </Container>
         </nav>
       ) : null}

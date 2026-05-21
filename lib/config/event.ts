@@ -32,7 +32,9 @@ export const eventConfig = {
   },
   attendTagline:
     "One day of culture, connection, and community — an experience you'll remember.",
-  registrationOpen: false,
+  registrationOpen: true,
+  ticketUrl:
+    "https://www.eventbrite.co.uk/e/london-community-fest-2026-tickets-1990051365204?aff=ebdsoporgprofile&_gl=1*1tnr8tc*_up*MQ..*_ga*NDE5Njg1OTYzLjE3NzkzMjE4MTE.*_ga_TQVES5V6SH*czE3NzkzMjE4MTAkbzEkZzAkdDE3NzkzMjE4MTAkajYwJGwwJGgw",
   expectedAttendance: "4,000+",
   foodStallCount: "10+",
 } as const;

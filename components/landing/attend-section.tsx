@@ -62,6 +62,7 @@ export function AttendSection() {
   const { venue, pricing } = eventConfig;
   const accent = sectionAccent("attend");
   const showWaitlist = !eventConfig.registrationOpen;
+  const showTicketButton = eventConfig.registrationOpen;
   const childPrice =
     pricing.child.display.toLowerCase() === "free"
       ? "FREE"
@@ -120,13 +121,30 @@ export function AttendSection() {
               </div>
             </div>
 
-            {showWaitlist && (
+            {(showWaitlist || showTicketButton) && (
               <div className="flex flex-col border-t border-cream/10 pt-4 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
-                <h3 className="mb-3 font-sans text-sm font-semibold text-cream">
-                  Get notified when registration opens
-                </h3>
-
-                <WaitlistForm variant="panel" />
+                {showTicketButton ? (
+                  <>
+                    <h3 className="mb-3 font-sans text-sm font-semibold text-cream">
+                      Tickets are now live
+                    </h3>
+                    <a
+                      href={eventConfig.ticketUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-full items-center justify-center rounded-xl border border-cream/20 bg-cream px-6 py-3 text-sm font-semibold text-forest-900 transition-colors hover:bg-paper-50 md:w-auto"
+                    >
+                      Get tickets on Eventbrite
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="mb-3 font-sans text-sm font-semibold text-cream">
+                      Get notified when registration opens
+                    </h3>
+                    <WaitlistForm variant="panel" />
+                  </>
+                )}
               </div>
             )}
           </div>
