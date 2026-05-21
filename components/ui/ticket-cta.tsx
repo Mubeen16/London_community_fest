@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 interface TicketCtaProps {
   label?: string;
-  /** UTM medium — e.g. hero, navbar, attend, strip-live */
+  /** UTM medium — e.g. hero, navbar, attend, strip-story */
   trackingMedium: string;
   variant?: "primary" | "panel" | "compact";
   className?: string;

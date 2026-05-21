@@ -132,10 +132,19 @@ export function AttendSection() {
               <div className="flex flex-col border-t border-cream/10 pt-4 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
                 {showTicketButton ? (
                   <>
-                    <h3 className="mb-3 font-sans text-sm font-semibold text-cream">
-                      {ticketCopy.liveBadge}
+                    <h3 className="font-sans text-sm font-semibold text-cream">
+                      {ticketCopy.attendHeading}
                     </h3>
-                    <TicketCta trackingMedium="attend" variant="panel" />
+                    <p className="mt-1 font-sans text-xs leading-relaxed text-cream-muted">
+                      {ticketCopy.attendIntro}
+                    </p>
+                    <p className="mt-2 font-sans text-xs text-cream-faint">
+                      {pricing.adult.display} adults ({pricing.adult.ageRange}) ·{" "}
+                      {childPrice} children ({pricing.child.ageRange})
+                    </p>
+                    <div className="mt-4">
+                      <TicketCta trackingMedium="attend" variant="panel" />
+                    </div>
                     <p className="mt-2 font-sans text-xs text-cream-faint">
                       {ticketCopy.trustNote}
                     </p>

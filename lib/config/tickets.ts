@@ -5,12 +5,12 @@ export const ticketCopy = {
   secondaryLabel: "Explore what's on",
   panelLabel: "Get tickets on Eventbrite",
   liveBadge: "Tickets live",
-  liveHeadline: "Tickets now live for London Community Fest 2026",
-  liveSubtext: "Secure checkout via Eventbrite · Adults from £3 · Kids under 10 free",
   storyHeadline: "Be part of London's community celebration",
   storySubtext:
     "Culture, food, family activities, and connection — one unforgettable day in Kennington Park.",
   trustNote: "Secure checkout via Eventbrite",
+  attendHeading: "Tickets & entry",
+  attendIntro: "Adults from £3 · Under 10s free · One ticket covers the full festival day",
 } as const;
 
 /** Eventbrite URL with UTM params for conversion tracking. */

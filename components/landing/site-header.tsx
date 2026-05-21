@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { isTicketSalesOpen, ticketCopy } from "@/lib/config/tickets";
+import { getTicketUrl, isTicketSalesOpen, ticketCopy } from "@/lib/config/tickets";
 import { navigationLinks } from "@/lib/config/navigation";
 import { siteConfig } from "@/lib/config/site";
 import {
@@ -201,21 +201,39 @@ export function SiteHeader() {
               ))}
             </ul>
 
-            {ticketsOpen ? (
-              <TicketCta
-                trackingMedium="navbar-drawer"
-                className="mt-6 w-full"
-                onClick={closeMobile}
-              />
-            ) : (
-              <Link
-                href={ctaHref}
-                className={cn(headerCtaClasses(), "mt-6 w-full")}
-                onClick={closeMobile}
-              >
-                {ctaLabel}
-              </Link>
-            )}
+            <p className="mt-5 font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
+              Tickets
+            </p>
+            <ul className="mt-2 flex flex-col">
+              <li>
+                {ticketsOpen ? (
+                  <a
+                    href={getTicketUrl("navbar-drawer")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      "block rounded-md px-2 py-3 font-sans text-base font-medium transition-colors",
+                      headerMobileLinkClasses(),
+                    )}
+                    onClick={closeMobile}
+                  >
+                    {ticketCopy.primaryLabel}
+                    <span className="sr-only"> on Eventbrite (opens in new tab)</span>
+                  </a>
+                ) : (
+                  <Link
+                    href={ctaHref}
+                    className={cn(
+                      "block rounded-md px-2 py-3 font-sans text-base font-medium transition-colors",
+                      headerMobileLinkClasses(),
+                    )}
+                    onClick={closeMobile}
+                  >
+                    {ctaLabel}
+                  </Link>
+                )}
+              </li>
+            </ul>
           </Container>
         </nav>
       ) : null}

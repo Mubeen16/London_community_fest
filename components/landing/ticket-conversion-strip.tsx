@@ -6,39 +6,10 @@ import { Container } from "@/components/ui/container";
 import { sectionClasses } from "@/lib/section-theme";
 import { cn } from "@/lib/utils";
 
-interface TicketConversionStripProps {
-  variant: "live" | "story";
-}
-
-export function TicketConversionStrip({ variant }: TicketConversionStripProps) {
+/** Single mid-page emotional conversion moment — placed after What's On */
+export function TicketConversionStrip() {
   if (!isTicketSalesOpen()) {
     return null;
-  }
-
-  if (variant === "live") {
-    return (
-      <section
-        className={cn(sectionClasses("hero"), "border-y border-cream/10 py-6 sm:py-8")}
-        aria-label="Tickets now live"
-      >
-        <Container className="relative z-10">
-          <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
-            <div className="max-w-xl">
-              <p className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
-                {ticketCopy.liveBadge}
-              </p>
-              <p className="mt-2 font-serif text-xl text-cream sm:text-2xl">
-                {ticketCopy.liveHeadline}
-              </p>
-              <p className="mt-2 font-sans text-sm text-cream-muted">
-                {ticketCopy.liveSubtext}
-              </p>
-            </div>
-            <TicketCta trackingMedium="strip-live" className="shrink-0" />
-          </div>
-        </Container>
-      </section>
-    );
   }
 
   return (

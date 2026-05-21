@@ -13,11 +13,10 @@ export default function Home() {
     <PageShell>
       <HeroSection />
       <BrandBar />
-      <TicketConversionStrip variant="live" />
       <AboutSection />
       <BrandBar />
       <CollageSection />
-      <TicketConversionStrip variant="story" />
+      <TicketConversionStrip />
       <BrandBar />
       <AttendSection />
       <BrandBar />

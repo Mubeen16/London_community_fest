@@ -9,27 +9,25 @@ const AUTO_INTERVAL_MS = 3200;
 const RESUME_DELAY_MS = 4000;
 const SCROLL_DURATION_MS = 480;
 
-/** Alternating scrapbook tilt — matches collage polaroid strip */
-const CARD_ROTATES = ["-rotate-2", "rotate-2", "-rotate-1"] as const;
+const CARD_SLOT_CLASS =
+  "flex w-[82vw] max-w-[240px] shrink-0 list-none snap-center snap-always sm:w-[228px]";
 
 interface ExperienceCardProps {
   item: (typeof experienceItems)[number];
-  index: number;
 }
 
-function ExperienceCard({ item, index }: ExperienceCardProps) {
+function ExperienceCard({ item }: ExperienceCardProps) {
   const image = getExperienceImage(item.imageKey);
-  const rotate = CARD_ROTATES[index % CARD_ROTATES.length];
 
   return (
     <figure
       className={cn(
-        "relative flex h-full w-full flex-col overflow-hidden bg-paper-50 p-1.5 shadow-xl shadow-forest-950/40",
-        "transition-shadow hover:shadow-2xl",
-        rotate,
+        "group relative flex w-full flex-col overflow-hidden bg-paper-50 p-1.5",
+        "shadow-xl shadow-forest-950/40 ring-1 ring-ink/5",
+        "transition-shadow duration-200 md:hover:shadow-2xl md:hover:shadow-forest-950/50",
       )}
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-forest-900">
+      <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-forest-900">
         <Image
           src={image.src}
           alt={image.alt}
@@ -40,9 +38,13 @@ function ExperienceCard({ item, index }: ExperienceCardProps) {
         />
       </div>
 
-      <figcaption className="flex flex-col gap-1 px-0.5 pt-2 pb-2.5">
-        <h3 className="font-sans text-xs font-bold leading-snug text-ink">{item.title}</h3>
-        <p className="font-sans text-xs leading-snug text-ink-muted">{item.description}</p>
+      <figcaption className="flex min-h-[4.75rem] flex-col gap-1 px-0.5 pt-2 pb-2">
+        <h3 className="line-clamp-2 font-sans text-xs font-bold leading-snug text-ink">
+          {item.title}
+        </h3>
+        <p className="line-clamp-3 font-sans text-xs leading-snug text-ink-muted">
+          {item.description}
+        </p>
       </figcaption>
 
       <span className="board-pin" aria-hidden />
@@ -72,7 +74,6 @@ export function ExperienceCarousel() {
     const mobileViewport = window.matchMedia("(max-width: 768px)");
 
     const update = () => {
-      // Auto-advance on mobile can scroll the whole page (iOS scroll chaining); manual swipe only.
       setAutoEnabled(!reducedMotion.matches && !mobileViewport.matches);
     };
 
@@ -154,7 +155,6 @@ export function ExperienceCarousel() {
         const eased = 1 - (1 - progress) ** 3;
         el.scrollLeft = start + distance * eased;
 
-        // Prevent iOS/Safari from chaining horizontal scroll into page scroll.
         if (window.scrollY !== lockedScrollY) {
           window.scrollTo(0, lockedScrollY);
         }
@@ -280,18 +280,15 @@ export function ExperienceCarousel() {
 
         <ul
           ref={scrollRef}
-          className="scrollbar-hide flex touch-pan-x gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain px-4 py-2 pb-3 snap-x snap-mandatory sm:gap-5 sm:px-6 md:px-8"
+          className="scrollbar-hide flex touch-pan-x items-stretch gap-4 overflow-x-auto overscroll-x-contain px-4 py-4 pb-3 snap-x snap-mandatory sm:gap-5 sm:px-6 md:px-8"
           aria-label="Festival programme highlights"
           onScroll={handleScroll}
           onTouchStart={handleUserInteraction}
           onPointerDown={handleUserInteraction}
         >
-          {experienceItems.map((item, index) => (
-            <li
-              key={item.id}
-              className="w-[82vw] max-w-[240px] shrink-0 snap-center snap-always list-none sm:w-[228px]"
-            >
-              <ExperienceCard item={item} index={index} />
+          {experienceItems.map((item) => (
+            <li key={item.id} className={CARD_SLOT_CLASS}>
+              <ExperienceCard item={item} />
             </li>
           ))}
         </ul>
