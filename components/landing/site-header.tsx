@@ -123,10 +123,7 @@ export function SiteHeader() {
           </Link>
         )}
 
-        <div className="flex items-center gap-2 lg:hidden">
-          {ticketsOpen ? (
-            <TicketCta trackingMedium="navbar-mobile" variant="compact" />
-          ) : null}
+        <div className="flex items-center lg:hidden">
           <button
             type="button"
             className="relative flex min-h-11 min-w-11 items-center justify-center rounded-md border border-cream/10 bg-cream/5"
