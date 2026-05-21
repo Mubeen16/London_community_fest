@@ -68,7 +68,7 @@ export const designConfig = {
       grain: false,
     },
     sponsors: {
-      bg: "bg-forest-900",
+      bg: "bg-crimson-600",
       text: "text-cream",
       accent: "text-gold-400",
       grain: true,
