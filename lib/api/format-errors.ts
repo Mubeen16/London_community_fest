@@ -25,3 +25,17 @@ export function formatApiErrors(data: unknown): string {
 export function isDuplicateEnquiryMessage(message: string): boolean {
   return message.toLowerCase().includes("already");
 }
+
+export function friendlyAppsScriptMessage(message: string): string {
+  const lower = message.toLowerCase();
+
+  if (
+    lower.includes("appendrow") ||
+    lower.includes("no spreadsheet linked") ||
+    lower.includes("spreadsheet_id")
+  ) {
+    return "Online signup is temporarily unavailable. Please email us with the subject Volunteer.";
+  }
+
+  return message;
+}

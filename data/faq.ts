@@ -31,7 +31,7 @@ export const faqItems: FAQItem[] = [
   {
     question: "Can I volunteer?",
     answer:
-      "Yes! We're looking for 40+ volunteers. Email us with the subject 'Volunteer' and we'll be in touch with roles and shifts.",
+      "Yes! We're looking for 40+ volunteers. Sign up on our volunteer page — arrive between 7:00 and 8:00 AM for briefing and role allocation, and receive a £10 food voucher.",
   },
   {
     question: "Is there prayer space?",
@@ -52,7 +52,7 @@ export function getFaqItems(): FAQItem[] {
     }
     return {
       ...item,
-      answer: `Yes! We're looking for 40+ volunteers. Email ${siteConfig.email} with the subject 'Volunteer' and we'll be in touch with roles and shifts.`,
+      answer: `Yes! We're looking for 40+ volunteers. Sign up on our Volunteers page or email ${siteConfig.email} with the subject Volunteer — arrive between 7:00 and 8:00 AM for briefing and role allocation, and receive a £10 food voucher.`,
     };
   });
 }

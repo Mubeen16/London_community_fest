@@ -16,7 +16,7 @@ const getInvolvedLinks = [
   { label: "Sponsorship", href: "/sponsors" },
   {
     label: "Volunteer",
-    href: `mailto:${siteConfig.email}?subject=Volunteer`,
+    href: "/volunteers",
   },
 ] as const;
 

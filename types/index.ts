@@ -65,6 +65,15 @@ export interface SponsorEnquiryPayload {
   consent: boolean;
 }
 
+/** Volunteer signup payload — shared by Apps Script (now) and Django API (later). */
+export interface VolunteerEnquiryPayload {
+  contact_name: string;
+  email: string;
+  phone: string;
+  message: string;
+  consent: boolean;
+}
+
 export interface SponsorTier {
   id: string;
   name: string;

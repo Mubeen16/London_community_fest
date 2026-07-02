@@ -3,7 +3,8 @@
  * Set NEXT_PUBLIC_API_URL only when calling the API on another origin directly.
  *
  * Waitlist: browser → `/api/waitlist` proxy → `WAITLIST_APPS_SCRIPT_URL` (see `app/api/waitlist/`).
- * Sponsor/vendor: `SPONSORS_APPS_SCRIPT_URL`, `VENDORS_APPS_SCRIPT_URL` via `app/api/*-enquiry/`.
+ * Sponsor/vendor/volunteer: `SPONSORS_APPS_SCRIPT_URL`, `VENDORS_APPS_SCRIPT_URL`,
+ * `VOLUNTEERS_APPS_SCRIPT_URL` via `app/api/*-enquiry/`.
  * Django `endpoints.waitlist` is preserved for future `postJsonToApi("waitlist", ...)`.
  */
 export const apiConfig = {

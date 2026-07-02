@@ -19,5 +19,14 @@ export const getInvolved = {
       ctaLabel: "Partner with us →",
       buttonStyle: "crimson" as const,
     },
+    {
+      icon: "🙋",
+      title: "Volunteer on the day",
+      description:
+        "Join 40+ volunteers on event day — receive a £10 food voucher and help keep the fest running smoothly",
+      href: "/volunteers",
+      ctaLabel: "Sign up to volunteer →",
+      buttonStyle: "gold" as const,
+    },
   ],
 } as const;

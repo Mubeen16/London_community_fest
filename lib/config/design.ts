@@ -73,6 +73,12 @@ export const designConfig = {
       accent: "text-gold-400",
       grain: true,
     },
+    volunteers: {
+      bg: "bg-paper-100",
+      text: "text-ink",
+      accent: "text-crimson-400",
+      grain: false,
+    },
     faq: {
       bg: "bg-paper-100",
       text: "text-ink",

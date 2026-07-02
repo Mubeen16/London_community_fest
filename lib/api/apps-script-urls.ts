@@ -11,6 +11,7 @@
 
 const MISSING_SPONSOR_URL = "SPONSORS_APPS_SCRIPT_URL is not configured.";
 const MISSING_VENDOR_URL = "VENDORS_APPS_SCRIPT_URL is not configured.";
+const MISSING_VOLUNTEER_URL = "VOLUNTEERS_APPS_SCRIPT_URL is not configured.";
 
 function normalizeAppsScriptUrl(raw: string | undefined): string {
   const url = raw?.trim().replace(/^["']|["']$/g, "") ?? "";
@@ -35,6 +36,14 @@ export function getVendorsAppsScriptUrl(): string {
     return normalizeAppsScriptUrl(process.env.VENDORS_APPS_SCRIPT_URL);
   } catch {
     throw new Error(MISSING_VENDOR_URL);
+  }
+}
+
+export function getVolunteersAppsScriptUrl(): string {
+  try {
+    return normalizeAppsScriptUrl(process.env.VOLUNTEERS_APPS_SCRIPT_URL);
+  } catch {
+    throw new Error(MISSING_VOLUNTEER_URL);
   }
 }
 

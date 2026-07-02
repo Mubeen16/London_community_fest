@@ -26,7 +26,7 @@ export function GetInvolvedSection() {
         description={description}
       />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         {getInvolved.cards.map((card) => (
           <article key={card.title}>
             <PaperCard torn={false} className="flex h-full flex-col p-5 sm:p-6">

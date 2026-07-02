@@ -18,15 +18,36 @@ interface FormFieldProps {
   children: ReactNode;
   className?: string;
   compact?: boolean;
+  error?: string;
 }
 
-export function FormField({ id, label, children, className, compact = false }: FormFieldProps) {
+export function FormField({
+  id,
+  label,
+  children,
+  className,
+  compact = false,
+  error,
+}: FormFieldProps) {
+  const errorId = error ? `${id}-error` : undefined;
+
   return (
     <div className={className}>
       <label htmlFor={id} className={compact ? formLabelCompactClass : formLabelClass}>
         {label}
       </label>
-      <div className={compact ? "mt-1" : "mt-1.5"}>{children}</div>
+      <div className={compact ? "mt-1" : "mt-1.5"}>
+        {children}
+        {error ? (
+          <p
+            id={errorId}
+            className="mt-1 font-sans text-xs text-crimson-500"
+            role="alert"
+          >
+            {error}
+          </p>
+        ) : null}
+      </div>
     </div>
   );
 }
