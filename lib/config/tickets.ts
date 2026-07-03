@@ -10,13 +10,15 @@ export const ticketCopy = {
   attendIntro: "Adults from £3 · Under 10s free · One ticket covers the full festival day",
 } as const;
 
-/** Eventbrite URL with UTM params for conversion tracking. */
+/** Ticket page URL with UTM params for conversion tracking. */
 export function getTicketUrl(medium: string): string {
-  const url = new URL(eventConfig.ticketUrl);
-  url.searchParams.set("utm_source", "website");
-  url.searchParams.set("utm_medium", medium);
-  url.searchParams.set("utm_campaign", "london-community-fest-2026");
-  return url.toString();
+  const params = new URLSearchParams({
+    utm_source: "website",
+    utm_medium: medium,
+    utm_campaign: "london-community-fest-2026",
+  });
+  const separator = eventConfig.ticketUrl.includes("?") ? "&" : "?";
+  return `${eventConfig.ticketUrl}${separator}${params.toString()}`;
 }
 
 export function isTicketSalesOpen(): boolean {
